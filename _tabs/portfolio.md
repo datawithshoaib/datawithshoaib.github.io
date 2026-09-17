@@ -6,6 +6,8 @@ order: 1
 permalink: /projects/
 ---
 
+<p class="lead">A collection of practical data, analytics, machine learning, and AI projects.</p>
+
 {% assign sorted_portfolio = site.portfolio | sort: "date" | reverse %}
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in sorted_portfolio %}
