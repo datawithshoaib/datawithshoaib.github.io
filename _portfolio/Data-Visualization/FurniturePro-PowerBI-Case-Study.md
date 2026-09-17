@@ -1,7 +1,7 @@
 ---
 title: Furniture Pro & Co., Retailers - Power BI Case Study
 date: 2025-06-01
-permalink: /portfolio/FurniturePro-PowerBI-Case-Study/
+permalink: /projects/FurniturePro-PowerBI-Case-Study/
 categories: [Projects, Data Visualization]
 excerpt: Built a Power BI report analyzing sales, RFM segments, and customer behavior. Uncovered that 20% of customers drive 49% of sales. Identified high returns in Office Supplies and weak new customer acquisition.
 collection: portfolio

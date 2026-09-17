@@ -9,98 +9,98 @@ order: 7
 
 <h1><i class="fas fa-hand-wave"></i>Hey, I'm Shoaib</h1>
 
-<p><strong>Data Analytics, Data Science & AI. Always Building.</strong></p>
+<p><strong>AI & Machine Learning Engineer. Building intelligent systems, experiments, and practical ML solutions.</strong></p>
 
 </div>
 
-<p><i class="fas fa-chart-line"></i> I am a data analytics professional passionate about transforming complex data into actionable business insights. With expertise in Power BI, Azure, and Python automation, I specialize in building intuitive dashboards, streamlining workflows, and uncovering hidden patterns that drive strategic decisions.</p>
+<p><i class="fas fa-robot"></i> I am an AI and machine learning-focused builder passionate about creating intelligent systems that solve real-world problems. My interests span machine learning, generative AI, model experimentation, and practical deployment workflows that turn ideas into working solutions.</p>
 
-<p><i class="fas fa-briefcase"></i> Over 3.5 years, I've solved critical business problems through data analysis, automation, and intelligent reporting. My core strengths lie in crafting interactive visualizations, developing Python-based workflow automation, and mastering SQL queries, Excel analytics, and Power BI solutions that empower organizations to make data-driven decisions.</p>
+<p><i class="fas fa-brain"></i> I enjoy working across the AI lifecycle: understanding data, prototyping models, evaluating performance, and designing systems that are reliable, explainable, and useful in production. I’m especially interested in applied ML, LLM workflows, experimentation, and building trustworthy AI-powered experiences.</p>
 
-<p><i class="fas fa-trophy"></i> I've delivered impactful analytics projects that streamlined operations, automated repetitive tasks, and provided leadership teams with the insights they need for strategic decision-making. My work has consistently focused on bridging the gap between raw data and business value.</p>
+<p><i class="fas fa-cubes"></i> My work focuses on translating complex technical ideas into useful systems. Whether it's model evaluation, prompt design, retrieval pipelines, or AI-driven automation, I aim to connect research concepts with practical engineering outcomes.</p>
 
-<p><i class="fas fa-certificate"></i> I'm proud to be 5x certified in Power BI and Azure, with a commitment to staying at the forefront of data and AI technologies. I continuously expand my expertise through hands-on projects, research, and sharing knowledge with the data community through my portfolio and blog.</p>
+<p><i class="fas fa-lightbulb"></i> I am continuously learning and experimenting with emerging AI technologies, exploring how modern models can support analytics, automation, and decision-making while keeping quality, safety, and human oversight in focus.</p>
 
 ## Skills & Expertise
 
 <div class="skills-container">
   <div class="skill-item">
-    <i class="fas fa-chart-bar skill-icon"></i>
-    <div class="skill-content">
-      <h4>Data Analysis & Visualization</h4>
-      <p>Crafting interactive dashboards and compelling visual narratives</p>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <i class="fas fa-cogs skill-icon"></i>
-    <div class="skill-content">
-      <h4>Automation & Scripting</h4>
-      <p>Streamlining processes with Python-based workflow automation</p>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <i class="fas fa-database skill-icon"></i>
-    <div class="skill-content">
-      <h4>Database & SQL</h4>
-      <p>Mastering complex queries, data modeling, and analytics engineering</p>
-    </div>
-  </div>
-
-  <div class="skill-item">
     <i class="fas fa-brain skill-icon"></i>
     <div class="skill-content">
-      <h4>Business Intelligence</h4>
-      <p>Leveraging Power BI, Excel analytics, and advanced reporting</p>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <i class="fas fa-lightbulb skill-icon"></i>
-    <div class="skill-content">
-      <h4>Problem-Solving</h4>
-      <p>Bridging business requirements with innovative technical solutions</p>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <i class="fas fa-palette skill-icon"></i>
-    <div class="skill-content">
-      <h4>Dashboard Design</h4>
-      <p>Design and develop interactive dashboards that bring data stories to life</p>
+      <h4>Machine Learning</h4>
+      <p>Building and evaluating models for real-world predictive and analytical tasks</p>
     </div>
   </div>
 
   <div class="skill-item">
     <i class="fas fa-robot skill-icon"></i>
     <div class="skill-content">
-      <h4>Process Automation</h4>
-      <p>Automate repetitive tasks to boost efficiency and eliminate manual work</p>
+      <h4>Generative AI</h4>
+      <p>Exploring LLMs, prompt design, and AI-driven workflows for practical use cases</p>
     </div>
   </div>
 
   <div class="skill-item">
-    <i class="fas fa-search skill-icon"></i>
+    <i class="fas fa-database skill-icon"></i>
     <div class="skill-content">
-      <h4>Data Analysis</h4>
-      <p>Conduct in-depth analyses to reveal actionable business insights</p>
+      <h4>Data & Feature Engineering</h4>
+      <p>Preparing data pipelines and feature sets that enable strong model performance</p>
     </div>
   </div>
 
   <div class="skill-item">
-    <i class="fas fa-users skill-icon"></i>
+    <i class="fas fa-magnifying-glass-chart skill-icon"></i>
     <div class="skill-content">
-      <h4>Stakeholder Collaboration</h4>
-      <p>Collaborate closely with stakeholders to define and refine analytics requirements</p>
+      <h4>Model Evaluation</h4>
+      <p>Testing model quality, reliability, and business value through structured evaluation</p>
     </div>
   </div>
 
   <div class="skill-item">
-    <i class="fas fa-scale-balanced skill-icon"></i>
+    <i class="fas fa-shield-heart skill-icon"></i>
     <div class="skill-content">
-      <h4>Scalable Solutions</h4>
-      <p>Build scalable data solutions that empower informed business decisions</p>
+      <h4>AI Safety & Guardrails</h4>
+      <p>Designing safer AI systems with monitoring, constraints, and responsible usage patterns</p>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <i class="fas fa-cogs skill-icon"></i>
+    <div class="skill-content">
+      <h4>Automation & AI Workflow Design</h4>
+      <p>Creating intelligent workflows that connect models, tools, and decision-making processes</p>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <i class="fas fa-wand-sparkles skill-icon"></i>
+    <div class="skill-content">
+      <h4>Prompt Engineering</h4>
+      <p>Shaping instructions and context to improve model behavior and output quality</p>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <i class="fas fa-layer-group skill-icon"></i>
+    <div class="skill-content">
+      <h4>RAG & Knowledge Systems</h4>
+      <p>Designing retrieval-based pipelines that ground AI responses in relevant context</p>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <i class="fas fa-chart-line skill-icon"></i>
+    <div class="skill-content">
+      <h4>AI in Analytics</h4>
+      <p>Applying AI to insights, summarization, exploration, and data-informed decision support</p>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <i class="fas fa-code skill-icon"></i>
+    <div class="skill-content">
+      <h4>Python & AI Tooling</h4>
+      <p>Building experiments, prototypes, and solutions using modern Python-based AI stacks</p>
     </div>
   </div>
 </div>
@@ -162,7 +162,7 @@ order: 7
 
 ## Beyond Work
 
-I'm passionate about continuous learning and knowledge sharing. When not immersed in data, you'll find me exploring cutting-edge technologies, blogging about data science and analytics, or tinkering with exciting personal projects.
+I'm passionate about continuous learning and experimentation. When I’m not building AI systems or testing new ideas, I’m exploring emerging tools, documenting experiments, and refining practical approaches to machine learning and intelligent automation.
 
-<p><a href="/portfolio" class="btn btn--primary"><i class="fas fa-folder-open"></i> Explore My Portfolio</a> | <a href="/" class="btn btn--info"><i class="fas fa-blog"></i> Read My Blog</a></p>
+<p><a href="/projects" class="btn btn--primary"><i class="fas fa-folder-open"></i> Explore My Projects</a> | <a href="/experiments" class="btn btn--info"><i class="fas fa-flask"></i> View Experiments</a></p>
 

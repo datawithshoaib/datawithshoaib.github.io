@@ -1,7 +1,7 @@
 ---
 title: Clique Bait SQL Case Study
 date: 2024-09-15
-permalink: /portfolio/8-Week-SQL-Challenge/Clique-Bait/
+permalink: /projects/8-Week-SQL-Challenge/Clique-Bait/
 categories: [Projects, 8 Week SQL Challenge]
 excerpt: Used SQL to evaluate ad performance and user behavior for an online seafood store. Found a 23% lift in purchases from ad engagement. Identified top campaigns and provided optimization strategies.
 collection: portfolio

@@ -1,7 +1,7 @@
 ---
 title: Global Superstore Sales Dashboard
 date: 2024-08-20
-permalink: /portfolio/Global-Superstore-Sales-Dashboard/
+permalink: /projects/Global-Superstore-Sales-Dashboard/
 categories: [Projects, Data Visualization]
 excerpt: Built a Power BI dashboard to analyze global sales by region, category, and time. Included dynamic filters, forecasts, and decomposition trees. Enabled trend discovery and strategic comparison.
 collection: portfolio

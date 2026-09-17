@@ -1,7 +1,7 @@
 ---
 title: Simple RNN for IMDb Sentiment Analysis
 date: 2025-12-20
-permalink: /portfolio/Simple-RNN-IMDb-Sentiment-Analysis/
+permalink: /projects/Simple-RNN-IMDb-Sentiment-Analysis/
 categories: [Projects, Deep Learning]
 excerpt: Developed an end-to-end deep learning project using a simple RNN on the IMDb movie reviews dataset.
 collection: portfolio

@@ -1,7 +1,7 @@
 ---
 title: Student Performance Prediction
 date: 2024-05-18
-permalink: /portfolio/Student-Performance-Prediction/
+permalink: /projects/Student-Performance-Prediction/
 categories: [Projects, Machine Learning]
 excerpt: Predicted student academic outcomes using demographic and educational data. Applied EDA, preprocessing, and classification models. Helped identify at-risk students early.
 collection: portfolio

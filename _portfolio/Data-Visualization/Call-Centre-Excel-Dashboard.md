@@ -1,7 +1,7 @@
 ---
 title: Call Centre Dashboard using Excel
 date: 2024-10-05
-permalink: /portfolio/Call-Centre-Excel-Dashboard/
+permalink: /projects/Call-Centre-Excel-Dashboard/
 categories: [Projects, Data Visualization]
 excerpt: Designed an interactive Excel dashboard using pivot tables, charts, and slicers. Tracked key metrics like call time, volume, and amount. Improved visibility into performance trends. Strengthened my Excel visualization skills.
 collection: portfolio

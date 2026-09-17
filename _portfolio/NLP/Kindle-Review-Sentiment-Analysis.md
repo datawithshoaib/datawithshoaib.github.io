@@ -1,7 +1,7 @@
 ---
 title: Kindle Review Sentiment Analysis
 date: 2025-11-01
-permalink: /portfolio/NLP/Kindle-Review-Sentiment-Analysis/
+permalink: /projects/NLP/Kindle-Review-Sentiment-Analysis/
 categories: [Projects, NLP]
 excerpt: "Sentiment analysis on Amazon Kindle reviews using various NLP techniques: Implemented multiple text vectorization methods (BOW, TF-IDF, Word2Vec), \rbuilt and compared different classification models, processed and analyzed the Kindle Reviews dataset."
 collection: portfolio

@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Portfolio
+title: Projects
 icon: fas fa-laptop-code
 order: 1
-permalink: /portfolio/
+permalink: /projects/
 ---
 
 {% assign sorted_portfolio = site.portfolio | sort: "date" | reverse %}

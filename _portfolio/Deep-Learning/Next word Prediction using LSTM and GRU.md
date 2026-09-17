@@ -1,7 +1,7 @@
 ---
 title: Next word Prediction using LSTM and GRU
 date: 2025-12-21
-permalink: /portfolio/Next-word-Prediction-LSTM-GRU/
+permalink: /projects/Next-word-Prediction-LSTM-GRU/
 categories: [Projects, Deep Learning]
 excerpt: Developed a deep learning model for predicting the next word in a given sequence of words, built using LSTM and GRU networks.
 collection: portfolio

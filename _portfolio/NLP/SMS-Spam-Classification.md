@@ -1,7 +1,7 @@
 ---
 title: SMS Spam Classification
 date: 2025-11-01
-permalink: /portfolio/NLP/SMS-Spam-Classification/
+permalink: /projects/NLP/SMS-Spam-Classification/
 categories: [Projects, NLP]
 excerpt: "A comprehensive spam detection system implementing multiple text classification approaches including Bag of Words (BOW), \rTF-IDF Vectorization with Multinomial Naive Bayes, \rWord2Vec with Random Forest Classifier"
 collection: portfolio

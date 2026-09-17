@@ -1,7 +1,7 @@
 ---
 title: NYC Yellow Taxi Data Project using Fabric
 date: 2025-12-06
-permalink: /portfolio/NYC-Yellow-Taxi-Data-Project-Fabric/
+permalink: /projects/NYC-Yellow-Taxi-Data-Project-Fabric/
 categories: [Projects, Data Engineering]
 excerpt: A complete end-to-end data engineering and analytics solution implemented using Microsoft Fabric for NYC Yellow Taxi trip data (January– October 2025)
 collection: portfolio
