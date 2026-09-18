@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Pagination from '../components/Pagination.astro';
+import { getAllSortedPosts, getRecentPosts, getTrendingTags, getPostUrl } from '../utils/content';
+
+const POSTS_PER_PAGE = 10;
+const allPosts = await getAllSortedPosts();
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const currentPosts = allPosts.slice(0, POSTS_PER_PAGE);
+
+const recentPosts = await getRecentPosts(5);
+const trendingTags = await getTrendingTags(10);
+---
+
+<BaseLayout recentPosts={recentPosts} trendingTags={trendingTags}>
+  <div class="px-1">
+    <h1 class="dynamic-title mb-2">Learning Blog</h1>
+    <p class="lead text-muted mb-4">Notes, tutorials, and practical insights on AI/ML.</p>
+
+    <div id="post-list" class="flex-grow-1">
+      {currentPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          url={getPostUrl(post)}
+          date={post.data.date}
+          description={post.data.description}
+          image={post.data.image}
+          categories={post.data.categories}
+          pin={post.data.pin}
+        />
+      ))}
+    </div>
+
+    <Pagination currentPage={1} totalPages={totalPages} baseUrl="/" />
+  </div>
+</BaseLayout>

@@ -1,0 +1,105 @@
+---
+import { siteConfig } from '../data/site';
+
+export interface Props {
+  title?: string;
+  category?: string;
+}
+
+const { title, category } = Astro.props;
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath.startsWith('/page/');
+---
+
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
+  <div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      {isHome ? (
+        <span>Home</span>
+      ) : (
+        <span>
+          <a href="/">Home</a>
+        </span>
+      )}
+
+      {category && (
+        <span>
+          <a href={`/categories/${category.toLowerCase()}/`}>{category}</a>
+        </span>
+      )}
+
+      {!isHome && title && (
+        <span>{title}</span>
+      )}
+    </nav>
+
+    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
+      <i class="fas fa-bars fa-fw"></i>
+    </button>
+
+    <div id="topbar-title">
+      {isHome ? siteConfig.title : title || siteConfig.title}
+    </div>
+
+    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
+      <i class="fas fa-search fa-fw"></i>
+    </button>
+
+    <search id="search" class="align-items-center ms-3 ms-lg-0 cursor-pointer">
+      <i class="fas fa-search fa-fw"></i>
+      <input
+        class="form-control"
+        id="search-input"
+        type="search"
+        aria-label="search"
+        autocomplete="off"
+        placeholder="Search... (Ctrl+K)"
+        readonly
+      />
+    </search>
+
+    <button type="button" class="btn btn-link text-decoration-none d-none" id="search-cancel">
+      Cancel
+    </button>
+  </div>
+</header>
+
+<script is:inline>
+  // Mobile sidebar drawer toggling
+  const sidebarTrigger = document.getElementById('sidebar-trigger');
+  const sidebar = document.getElementById('sidebar');
+  const mask = document.getElementById('mask');
+
+  function toggleSidebar() {
+    sidebar?.classList.toggle('sidebar-open');
+    mask?.classList.toggle('show');
+  }
+
+  sidebarTrigger?.addEventListener('click', toggleSidebar);
+  mask?.addEventListener('click', () => {
+    sidebar?.classList.remove('sidebar-open');
+    mask?.classList.remove('show');
+  });
+
+  // Search trigger
+  function openSearch() {
+    const searchModal = document.getElementById('search-modal');
+    searchModal?.classList.add('active');
+    const input = document.getElementById('modal-search-input');
+    input?.focus();
+  }
+
+  document.getElementById('search-trigger')?.addEventListener('click', openSearch);
+  document.getElementById('search-input')?.addEventListener('click', openSearch);
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '')) {
+      e.preventDefault();
+      openSearch();
+    }
+  });
+</script>

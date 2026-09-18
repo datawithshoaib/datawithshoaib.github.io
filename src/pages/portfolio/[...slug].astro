@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('portfolio');
+  const portfolioItems = projects.filter((p) => p.data.permalink?.startsWith('/portfolio/'));
+
+  return portfolioItems.map((project) => {
+    const slug = project.data.permalink!
+      .replace(/^\/portfolio\/?/, '')
+      .replace(/\/$/, '');
+
+    return {
+      params: { slug },
+      props: { targetUrl: `/projects/${slug}/` },
+    };
+  });
+}
+
+interface Props {
+  targetUrl: string;
+}
+
+const { targetUrl } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
+    <link rel="canonical" href={targetUrl} />
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href={targetUrl}>{targetUrl}</a>...</p>
+  </body>
+</html>

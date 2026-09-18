@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getAllSortedExperiments, getExperimentUrl } from '../../utils/content';
+
+const allExperiments = await getAllSortedExperiments();
+---
+
+<BaseLayout
+  title="Experiments"
+  description="A collection of small AI experiments, tooling notes, and practical concept explorations."
+>
+  <div class="px-1">
+    <h1 class="dynamic-title mb-2">Experiments</h1>
+    <p class="lead text-muted mb-4">A collection of small AI experiments, tooling notes, and practical concept explorations.</p>
+
+    <div id="post-list" class="flex-grow-1">
+      {allExperiments.map((exp) => (
+        <PostCard
+          title={exp.data.title}
+          url={getExperimentUrl(exp)}
+          date={exp.data.date}
+          description={exp.data.description}
+          categories={exp.data.categories}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

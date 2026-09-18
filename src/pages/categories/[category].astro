@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllSortedPosts, getAllSortedPortfolio, getPostUrl, getPortfolioUrl } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const posts = await getAllSortedPosts();
+  const portfolio = await getAllSortedPortfolio();
+
+  interface Item {
+    title: string;
+    url: string;
+    date: Date | null;
+  }
+
+  const map: Record<string, { originalName: string; items: Item[] }> = {};
+
+  for (const p of posts) {
+    for (const cat of p.data.categories || []) {
+      const trimmed = cat.trim();
+      if (!trimmed) continue;
+      const key = trimmed.toLowerCase();
+      if (!map[key]) {
+        map[key] = { originalName: trimmed, items: [] };
+      }
+      map[key].items.push({
+        title: p.data.title,
+        url: getPostUrl(p),
+        date: p.data.date || null,
+      });
+    }
+  }
+
+  for (const p of portfolio) {
+    for (const cat of p.data.categories || []) {
+      const trimmed = cat.trim();
+      if (!trimmed) continue;
+      const key = trimmed.toLowerCase();
+      if (!map[key]) {
+        map[key] = { originalName: trimmed, items: [] };
+      }
+      map[key].items.push({
+        title: p.data.title,
+        url: getPortfolioUrl(p),
+        date: p.data.date || null,
+      });
+    }
+  }
+
+  return Object.entries(map).map(([key, data]) => {
+    // Sort items by date reverse
+    data.items.sort((a, b) => {
+      const aTime = a.date ? new Date(a.date).getTime() : 0;
+      const bTime = b.date ? new Date(b.date).getTime() : 0;
+      return bTime - aTime;
+    });
+
+    return {
+      params: { category: key },
+      props: {
+        categoryName: data.originalName,
+        items: data.items,
+      },
+    };
+  });
+}
+
+interface Props {
+  categoryName: string;
+  items: Array<{ title: string; url: string; date: Date | null }>;
+}
+
+const { categoryName, items } = Astro.props;
+---
+
+<BaseLayout title={`Category: ${categoryName}`} category={categoryName}>
+  <div id="page-category" class="px-1">
+    <h1 class="ps-lg-2 mb-4">
+      <i class="far fa-folder-open fa-fw text-muted me-2"></i>
+      {categoryName}
+      <span class="lead text-muted ps-2">{items.length}</span>
+    </h1>
+
+    <ul class="content ps-0 list-unstyled">
+      {items.map((item) => (
+        <li class="d-flex justify-content-between align-items-center py-2 px-md-3 border-bottom">
+          <a href={item.url} class="text-decoration-none">
+            {item.title}
+          </a>
+          <span class="dash flex-grow-1 mx-3 border-bottom border-dotted"></span>
+          {item.date && (
+            <time class="text-muted small text-nowrap">
+              {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            </time>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+.border-dotted {
+  border-bottom-style: dotted !important;
+  border-bottom-color: var(--dash-color, #ccc) !important;
+  height: 1px;
+}
+</style>

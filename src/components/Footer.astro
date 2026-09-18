@@ -1,0 +1,41 @@
+---
+import { siteConfig } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer
+  aria-label="Site Info"
+  class="d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 mt-5"
+>
+  <p class="mb-0">
+    © {year}
+    <a href={siteConfig.socialLinks[0].url}>{siteConfig.author}</a>.
+    <span>All rights reserved.</span>
+  </p>
+
+  <p class="mb-0">
+    Powered by
+    <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+  </p>
+</footer>
+
+<aside aria-label="Scroll to Top">
+  <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow" aria-label="Back to Top">
+    <i class="fas fa-angle-up"></i>
+  </button>
+</aside>
+
+<script is:inline>
+  const backToTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
+      backToTop?.classList.add('show');
+    } else {
+      backToTop?.classList.remove('show');
+    }
+  }, { passive: true });
+
+  backToTop?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

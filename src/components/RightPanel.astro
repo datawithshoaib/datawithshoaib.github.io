@@ -1,0 +1,109 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+export interface Props {
+  headings?: MarkdownHeading[];
+  enableToc?: boolean;
+  recentPosts?: Array<{ title: string; url: string }>;
+  trendingTags?: Array<{ name: string; count: number }>;
+}
+
+const {
+  headings = [],
+  enableToc = false,
+  recentPosts = [],
+  trendingTags = [],
+} = Astro.props;
+
+const filteredHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const showToc = enableToc && filteredHeadings.length > 0;
+---
+
+<aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted">
+  {showToc ? (
+    <div id="toc-wrapper" class="position-sticky ps-0 pe-4 pb-4">
+      <h2 class="panel-heading ps-3 pb-2 mb-0">CONTENTS</h2>
+      <nav id="toc">
+        <ul class="list-unstyled mb-0">
+          {filteredHeadings.map((h) => (
+            <li class={`toc-item ${h.depth === 3 ? 'toc-item-h3' : ''}`}>
+              <a href={`#${h.slug}`} class="toc-link" data-target={h.slug}>
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  ) : (
+    <div class="access">
+      {recentPosts.length > 0 && (
+        <section id="access-lastmod">
+          <h2 class="panel-heading">RECENT UPDATES</h2>
+          <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+            {recentPosts.map((post) => (
+              <li class="text-truncate lh-lg">
+                <a href={post.url}>{post.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {trendingTags.length > 0 && (
+        <section>
+          <h2 class="panel-heading">TRENDING TAGS</h2>
+          <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+            {trendingTags.map((tag) => (
+              <a
+                class="post-tag btn btn-outline-primary"
+                href={`/tags/${encodeURIComponent(tag.name.toLowerCase())}/`}
+              >
+                {tag.name}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  )}
+</aside>
+
+{showToc && (
+  <script is:inline>
+    // Scroll-spy for Table of Contents
+    const tocLinks = document.querySelectorAll('#toc .toc-link');
+    if (tocLinks.length > 0) {
+      const headingElements = Array.from(tocLinks)
+        .map((link) => {
+          const id = link.getAttribute('data-target');
+          return id ? document.getElementById(id) : null;
+        })
+        .filter(Boolean);
+
+      function updateActiveToc() {
+        const scrollPosition = window.scrollY + 100;
+        let currentActive = null;
+
+        for (const el of headingElements) {
+          if (el.offsetTop <= scrollPosition) {
+            currentActive = el.id;
+          } else {
+            break;
+          }
+        }
+
+        tocLinks.forEach((link) => {
+          if (link.getAttribute('data-target') === currentActive) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveToc, { passive: true });
+      updateActiveToc();
+    }
+  </script>
+)}

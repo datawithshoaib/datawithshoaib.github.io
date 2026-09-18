@@ -1,0 +1,67 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getExperimentUrl } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const experiments = await getCollection('experiments');
+  const sorted = experiments.sort((a, b) => {
+    const aDate = a.data.date ? new Date(a.data.date).getTime() : 0;
+    const bDate = b.data.date ? new Date(b.data.date).getTime() : 0;
+    return bDate - aDate;
+  });
+
+  return sorted.map((exp, index) => {
+    let slug: string;
+    if (exp.data.permalink) {
+      slug = exp.data.permalink
+        .replace(/^\/experiments\/?/, '')
+        .replace(/^\//, '')
+        .replace(/\/$/, '');
+    } else {
+      slug = exp.id.replace(/\.mdx?$/, '');
+    }
+
+    const prevPost = index < sorted.length - 1 ? {
+      title: sorted[index + 1].data.title,
+      url: getExperimentUrl(sorted[index + 1]),
+    } : null;
+
+    const nextPost = index > 0 ? {
+      title: sorted[index - 1].data.title,
+      url: getExperimentUrl(sorted[index - 1]),
+    } : null;
+
+    return {
+      params: { slug },
+      props: { exp, prevPost, nextPost },
+    };
+  });
+}
+
+interface Props {
+  exp: CollectionEntry<'experiments'>;
+  prevPost?: { title: string; url: string } | null;
+  nextPost?: { title: string; url: string } | null;
+}
+
+const { exp, prevPost, nextPost } = Astro.props;
+const { Content, headings } = await render(exp);
+---
+
+<PostLayout
+  title={exp.data.title}
+  description={exp.data.description}
+  date={exp.data.date}
+  lastModifiedAt={exp.data.last_modified_at}
+  author={exp.data.author}
+  image={exp.data.image}
+  categories={exp.data.categories}
+  tags={exp.data.tags}
+  headings={headings}
+  enableToc={exp.data.toc !== false}
+  prevPost={prevPost}
+  nextPost={nextPost}
+>
+  <Content />
+</PostLayout>

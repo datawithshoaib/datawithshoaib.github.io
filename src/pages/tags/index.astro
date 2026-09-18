@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllSortedPosts, getAllSortedPortfolio } from '../../utils/content';
+
+const posts = await getAllSortedPosts();
+const portfolio = await getAllSortedPortfolio();
+
+const tagCounts: Record<string, number> = {};
+
+for (const p of [...posts, ...portfolio]) {
+  for (const tag of p.data.tags || []) {
+    const name = tag.trim();
+    if (!name) continue;
+    tagCounts[name] = (tagCounts[name] || 0) + 1;
+  }
+}
+
+const sortedTags = Object.entries(tagCounts).sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<BaseLayout title="Tags" description="All article and project tags.">
+  <div class="px-1">
+    <h1 class="dynamic-title mb-4">Tags</h1>
+
+    <div id="tags" class="d-flex flex-wrap gap-2">
+      {sortedTags.map(([tag, count]) => (
+        <a
+          class="post-tag btn btn-outline-primary"
+          href={`/tags/${encodeURIComponent(tag.toLowerCase())}/`}
+        >
+          <span>{tag}</span>
+          <span class="badge bg-secondary ms-1">{count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+#tags .post-tag {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+</style>

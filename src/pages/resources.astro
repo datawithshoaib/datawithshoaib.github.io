@@ -1,0 +1,909 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import resourcesData from '../data/resources.json';
+
+interface Resource {
+  title: string;
+  slug: string;
+  category: string;
+  excerpt?: string;
+  thumbnail?: string;
+  slide_count: number;
+  has_pdf?: boolean;
+  pdf_path: string;
+  slides: string[];
+}
+
+const allResources = resourcesData as Resource[];
+const totalCount = allResources.length;
+
+// Unique categories and their counts
+const categoryCounts: Record<string, number> = {};
+for (const res of allResources) {
+  categoryCounts[res.category] = (categoryCounts[res.category] || 0) + 1;
+}
+
+const categoriesList = [
+  'Machine Learning',
+  'Power BI',
+  'SQL & Databases',
+  'Data Analytics',
+  'Generative AI',
+  'Deep Learning',
+  'Python',
+];
+---
+
+<BaseLayout
+  title="Resources"
+  description="Visual slide decks, educational carousels, and downloadable guides covering Python, Data Analytics, Power BI, SQL, Machine Learning, Deep Learning, and Generative AI."
+>
+  <div class="resources-container px-1">
+    <div class="resource-header mb-4">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <span class="badge resource-eyebrow">
+          <i class="fas fa-layer-group me-1"></i> Learning Materials
+        </span>
+      </div>
+
+      <h1 class="dynamic-title mb-2">Resources</h1>
+      <p class="lead text-muted mb-3">
+        Visual slide decks, educational carousels, and downloadable guides covering Python, Data Analytics, Power BI, SQL, Machine Learning, Deep Learning, and Generative AI.
+      </p>
+
+      <!-- Stats Summary Badges -->
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        <span class="resource-stat-badge">
+          <i class="fas fa-layer-group me-1 text-primary"></i> <strong>{totalCount}</strong> Total Decks
+        </span>
+        {categoriesList.map((cat) => (
+          categoryCounts[cat] ? (
+            <span class="resource-stat-badge">
+              <strong>{categoryCounts[cat]}</strong>&nbsp;{cat}
+            </span>
+          ) : null
+        ))}
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="resource-controls card p-3 shadow-sm border-0 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-transparent border-end-0">
+                <i class="fas fa-search text-muted"></i>
+              </span>
+              <input
+                type="text"
+                id="resource-search-input"
+                class="form-control border-start-0 ps-0"
+                placeholder="Search guides, Python, Power BI, SQL, ML, AI..."
+                aria-label="Search resources"
+              />
+              <button class="btn btn-outline-secondary border-start-0 d-none" type="button" id="resource-search-clear" title="Clear search">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Category filter pills -->
+          <div class="col-12 col-md-7">
+            <div class="d-flex flex-wrap gap-1 justify-content-md-end" id="resource-category-filters">
+              <button type="button" class="btn btn-sm resource-filter-btn active" data-category="All">
+                All ({totalCount})
+              </button>
+              {categoriesList.map((cat) => (
+                <button type="button" class="btn btn-sm resource-filter-btn" data-category={cat}>
+                  {cat} ({categoryCounts[cat] || 0})
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources Grid -->
+    <div class="row g-4" id="resources-grid">
+      {allResources.map((res) => {
+        const catSlug = res.category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        return (
+          <div class="col-12 col-sm-6 col-lg-4 resource-col" data-slug={res.slug} data-category={res.category}>
+            <article class="card h-100 resource-card border shadow-sm">
+              <a
+                href={`/resources/#${res.slug}`}
+                class="resource-thumbnail-wrapper deck-open-link d-block text-decoration-none"
+                data-slug={res.slug}
+                aria-label={`View slide carousel for ${res.title}`}
+                title="Click to view full slide deck"
+              >
+                {res.thumbnail ? (
+                  <img
+                    src={res.thumbnail}
+                    alt={res.title}
+                    class="resource-thumb-img no-popup"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="resource-thumb-fallback">
+                    <i class="fas fa-file-pdf text-4xl mb-2 opacity-60"></i>
+                    <span class="small font-weight-medium">PDF Deck</span>
+                  </div>
+                )}
+
+                {res.slide_count > 0 && (
+                  <span class="resource-badge-overlay badge-top-right">
+                    <i class="fas fa-layer-group me-1"></i>
+                    <span>{res.slide_count} slides</span>
+                  </span>
+                )}
+
+                <span class={`resource-badge-overlay badge-bottom-left cat-tag-${catSlug}`}>
+                  {res.category}
+                </span>
+
+                <span class="resource-hover-hint">
+                  <i class="fas fa-eye me-1"></i> View Slides
+                </span>
+              </a>
+
+              <div class="card-body d-flex flex-column p-3">
+                <h3 class="resource-card-title mb-2">
+                  <a href={`/resources/#${res.slug}`} class="deck-open-link text-decoration-none" data-slug={res.slug}>
+                    {res.title}
+                  </a>
+                </h3>
+
+                {res.excerpt && (
+                  <p class="resource-card-excerpt small text-muted mb-3 flex-grow-1">
+                    {res.excerpt}
+                  </p>
+                )}
+
+                <div class="resource-card-footer pt-3 mt-auto d-flex align-items-center justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-link text-decoration-none p-0 resource-view-btn text-primary fw-semibold"
+                    data-slug={res.slug}
+                  >
+                    <span>View Slides</span>
+                    <i class="fas fa-arrow-right ms-1 transition-arrow"></i>
+                  </button>
+
+                  {res.has_pdf && (
+                    <a
+                      href={res.pdf_path}
+                      download={`${res.slug}.pdf`}
+                      class="btn btn-sm resource-pdf-btn text-decoration-none"
+                      title="Download PDF version"
+                    >
+                      <i class="fas fa-download me-1 small"></i>
+                      <span>PDF</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty State -->
+    <div id="resources-no-results" class="text-center py-5 d-none">
+      <div class="card p-5 border shadow-sm empty-card">
+        <i class="fas fa-search text-muted mb-3" style="font-size: 2.5rem;"></i>
+        <h5 class="text-muted fw-bold">No matching resources found</h5>
+        <p class="text-muted small mb-3">Try searching with different keywords or select "All" categories.</p>
+        <div>
+          <button type="button" id="resource-reset-btn" class="btn btn-sm btn-primary px-3">
+            <i class="fas fa-redo me-1"></i> Reset Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide Carousel Lightbox Modal -->
+    <div id="deck-modal" class="deck-modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="deck-modal-backdrop"></div>
+      <div class="deck-modal-dialog">
+        <div class="deck-modal-content">
+          <div class="deck-modal-header">
+            <div class="deck-modal-title-box">
+              <span class="badge deck-modal-category me-2" id="modal-category">Category</span>
+              <h4 class="deck-modal-title mb-0" id="modal-title">Deck Title</h4>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="deck-slide-counter small text-muted" id="modal-counter">Slide 1 / 10</span>
+              <button type="button" class="deck-modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="deck-modal-body">
+            <button type="button" class="deck-nav-btn deck-nav-prev" id="modal-prev-btn" aria-label="Previous slide">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="deck-slide-stage" id="modal-slide-stage">
+              <div class="deck-slide-loading d-none" id="modal-loading">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading slide...</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="deck-nav-btn deck-nav-next" id="modal-next-btn" aria-label="Next slide">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="deck-modal-footer">
+            <div class="deck-dots-container" id="modal-dots"></div>
+
+            <div class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
+              <button type="button" id="modal-share-btn" class="btn btn-sm btn-outline-secondary" title="Copy link to deck">
+                <i class="fas fa-share-alt me-1"></i> Share
+              </button>
+              <a href="#" id="modal-pdf-download" download class="btn btn-sm btn-outline-secondary" title="Download PDF deck">
+                <i class="fas fa-download me-1"></i> Download PDF
+              </a>
+              <a href="#" id="modal-pdf-view" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" title="Open PDF in new tab">
+                <i class="fas fa-external-link-alt me-1"></i> View PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="resource-toast" class="resource-toast d-none" role="alert">
+      <i class="fas fa-check-circle me-2 text-success"></i>
+      <span id="resource-toast-msg">Link copied to clipboard!</span>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.resource-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  background-color: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.resource-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--text-color, #212529);
+}
+
+.resource-controls {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.75rem;
+}
+
+#resource-search-input {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef);
+}
+
+.resource-filter-btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e0e0e0);
+  transition: all 0.2s ease;
+}
+
+.resource-filter-btn:hover {
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--heading-color, #212529);
+}
+
+.resource-filter-btn.active {
+  background-color: var(--link-color, #007bff);
+  color: #ffffff;
+  border-color: var(--link-color, #007bff);
+  font-weight: 600;
+}
+
+.resource-card {
+  background-color: var(--card-bg, #ffffff);
+  border-color: var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.85rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--link-color, #007bff) !important;
+}
+
+.resource-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: var(--card-header-bg, #f8f9fa);
+  overflow: hidden;
+  cursor: pointer;
+  border-bottom: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.resource-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.resource-card:hover .resource-thumb-img {
+  transform: scale(1.03);
+}
+
+.resource-thumb-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted-color, #6c757d);
+  padding: 1.5rem;
+}
+
+.resource-badge-overlay {
+  position: absolute;
+  z-index: 2;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  line-height: 1.2;
+}
+
+.badge-top-right {
+  top: 0.75rem;
+  right: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.badge-bottom-left {
+  bottom: 0.75rem;
+  left: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cat-tag-machine-learning { background-color: rgba(99, 102, 241, 0.92); }
+.cat-tag-power-bi { background-color: rgba(245, 158, 11, 0.95); }
+.cat-tag-sql-databases { background-color: rgba(14, 165, 233, 0.95); }
+.cat-tag-data-analytics { background-color: rgba(16, 185, 129, 0.95); }
+.cat-tag-generative-ai { background-color: rgba(236, 72, 153, 0.95); }
+.cat-tag-deep-learning { background-color: rgba(139, 92, 246, 0.95); }
+.cat-tag-python { background-color: rgba(59, 130, 246, 0.95); }
+
+.resource-hover-hint {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 3;
+}
+
+.resource-thumbnail-wrapper:hover .resource-hover-hint {
+  opacity: 1;
+}
+
+.resource-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.resource-card-title a {
+  color: var(--heading-color, #212529);
+}
+
+.resource-pdf-btn {
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--text-color, #333);
+}
+
+/* Modal Lightbox Styling */
+.deck-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1060;
+  overflow: hidden;
+}
+
+.deck-modal.is-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deck-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+}
+
+.deck-modal-dialog {
+  position: relative;
+  width: 95%;
+  max-width: 900px;
+  max-height: 92vh;
+  z-index: 1061;
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-modal-content {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.deck-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.deck-modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--heading-color, #212529);
+}
+
+.deck-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-muted-color, #6c757d);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.deck-modal-body {
+  position: relative;
+  background-color: #0b0f19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+  max-height: 68vh;
+  overflow: hidden;
+}
+
+.deck-slide-stage {
+  max-height: 68vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deck-slide-stage img {
+  max-height: 68vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.deck-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #1f2937;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.deck-nav-prev { left: 1rem; }
+.deck-nav-next { right: 1rem; }
+
+.deck-modal-footer {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--card-border-color, #e9ecef);
+  gap: 1rem;
+}
+
+.deck-dots-container {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow-x: auto;
+  max-width: 320px;
+  padding: 0.25rem 0;
+}
+
+.deck-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ced4da;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.deck-dot.active {
+  width: 22px;
+  border-radius: 9999px;
+  background-color: #007bff;
+}
+
+.resource-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--card-bg, #ffffff);
+  color: var(--text-color, #212529);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  font-size: 0.88rem;
+}
+</style>
+
+<script is:inline define:vars={{ allResources }}>
+  document.addEventListener('DOMContentLoaded', function() {
+    const resourcesBySlug = {};
+    allResources.forEach(function(item) {
+      resourcesBySlug[item.slug] = item;
+    });
+
+    const searchInput = document.getElementById('resource-search-input');
+    const searchClearBtn = document.getElementById('resource-search-clear');
+    const categoryBtns = document.querySelectorAll('.resource-filter-btn');
+    const cards = document.querySelectorAll('.resource-col');
+    const noResults = document.getElementById('resources-no-results');
+    const resetBtn = document.getElementById('resource-reset-btn');
+
+    const modal = document.getElementById('deck-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalTitle = document.getElementById('modal-title');
+    const modalCategory = document.getElementById('modal-category');
+    const modalCounter = document.getElementById('modal-counter');
+    const modalSlideStage = document.getElementById('modal-slide-stage');
+    const modalPrevBtn = document.getElementById('modal-prev-btn');
+    const modalNextBtn = document.getElementById('modal-next-btn');
+    const modalDots = document.getElementById('modal-dots');
+    const modalPdfDownload = document.getElementById('modal-pdf-download');
+    const modalPdfView = document.getElementById('modal-pdf-view');
+    const modalShareBtn = document.getElementById('modal-share-btn');
+    const modalLoading = document.getElementById('modal-loading');
+    const toast = document.getElementById('resource-toast');
+    const toastMsg = document.getElementById('resource-toast-msg');
+
+    let modalSlideImg = document.getElementById('modal-slide-img');
+    if (!modalSlideImg && modalSlideStage) {
+      modalSlideImg = document.createElement('img');
+      modalSlideImg.id = 'modal-slide-img';
+      modalSlideImg.className = 'deck-current-slide no-popup';
+      modalSlideImg.alt = 'Slide preview';
+      modalSlideStage.appendChild(modalSlideImg);
+    }
+
+    let activeCategory = 'All';
+    let searchQuery = '';
+    let currentDeck = null;
+    let currentSlideIndex = 0;
+
+    function filterCards() {
+      let visibleCount = 0;
+
+      cards.forEach(function(card) {
+        const slug = card.getAttribute('data-slug') || '';
+        const item = resourcesBySlug[slug];
+        if (!item) return;
+
+        const title = (item.title || '').toLowerCase();
+        const category = item.category || '';
+        const excerpt = (item.excerpt || '').toLowerCase();
+
+        const matchesCategory = activeCategory === 'All' || category === activeCategory;
+        const matchesSearch = !searchQuery || (
+          title.includes(searchQuery) ||
+          excerpt.includes(searchQuery) ||
+          category.toLowerCase().includes(searchQuery) ||
+          slug.toLowerCase().includes(searchQuery)
+        );
+
+        if (matchesCategory && matchesSearch) {
+          card.classList.remove('d-none');
+          visibleCount++;
+        } else {
+          card.classList.add('d-none');
+        }
+      });
+
+      if (noResults) {
+        if (visibleCount === 0) noResults.classList.remove('d-none');
+        else noResults.classList.add('d-none');
+      }
+    }
+
+    searchInput?.addEventListener('input', function(e) {
+      searchQuery = e.target.value.trim().toLowerCase();
+      if (searchClearBtn) {
+        if (searchQuery.length > 0) searchClearBtn.classList.remove('d-none');
+        else searchClearBtn.classList.add('d-none');
+      }
+      filterCards();
+    });
+
+    searchClearBtn?.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      searchClearBtn.classList.add('d-none');
+      filterCards();
+    });
+
+    categoryBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        categoryBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeCategory = btn.getAttribute('data-category') || 'All';
+        filterCards();
+      });
+    });
+
+    resetBtn?.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      if (searchClearBtn) searchClearBtn.classList.add('d-none');
+      searchQuery = '';
+      activeCategory = 'All';
+      categoryBtns.forEach(function(b, idx) {
+        if (idx === 0) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      filterCards();
+    });
+
+    function showToast(message) {
+      if (!toast) return;
+      if (toastMsg) toastMsg.textContent = message;
+      toast.classList.remove('d-none');
+      setTimeout(function() {
+        toast.classList.add('d-none');
+      }, 3000);
+    }
+
+    function openDeck(slug, initialSlideIndex) {
+      const deck = resourcesBySlug[slug];
+      if (!deck || !deck.slides || deck.slides.length === 0) return;
+
+      currentDeck = deck;
+      currentSlideIndex = typeof initialSlideIndex === 'number' ? initialSlideIndex : 0;
+
+      if (modalTitle) modalTitle.textContent = deck.title;
+      if (modalCategory) {
+        modalCategory.textContent = deck.category;
+      }
+
+      if (modalPdfDownload) {
+        modalPdfDownload.href = deck.pdf_path;
+        modalPdfDownload.setAttribute('download', deck.slug + '.pdf');
+      }
+      if (modalPdfView) {
+        modalPdfView.href = deck.pdf_path;
+      }
+
+      if (modalDots) {
+        modalDots.innerHTML = '';
+        deck.slides.forEach(function(_, idx) {
+          const dot = document.createElement('span');
+          dot.className = 'deck-dot' + (idx === currentSlideIndex ? ' active' : '');
+          dot.title = 'Slide ' + (idx + 1);
+          dot.addEventListener('click', function() {
+            goToSlide(idx);
+          });
+          modalDots.appendChild(dot);
+        });
+      }
+
+      renderCurrentSlide();
+
+      modal?.classList.add('is-open');
+      modal?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      if (history.pushState) {
+        history.pushState(null, '', '#' + deck.slug);
+      }
+    }
+
+    function closeDeck() {
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      currentDeck = null;
+
+      if (history.pushState) {
+        history.pushState('', document.title, window.location.pathname + window.location.search);
+      }
+    }
+
+    function renderCurrentSlide() {
+      if (!currentDeck || !currentDeck.slides) return;
+      const total = currentDeck.slides.length;
+      if (currentSlideIndex < 0) currentSlideIndex = 0;
+      if (currentSlideIndex >= total) currentSlideIndex = total - 1;
+
+      if (modalCounter) {
+        modalCounter.textContent = 'Slide ' + (currentSlideIndex + 1) + ' / ' + total;
+      }
+
+      if (modalDots) {
+        const dots = modalDots.querySelectorAll('.deck-dot');
+        dots.forEach(function(d, i) {
+          if (i === currentSlideIndex) d.classList.add('active');
+          else d.classList.remove('active');
+        });
+        if (dots[currentSlideIndex]) {
+          dots[currentSlideIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+
+      const slideSrc = currentDeck.slides[currentSlideIndex];
+      if (modalSlideImg) {
+        if (modalLoading) modalLoading.classList.remove('d-none');
+        const tempImg = new Image();
+        tempImg.onload = function() {
+          modalSlideImg.src = slideSrc;
+          if (modalLoading) modalLoading.classList.add('d-none');
+        };
+        tempImg.onerror = function() {
+          modalSlideImg.src = slideSrc;
+          if (modalLoading) modalLoading.classList.add('d-none');
+        };
+        tempImg.src = slideSrc;
+      }
+
+      if (modalPrevBtn) modalPrevBtn.style.opacity = currentSlideIndex === 0 ? '0.4' : '1';
+      if (modalNextBtn) modalNextBtn.style.opacity = currentSlideIndex === total - 1 ? '0.4' : '1';
+    }
+
+    function goToSlide(index) {
+      currentSlideIndex = index;
+      renderCurrentSlide();
+    }
+
+    function prevSlide() {
+      if (!currentDeck) return;
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        renderCurrentSlide();
+      }
+    }
+
+    function nextSlide() {
+      if (!currentDeck) return;
+      if (currentSlideIndex < currentDeck.slides.length - 1) {
+        currentSlideIndex++;
+        renderCurrentSlide();
+      }
+    }
+
+    modalPrevBtn?.addEventListener('click', prevSlide);
+    modalNextBtn?.addEventListener('click', nextSlide);
+    modalCloseBtn?.addEventListener('click', closeDeck);
+
+    modal?.addEventListener('click', function(e) {
+      if (e.target === modal || e.target.classList.contains('deck-modal-backdrop')) {
+        closeDeck();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!modal || !modal.classList.contains('is-open')) return;
+
+      if (e.key === 'Escape') closeDeck();
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      }
+    });
+
+    modalShareBtn?.addEventListener('click', function() {
+      if (!currentDeck) return;
+      const shareUrl = window.location.origin + window.location.pathname + '#' + currentDeck.slug;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => showToast('Share link copied to clipboard!'));
+      }
+    });
+
+    document.querySelectorAll('.deck-open-link').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const slug = el.getAttribute('data-slug');
+        if (slug) openDeck(slug, 0);
+      });
+    });
+
+    document.querySelectorAll('.resource-view-btn').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const slug = el.getAttribute('data-slug');
+        if (slug) openDeck(slug, 0);
+      });
+    });
+
+    if (window.location.hash) {
+      const hashSlug = window.location.hash.replace(/^#/, '');
+      if (resourcesBySlug[hashSlug]) {
+        setTimeout(function() {
+          openDeck(hashSlug, 0);
+        }, 100);
+      }
+    }
+  });
+</script>

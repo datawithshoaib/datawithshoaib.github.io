@@ -1,43 +1,110 @@
-# Chirpy Starter
+# Shoaib Akthar - Portfolio & Blog
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+[![Build and Deploy](https://github.com/datawithshoaib/datawithshoaib.github.io/actions/workflows/pages-deploy.yml/badge.svg)](https://github.com/datawithshoaib/datawithshoaib.github.io/actions/workflows/pages-deploy.yml)
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+> Personal portfolio, learning blog, project showcase, and resource library of Shoaib Akthar (AI Engineer & Data Scientist). Built with **Astro 5**.
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+## 🚀 Tech Stack
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+- **Framework**: [Astro 5](https://astro.build/) (Static Site Generation - SSG)
+- **Styling**: Bootstrap 5 + Standalone Chirpy Theme Styles + Custom CSS
+- **Syntax Highlighting**: Shiki (with dual light/dark GitHub themes)
+- **Math / LaTeX**: Remark-Math & Rehype-KaTeX
+- **Search**: Built-in client-side instant search (`Ctrl+K`)
+- **Typography & Icons**: Google Fonts (Lato, Source Sans Pro) & FontAwesome 6
+- **Deployment**: GitHub Pages via GitHub Actions (fast Node.js build)
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+## 📁 Project Structure
+
+```text
+├── public/
+│   └── assets/
+│       ├── css/          # Standalone theme stylesheets
+│       ├── docs/         # Visual slide decks & PDF guides
+│       └── img/          # Images (profile, posts, portfolio, certificates)
+├── src/
+│   ├── components/       # UI components (Sidebar, Topbar, PostCard, TOC, Search, etc.)
+│   ├── content/
+│   │   ├── experiments/  # AI experiments & concept explorations (.md)
+│   │   ├── portfolio/    # Project case studies & portfolio (.md)
+│   │   └── posts/        # Learning blog posts (.md)
+│   ├── data/
+│   │   ├── certificates.json  # Verified credentials & badges
+│   │   ├── resources.json     # Slide decks & educational materials
+│   │   └── site.ts            # Site metadata, navigation, & social links
+│   ├── layouts/          # BaseLayout, PostLayout, PageLayout
+│   ├── pages/            # File-based routing & dynamic collections
+│   └── utils/            # Content helpers, URL mapping, & tag utilities
+├── astro.config.mjs      # Astro configuration
+└── package.json          # Node dependencies & scripts
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+## 🛠️ Development
 
-## Usage
+### Prerequisites
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+- **Node.js**: v18 or higher (v20+ recommended)
+- **npm**: v9 or higher
 
-## Contributing
+### Getting Started
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/datawithshoaib/datawithshoaib.github.io.git
+   cd datawithshoaib.github.io
+   ```
 
-## License
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-This work is published under [MIT][mit] License.
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+   Static files will be generated in the `dist/` directory.
+
+5. **Preview production build:**
+   ```bash
+   npm run preview
+   ```
+
+## 📝 Writing Content
+
+### Adding a Blog Post
+Create a new `.md` file in `src/content/posts/`:
+```markdown
+---
+title: Your Post Title
+date: 2026-09-18
+permalink: /posts/2026/09/your-post-title/
+categories: ["Machine Learning"]
+tags: ["Python", "Scikit-Learn"]
+image: /assets/img/posts/your-image.png
+description: A short excerpt of the post.
+toc: true
+---
+
+Post content in standard Markdown...
+```
+
+### Adding a Portfolio Project
+Create a new `.md` file in `src/content/portfolio/` under the appropriate subcategory folder.
+
+### Adding an Experiment
+Create a new `.md` file in `src/content/experiments/`.
+
+## 🚢 Deployment
+
+The site is automatically built and deployed to GitHub Pages whenever changes are pushed to `main` via the GitHub Actions workflow in `.github/workflows/pages-deploy.yml`.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

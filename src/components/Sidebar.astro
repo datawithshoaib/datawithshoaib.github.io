@@ -1,0 +1,71 @@
+---
+import { siteConfig } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+
+function isActive(url: string) {
+  if (url === '/') {
+    return currentPath === '/' || currentPath.startsWith('/page/');
+  }
+  return currentPath.startsWith(url);
+}
+---
+
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  <header class="profile-wrapper">
+    <a href="/" id="avatar" class="rounded-circle">
+      <img
+        src={siteConfig.avatar}
+        width="112"
+        height="112"
+        alt="avatar"
+        onerror={`this.onerror=null; this.src='${siteConfig.avatarFallback}'`}
+      />
+    </a>
+
+    <a class="site-title d-block" href="/">{siteConfig.title}</a>
+    <p class="site-subtitle fst-italic mb-0">{siteConfig.tagline}</p>
+  </header>
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      {siteConfig.navItems.map((item) => (
+        <li class={`nav-item ${isActive(item.url) ? 'active' : ''}`}>
+          <a href={item.url} class="nav-link">
+            <i class={`fa-fw ${item.icon}`}></i>
+            <span>{item.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom d-flex flex-wrap align-items-center w-100">
+    <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
+      <i class="fas fa-adjust"></i>
+    </button>
+
+    <span class="icon-border"></span>
+
+    {siteConfig.socialLinks.map((social) => (
+      <a
+        href={social.url}
+        aria-label={social.ariaLabel}
+        target={social.url.startsWith('http') ? '_blank' : undefined}
+        rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+      >
+        <i class={social.icon}></i>
+      </a>
+    ))}
+  </div>
+</aside>
+
+<script is:inline>
+  document.getElementById('mode-toggle')?.addEventListener('click', () => {
+    const currentMode = document.documentElement.getAttribute('data-mode');
+    const newMode = currentMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-mode', newMode);
+    localStorage.setItem('theme-mode', newMode);
+    sessionStorage.setItem('mode', newMode);
+  });
+</script>

@@ -1,0 +1,68 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPostUrl } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const sortedPosts = posts.sort((a, b) => {
+    const aDate = a.data.date ? new Date(a.data.date).getTime() : 0;
+    const bDate = b.data.date ? new Date(b.data.date).getTime() : 0;
+    return bDate - aDate;
+  });
+
+  return sortedPosts.map((post, index) => {
+    let slug: string;
+    if (post.data.permalink) {
+      // e.g. /posts/2025/03/ai-900-preparation-notes/ -> 2025/03/ai-900-preparation-notes
+      slug = post.data.permalink
+        .replace(/^\/posts\/?/, '')
+        .replace(/^\//, '')
+        .replace(/\/$/, '');
+    } else {
+      slug = post.id.replace(/\.mdx?$/, '');
+    }
+
+    const prevPost = index < sortedPosts.length - 1 ? {
+      title: sortedPosts[index + 1].data.title,
+      url: getPostUrl(sortedPosts[index + 1]),
+    } : null;
+
+    const nextPost = index > 0 ? {
+      title: sortedPosts[index - 1].data.title,
+      url: getPostUrl(sortedPosts[index - 1]),
+    } : null;
+
+    return {
+      params: { slug },
+      props: { post, prevPost, nextPost },
+    };
+  });
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  prevPost?: { title: string; url: string } | null;
+  nextPost?: { title: string; url: string } | null;
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  lastModifiedAt={post.data.last_modified_at}
+  author={post.data.author}
+  image={post.data.image}
+  categories={post.data.categories}
+  tags={post.data.tags}
+  headings={headings}
+  enableToc={post.data.toc !== false}
+  prevPost={prevPost}
+  nextPost={nextPost}
+>
+  <Content />
+</PostLayout>

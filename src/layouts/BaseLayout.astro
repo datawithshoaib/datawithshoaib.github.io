@@ -1,0 +1,113 @@
+---
+import Head from '../components/Head.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Topbar from '../components/Topbar.astro';
+import RightPanel from '../components/RightPanel.astro';
+import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
+import type { MarkdownHeading } from 'astro';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  headings?: MarkdownHeading[];
+  enableToc?: boolean;
+  recentPosts?: Array<{ title: string; url: string }>;
+  trendingTags?: Array<{ name: string; count: number }>;
+  category?: string;
+  mainColClass?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  type = 'website',
+  headings = [],
+  enableToc = false,
+  recentPosts = [],
+  trendingTags = [],
+  category,
+  mainColClass = 'col-12 col-lg-11 col-xl-9 px-md-4',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <Head title={title} description={description} image={image} type={type} />
+
+  <body>
+    <Sidebar />
+
+    <div id="main-wrapper" class="d-flex justify-content-center">
+      <div class="container d-flex flex-column px-xxl-5">
+        <Topbar title={title} category={category} />
+
+        <div class="row flex-grow-1">
+          <main aria-label="Main Content" class={mainColClass}>
+            <slot />
+          </main>
+
+          <RightPanel
+            headings={headings}
+            enableToc={enableToc}
+            recentPosts={recentPosts}
+            trendingTags={trendingTags}
+          />
+        </div>
+
+        <div class="row">
+          <div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            <slot name="tail" />
+            <Footer />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+    <SearchModal />
+
+    <!-- Code Block Copy Button Script -->
+    <script is:inline>
+      document.querySelectorAll('pre.astro-code').forEach((pre) => {
+        if (pre.closest('.code-block-wrapper')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+
+        const header = document.createElement('div');
+        header.className = 'code-block-header';
+
+        const langSpan = document.createElement('span');
+        const lang = pre.getAttribute('data-language') || 'code';
+        langSpan.textContent = lang.toUpperCase();
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-code-btn';
+        copyBtn.type = 'button';
+        copyBtn.title = 'Copy code';
+        copyBtn.innerHTML = '<i class="far fa-clipboard me-1"></i>Copy';
+
+        copyBtn.addEventListener('click', () => {
+          const code = pre.querySelector('code')?.innerText || pre.innerText;
+          navigator.clipboard.writeText(code).then(() => {
+            copyBtn.innerHTML = '<i class="fas fa-check text-success me-1"></i>Copied!';
+            setTimeout(() => {
+              copyBtn.innerHTML = '<i class="far fa-clipboard me-1"></i>Copy';
+            }, 2000);
+          });
+        });
+
+        header.appendChild(langSpan);
+        header.appendChild(copyBtn);
+
+        pre.parentNode?.insertBefore(wrapper, pre);
+        wrapper.appendChild(header);
+        wrapper.appendChild(pre);
+      });
+    </script>
+  </body>
+</html>

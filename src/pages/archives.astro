@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllSortedPosts, getPostUrl } from '../utils/content';
+
+const posts = await getAllSortedPosts();
+
+// Group posts by year
+const postsByYear: Record<string, typeof posts> = {};
+
+for (const post of posts) {
+  const d = post.data.date ? new Date(post.data.date) : new Date();
+  const year = String(d.getFullYear());
+  if (!postsByYear[year]) {
+    postsByYear[year] = [];
+  }
+  postsByYear[year].push(post);
+}
+
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<BaseLayout title="Archives" description="Yearly archive of all articles.">
+  <div id="archives" class="px-1 pl-xl-3">
+    <h1 class="dynamic-title mb-4">Archives</h1>
+
+    {years.map((year) => (
+      <div class="archive-year-group mb-4">
+        <time class="year lead d-block fw-bold text-primary mb-2">{year}</time>
+        <ul class="list-unstyled ps-0">
+          {postsByYear[year].map((post) => {
+            const d = post.data.date ? new Date(post.data.date) : new Date();
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+
+            return (
+              <li class="d-flex align-items-center py-2 px-2 border-bottom">
+                <span class="date day fw-bold me-1">{day}</span>
+                <span class="date month small text-muted me-3">/ {month}</span>
+                <a href={getPostUrl(post)} class="text-decoration-none">
+                  {post.data.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

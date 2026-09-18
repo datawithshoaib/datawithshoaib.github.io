@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getAllSortedPortfolio, getPortfolioUrl } from '../../utils/content';
+
+const allProjects = await getAllSortedPortfolio();
+---
+
+<BaseLayout title="Projects" description="A collection of practical data, analytics, machine learning, and AI projects.">
+  <div class="px-1">
+    <h1 class="dynamic-title mb-2">Projects</h1>
+    <p class="lead text-muted mb-4">A collection of practical data, analytics, machine learning, and AI projects.</p>
+
+    <div id="post-list" class="flex-grow-1">
+      {allProjects.map((project) => (
+        <PostCard
+          title={project.data.title}
+          url={getPortfolioUrl(project)}
+          date={project.data.date}
+          description={project.data.description}
+          image={project.data.image}
+          categories={project.data.categories}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

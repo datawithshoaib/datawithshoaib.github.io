@@ -1,0 +1,75 @@
+---
+export interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+const encodedTitle = encodeURIComponent(title);
+const encodedUrl = encodeURIComponent(url);
+
+const twitterUrl = `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+---
+
+<div class="share-wrapper d-flex align-items-center gap-2">
+  <span class="share-label text-muted small me-2">Share:</span>
+  <div class="share-icons d-flex gap-2">
+    <a
+      href={twitterUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-btn"
+      title="Share on Twitter"
+      aria-label="Share on Twitter"
+    >
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a
+      href={linkedinUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-btn"
+      title="Share on LinkedIn"
+      aria-label="Share on LinkedIn"
+    >
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a
+      href={facebookUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-btn"
+      title="Share on Facebook"
+      aria-label="Share on Facebook"
+    >
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <button
+      type="button"
+      id="copy-link-btn"
+      class="share-btn"
+      title="Copy link"
+      aria-label="Copy link"
+      data-url={url}
+    >
+      <i class="fas fa-link"></i>
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  document.getElementById('copy-link-btn')?.addEventListener('click', function () {
+    const link = this.getAttribute('data-url') || window.location.href;
+    navigator.clipboard.writeText(link).then(() => {
+      const icon = this.querySelector('i');
+      if (icon) {
+        icon.className = 'fas fa-check text-success';
+        setTimeout(() => {
+          icon.className = 'fas fa-link';
+        }, 2000);
+      }
+    });
+  });
+</script>

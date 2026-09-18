@@ -1,0 +1,68 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPortfolioUrl } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('portfolio');
+  const sorted = projects.sort((a, b) => {
+    const aDate = a.data.date ? new Date(a.data.date).getTime() : 0;
+    const bDate = b.data.date ? new Date(b.data.date).getTime() : 0;
+    return bDate - aDate;
+  });
+
+  return sorted.map((project, index) => {
+    let slug: string;
+    if (project.data.permalink) {
+      slug = project.data.permalink
+        .replace(/^\/projects\/?/, '')
+        .replace(/^\/portfolio\/?/, '')
+        .replace(/^\//, '')
+        .replace(/\/$/, '');
+    } else {
+      slug = project.id.replace(/\.mdx?$/, '');
+    }
+
+    const prevPost = index < sorted.length - 1 ? {
+      title: sorted[index + 1].data.title,
+      url: getPortfolioUrl(sorted[index + 1]),
+    } : null;
+
+    const nextPost = index > 0 ? {
+      title: sorted[index - 1].data.title,
+      url: getPortfolioUrl(sorted[index - 1]),
+    } : null;
+
+    return {
+      params: { slug },
+      props: { project, prevPost, nextPost },
+    };
+  });
+}
+
+interface Props {
+  project: CollectionEntry<'portfolio'>;
+  prevPost?: { title: string; url: string } | null;
+  nextPost?: { title: string; url: string } | null;
+}
+
+const { project, prevPost, nextPost } = Astro.props;
+const { Content, headings } = await render(project);
+---
+
+<PostLayout
+  title={project.data.title}
+  description={project.data.description}
+  date={project.data.date}
+  lastModifiedAt={project.data.last_modified_at}
+  author={project.data.author}
+  image={project.data.image}
+  categories={project.data.categories}
+  tags={project.data.tags}
+  headings={headings}
+  enableToc={project.data.toc !== false}
+  prevPost={prevPost}
+  nextPost={nextPost}
+>
+  <Content />
+</PostLayout>

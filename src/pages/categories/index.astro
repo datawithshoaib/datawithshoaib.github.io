@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllSortedPosts, getAllSortedPortfolio, getPostUrl, getPortfolioUrl } from '../../utils/content';
+
+const posts = await getAllSortedPosts();
+const portfolio = await getAllSortedPortfolio();
+
+interface CategoryGroup {
+  name: string;
+  count: number;
+  items: Array<{ title: string; url: string; date: Date | null }>;
+}
+
+const categoriesMap: Record<string, CategoryGroup> = {};
+
+for (const p of posts) {
+  for (const cat of p.data.categories || []) {
+    const name = cat.trim();
+    if (!name) continue;
+    if (!categoriesMap[name]) {
+      categoriesMap[name] = { name, count: 0, items: [] };
+    }
+    categoriesMap[name].count++;
+    categoriesMap[name].items.push({
+      title: p.data.title,
+      url: getPostUrl(p),
+      date: p.data.date || null,
+    });
+  }
+}
+
+for (const p of portfolio) {
+  for (const cat of p.data.categories || []) {
+    const name = cat.trim();
+    if (!name) continue;
+    if (!categoriesMap[name]) {
+      categoriesMap[name] = { name, count: 0, items: [] };
+    }
+    categoriesMap[name].count++;
+    categoriesMap[name].items.push({
+      title: p.data.title,
+      url: getPortfolioUrl(p),
+      date: p.data.date || null,
+    });
+  }
+}
+
+const sortedCategories = Object.values(categoriesMap).sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<BaseLayout title="Categories" description="All article and project categories.">
+  <div class="px-1">
+    <h1 class="dynamic-title mb-4">Categories</h1>
+
+    <div class="categories-list">
+      {sortedCategories.map((cat) => (
+        <div class="card mb-3 categories card border shadow-sm">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <a href={`/categories/${encodeURIComponent(cat.name.toLowerCase())}/`} class="text-decoration-none fw-bold">
+              <i class="far fa-folder-open me-2 text-primary"></i>
+              {cat.name}
+            </a>
+            <span class="badge bg-secondary rounded-pill">{cat.count}</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            {cat.items.slice(0, 5).map((item) => (
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href={item.url} class="text-truncate text-decoration-none me-3">
+                  {item.title}
+                </a>
+                {item.date && (
+                  <span class="text-muted small text-nowrap">
+                    {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+                  </span>
+                )}
+              </li>
+            ))}
+            {cat.items.length > 5 && (
+              <li class="list-group-item text-center">
+                <a href={`/categories/${encodeURIComponent(cat.name.toLowerCase())}/`} class="small text-muted">
+                  View all {cat.items.length} items &rarr;
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

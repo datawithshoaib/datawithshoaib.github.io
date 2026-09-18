@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getAllSortedPosts, getRecentPosts, getTrendingTags, getPostUrl } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 10;
+  const allPosts = await getAllSortedPosts();
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+  // Return paths for page 2 and onwards
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNum = i + 2;
+    const start = (pageNum - 1) * POSTS_PER_PAGE;
+    const end = start + POSTS_PER_PAGE;
+    return {
+      params: { page: String(pageNum) },
+      props: {
+        currentPosts: allPosts.slice(start, end),
+        currentPage: pageNum,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { currentPosts, currentPage, totalPages } = Astro.props;
+const recentPosts = await getRecentPosts(5);
+const trendingTags = await getTrendingTags(10);
+---
+
+<BaseLayout
+  title={`Page ${currentPage}`}
+  recentPosts={recentPosts}
+  trendingTags={trendingTags}
+>
+  <div class="px-1">
+    <h1 class="dynamic-title mb-2">Learning Blog</h1>
+    <p class="lead text-muted mb-4">Notes, tutorials, and practical insights on AI/ML.</p>
+
+    <div id="post-list" class="flex-grow-1">
+      {currentPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          url={getPostUrl(post)}
+          date={post.data.date}
+          description={post.data.description}
+          image={post.data.image}
+          categories={post.data.categories}
+          pin={post.data.pin}
+        />
+      ))}
+    </div>
+
+    <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/" />
+  </div>
+</BaseLayout>

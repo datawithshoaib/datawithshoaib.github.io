@@ -1,0 +1,398 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import certsData from '../data/certificates.json';
+
+interface Certificate {
+  name: string;
+  issuer: string;
+  date: string;
+  type: string;
+  url: string;
+  image: string;
+}
+
+const allCerts = (certsData as Certificate[]).sort((a, b) => {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+});
+
+const certCount = allCerts.length;
+const certificationsCount = allCerts.filter((c) => c.type.toLowerCase() === 'certification').length;
+const certificatesCount = allCerts.filter((c) => c.type.toLowerCase() === 'certificate').length;
+const badgesCount = allCerts.filter((c) => c.type.toLowerCase() === 'badge').length;
+---
+
+<BaseLayout
+  title="Certificates"
+  description="A collection of verified professional certifications, technical accreditations, and course credentials in Cloud, Data Engineering, AI/ML, and Analytics."
+>
+  <div class="certificates-container px-1">
+    <div class="cert-header mb-4">
+      <h1 class="dynamic-title mb-2">Certificates</h1>
+      <p class="lead text-muted mb-3">
+        A collection of verified professional certifications, technical accreditations, and course credentials in Cloud, Data Engineering, AI/ML, and Analytics.
+      </p>
+
+      <!-- Stats Summary Badges -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="cert-stat-badge">
+          <i class="fas fa-award me-1 text-primary"></i> <strong>{certCount}</strong> Total Credentials
+        </span>
+        <span class="cert-stat-badge">
+          <i class="fas fa-certificate me-1 text-success"></i> <strong>{certificationsCount}</strong> Professional Certifications
+        </span>
+        <span class="cert-stat-badge">
+          <i class="fas fa-graduation-cap me-1 text-info"></i> <strong>{certificatesCount}</strong> Course Certificates
+        </span>
+        <span class="cert-stat-badge">
+          <i class="fas fa-medal me-1 text-warning"></i> <strong>{badgesCount}</strong> Badges & Accreditations
+        </span>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="cert-controls card p-3 shadow-sm border-0 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-transparent border-end-0">
+                <i class="fas fa-search text-muted"></i>
+              </span>
+              <input
+                type="text"
+                id="cert-search-input"
+                class="form-control border-start-0 ps-0"
+                placeholder="Search by credential or issuer..."
+                aria-label="Search certificates"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-7">
+            <div class="d-flex flex-wrap gap-1 justify-content-md-end" id="cert-filter-buttons">
+              <button type="button" class="btn btn-sm cert-filter-btn active" data-filter="all">
+                All ({certCount})
+              </button>
+              <button type="button" class="btn btn-sm cert-filter-btn" data-filter="certification">
+                Certifications ({certificationsCount})
+              </button>
+              <button type="button" class="btn btn-sm cert-filter-btn" data-filter="certificate">
+                Certificates ({certificatesCount})
+              </button>
+              <button type="button" class="btn btn-sm cert-filter-btn" data-filter="badge">
+                Badges ({badgesCount})
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Issuer quick pills -->
+        <div class="d-flex flex-wrap gap-1 align-items-center mt-3 pt-2 border-top">
+          <span class="small text-muted me-2"><i class="fas fa-filter me-1"></i> Issuer:</span>
+          <button type="button" class="btn btn-sm issuer-filter-btn active" data-issuer="all">All Issuers</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="microsoft">Microsoft</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="deeplearning.ai">DeepLearning.AI</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="coursera">Coursera</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="hackerrank">HackerRank</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="snowflake">Snowflake</button>
+          <button type="button" class="btn btn-sm issuer-filter-btn" data-issuer="databricks">Databricks</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificates Grid -->
+    <div class="row g-4" id="certificates-grid">
+      {allCerts.map((cert) => {
+        const issuerLower = cert.issuer.toLowerCase();
+        const typeLower = cert.type.toLowerCase();
+        const issuerClass = `issuer-${issuerLower.replace(/[\.\s]/g, '')}`;
+        const formattedDate = new Date(cert.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+        });
+
+        return (
+          <div
+            class="col-12 col-md-6 col-lg-4 cert-card-wrapper"
+            data-title={cert.name.toLowerCase()}
+            data-issuer={issuerLower}
+            data-type={typeLower}
+          >
+            <div class="card h-100 cert-card border shadow-sm">
+              <div class="cert-img-container">
+                <img
+                  src={cert.image}
+                  alt={cert.name}
+                  class="cert-img"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="card-body d-flex flex-column p-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class={`badge issuer-badge ${issuerClass}`}>
+                    {cert.issuer}
+                  </span>
+                  <span class={`badge type-badge type-${typeLower}`}>
+                    {cert.type.charAt(0).toUpperCase() + cert.type.slice(1)}
+                  </span>
+                </div>
+
+                <h5 class="card-title cert-title mb-2">
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                    {cert.name}
+                  </a>
+                </h5>
+
+                <div class="cert-meta mt-auto pt-2 d-flex align-items-center justify-content-between">
+                  <span class="small text-muted">
+                    <i class="far fa-calendar-alt me-1"></i>
+                    {formattedDate}
+                  </span>
+
+                  <a
+                    href={cert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-sm btn-outline-primary cert-verify-btn"
+                    title={`Verify ${cert.name}`}
+                  >
+                    <span>Verify</span>
+                    <i class="fas fa-external-link-alt ms-1 small"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty Search Result State -->
+    <div id="cert-no-results" class="text-center py-5 d-none">
+      <div class="mb-3">
+        <i class="fas fa-search fa-3x text-muted opacity-50"></i>
+      </div>
+      <h5 class="text-muted">No credentials found</h5>
+      <p class="text-muted small">Try searching with a different keyword or reset filters.</p>
+      <button type="button" id="cert-reset-btn" class="btn btn-sm btn-primary">
+        <i class="fas fa-redo me-1"></i> Reset Filters
+      </button>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.cert-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.cert-controls {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.75rem;
+}
+
+#cert-search-input {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef);
+}
+
+.cert-filter-btn, .issuer-filter-btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e0e0e0);
+  transition: all 0.2s ease;
+}
+
+.cert-filter-btn:hover, .issuer-filter-btn:hover {
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--heading-color, #212529);
+}
+
+.cert-filter-btn.active, .issuer-filter-btn.active {
+  background-color: var(--link-color, #007bff);
+  color: #ffffff;
+  border-color: var(--link-color, #007bff);
+  font-weight: 600;
+}
+
+.cert-card {
+  background-color: var(--card-bg, #ffffff);
+  border-color: var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.cert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  border-color: var(--link-color, #007bff) !important;
+}
+
+.cert-img-container {
+  width: 100%;
+  height: 190px;
+  background-color: var(--card-header-bg, #f8f9fa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--card-border-color, #e9ecef);
+  overflow: hidden;
+}
+
+.cert-img {
+  max-width: 100%;
+  max-height: 155px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover .cert-img {
+  transform: scale(1.05);
+}
+
+.cert-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--heading-color, #212529);
+}
+
+.issuer-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+}
+
+.issuer-microsoft { background-color: #0078d4; color: #ffffff; }
+.issuer-deeplearningai { background-color: #ff3366; color: #ffffff; }
+.issuer-coursera { background-color: #0056d2; color: #ffffff; }
+.issuer-hackerrank { background-color: #00ea64; color: #0c1014; }
+.issuer-snowflake { background-color: #29b5e8; color: #ffffff; }
+.issuer-databricks { background-color: #ff3621; color: #ffffff; }
+
+.type-badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--btn-border-color, #e9ecef);
+  color: var(--text-color, #495057);
+}
+
+.type-certification { background-color: rgba(40, 167, 69, 0.15); color: #28a745; }
+.type-certificate { background-color: rgba(0, 123, 255, 0.15); color: #007bff; }
+.type-badge { background-color: rgba(255, 193, 7, 0.15); color: #e0a800; }
+
+.cert-verify-btn {
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.65rem;
+  font-weight: 500;
+}
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('cert-search-input');
+    const filterBtns = document.querySelectorAll('.cert-filter-btn');
+    const issuerBtns = document.querySelectorAll('.issuer-filter-btn');
+    const cards = document.querySelectorAll('.cert-card-wrapper');
+    const noResults = document.getElementById('cert-no-results');
+    const resetBtn = document.getElementById('cert-reset-btn');
+
+    let activeFilter = 'all';
+    let activeIssuer = 'all';
+    let searchQuery = '';
+
+    function filterCertificates() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = card.getAttribute('data-title') || '';
+        const issuer = card.getAttribute('data-issuer') || '';
+        const type = card.getAttribute('data-type') || '';
+
+        const matchesType = activeFilter === 'all' || type === activeFilter;
+        const matchesIssuer = activeIssuer === 'all' || issuer === activeIssuer;
+        const matchesSearch = !searchQuery || (
+          title.includes(searchQuery) ||
+          issuer.includes(searchQuery) ||
+          type.includes(searchQuery)
+        );
+
+        if (matchesType && matchesIssuer && matchesSearch) {
+          card.classList.remove('d-none');
+          visibleCount++;
+        } else {
+          card.classList.add('d-none');
+        }
+      });
+
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('d-none');
+        } else {
+          noResults.classList.add('d-none');
+        }
+      }
+    }
+
+    searchInput?.addEventListener('input', function(e) {
+      searchQuery = e.target.value.trim().toLowerCase();
+      filterCertificates();
+    });
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach((b) => b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilter = this.getAttribute('data-filter') || 'all';
+        filterCertificates();
+      });
+    });
+
+    issuerBtns.forEach((btn) => {
+      btn.addEventListener('click', function() {
+        issuerBtns.forEach((b) => b.classList.remove('active'));
+        this.classList.add('active');
+        activeIssuer = this.getAttribute('data-issuer') || 'all';
+        filterCertificates();
+      });
+    });
+
+    resetBtn?.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      activeFilter = 'all';
+      activeIssuer = 'all';
+
+      filterBtns.forEach((b, idx) => {
+        if (idx === 0) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      issuerBtns.forEach((b, idx) => {
+        if (idx === 0) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      filterCertificates();
+    });
+  });
+</script>
