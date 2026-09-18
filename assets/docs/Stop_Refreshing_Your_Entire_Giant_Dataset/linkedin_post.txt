@@ -1,0 +1,65 @@
+Stop Refreshing Your Entire Giant Dataset
+
+The Big Data Problem
+- Large datasets can be slow and expensive to refresh
+- A full refresh processes every single row every time
+- This consumes significant computational power
+- It can max out your data storage capacity
+- Refresh times can become unbearably long
+- It is often unnecessary to process historical data daily
+
+What Is It?
+- Incremental Refresh is a Power BI performance feature
+- It only loads new or changed data during a refresh
+- Historical data remains untouched in the dataset
+- Only the latest data is queried from the source
+- This dramatically reduces the refresh load
+- Think of it as updating only the newest chapter, not the whole book
+
+How It Works
+- You define a range for historical data
+- You define a range for incremental data (e.g., last 10 days)
+- Power BI automatically partitions the data
+- During refresh, it checks for new rows within the incremental range
+- It only appends these new rows to the existing table
+- Old partitions are not queried unless necessary
+
+Key Requirements
+- Your table must have a date/time column
+- This column is used to filter the data ranges
+- The data source must support query folding
+- This ensures filters are applied at the source database
+- Common supported sources: SQL Server, Azure SQL
+- Power BI Premium, Premium Per User, or Embedded is required
+
+Major Benefits
+- Drastically faster refresh times
+- Reduced load on the source system
+- Lower consumption of memory and CPU
+- More reliable and predictable refresh cycles
+- Ability to handle much larger datasets
+- Lower overall cost on Premium capacity
+
+Setting It Up
+- In Power BI Desktop, select the table
+- Go to Table tools > Incremental Refresh
+- Define the historical period (e.g., years)
+- Define the incremental period (e.g., days)
+- Publish the report to the Power BI Service
+- Configure your scheduled refresh
+
+Real-World Use Cases
+- Daily sales transactions over multiple years
+- IoT sensor data streaming in constantly
+- Large fact tables in a data warehouse
+- Log files that grow every day
+- Any scenario with rapidly growing data
+- When full refresh times exceed your available window
+
+Pro Tips
+- Always use a reliable date/time column
+- Test your incremental refresh policy thoroughly
+- Periodically process the full history to maintain accuracy
+- Monitor refresh times in the Service to confirm performance gains
+- Combine with DirectQuery for real-time latest data
+- This feature is a game-changer for big data in Power BI

@@ -1,0 +1,65 @@
+Is Your Report Slowing You Down?
+
+The Performance Problem
+- Reports feel slow and unresponsive
+- Users complain about long loading times
+- You are unsure which visual is the culprit
+- Hard refresh or browser close is a common fix
+- This frustration hurts user adoption and trust
+- Identifying the issue feels like guesswork
+
+Meet Your New Tool
+- The Performance Analyzer is built into Power BI Desktop
+- It records the load time of every report element
+- It reveals exactly which visuals are slowing you down
+- No more guessing where the bottlenecks are
+- It provides a clear, data-driven path to optimization
+- This tool is completely free to use
+
+How To Start
+- Open your report in Power BI Desktop
+- Find the Performance Analyzer pane under the View tab
+- Click the Start Recording button
+- Interact with your report as a user normally would
+- Click Stop Recording when finished
+- The pane will populate with detailed timing metrics
+
+Reading The Results
+- Each visual in your report is listed
+- See total duration for each visual to load
+- Review DAX query time (the formula engine)
+- Check visual display time (the rendering engine)
+- Identify the highest duration times instantly
+- Sort the list to immediately spot the worst offenders
+
+Common Culprits
+- Overly complex DAX formulas in measures
+- Importing excessively large data tables
+- Using too many visuals on a single page
+- Custom visuals with poor optimization
+- Inefficient data models and relationships
+- Lack of filters or slicers to limit data
+
+Quick Fixes
+- Simplify or rewrite slow DAX measures
+- Reduce columns and rows in your data imports
+- Break one busy page into multiple pages
+- Replace slow custom visuals with native ones
+- Add effective filters to limit data per visual
+- Use aggregations for very large datasets
+
+Rinse And Repeat
+- After making changes, run the analyzer again
+- Compare new results to your original baseline
+- Celebrate the performance improvements you made
+- Continue this process for other slow visuals
+- Make performance checks part of your regular workflow
+- Ensure every new visual is optimized before publishing
+
+Your Action Plan
+- Open Power BI Desktop right now
+- Pick your slowest, most important report
+- Run the Performance Analyzer on it
+- Identify the top three slowest visuals
+- Apply one or two of the quick fixes
+- Measure the improvement and share your win

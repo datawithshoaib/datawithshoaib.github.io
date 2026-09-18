@@ -1,0 +1,64 @@
+Secure Your Data Without Slowing Down
+
+What is RLS?
+- A security feature in Power BI
+- Restricts data access for specific users
+- Ensures users see only their own data
+- Crucial for multi-tenant environments
+- Maintains a single report source
+- Filters data at the row level
+
+The Core Challenge
+- One report serves many users
+- Each user belongs to a specific tenant
+- Data must be isolated between tenants
+- Security must be automatic and reliable
+- Manual filtering is not a scalable solution
+- Requires a dynamic, automated approach
+
+How It Works
+- Define roles within Power BI
+- Write DAX rules to filter data
+- Rules use a user identity function
+- This function identifies the logged-in user
+- The filter applies automatically upon report open
+- Data is filtered before it's rendered
+
+Key DAX Function
+- Use USERPRINCIPALNAME()
+- This function fetches the user's email
+- Email is typically the unique identifier
+- Compare it to a table column
+- For example, filter Sales table by Sales[OwnerEmail]
+- Creates a personalized data view
+
+Basic Setup Steps
+- Import a table with user emails
+- Import a table with tenant identifiers
+- Link these tables in your data model
+- Navigate to Manage Roles in Power BI
+- Create a new role for the table
+- Write the DAX filter rule
+
+Sample DAX Rule
+- A simple rule for a User table: [Email] = USERPRINCIPALNAME()
+- A rule for tenant isolation: [TenantID] = LOOKUPVALUE( UserTenantTable[TenantID], UserTenantTable[Email], USERPRINCIPALNAME() )
+- The rule returns TRUE for rows the user can see
+- FALSE rows are hidden from view
+- Test roles using View As in Power BI
+
+Pro Tips
+- Use a dedicated user-to-tenant mapping table
+- Test security thoroughly before publishing
+- Utilize the View As feature for testing
+- Remember RLS does not filter imported data in Power BI Desktop
+- Publish to the service to enforce security
+- Combine RLS with other security layers
+
+Your Next Step
+- Audit your reports for security needs
+- Identify a user/tenant identifier column
+- Try a simple filter on a small table
+- Test it with a colleague's account
+- Implement gradually across your reports
+- Achieve secure, scalable multi-tenant analytics

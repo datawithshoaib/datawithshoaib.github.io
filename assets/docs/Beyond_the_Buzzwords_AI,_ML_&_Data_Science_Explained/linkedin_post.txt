@@ -1,0 +1,64 @@
+Beyond the Buzzwords: AI, ML & Data Science Explained.
+
+What is Data Science?
+- The foundation of everything we will discuss.
+- It is the art and science of extracting insights from data.
+- Uses statistics, programming, and domain expertise.
+- Focuses on asking the right questions.
+- Aims to find patterns and trends hidden in data.
+- The ultimate goal is to support better decision-making.
+
+The Data Science Process
+- It starts with a business problem or question.
+- Data collection from various sources comes next.
+- Then, cleaning and preparing the messy data for analysis.
+- Exploratory analysis to find patterns and insights.
+- Building models to predict or classify information.
+- Finally, communicating the results through visualizations.
+
+Enter Machine Learning
+- A subset or tool within Artificial Intelligence.
+- Focuses on teaching computers to learn from data.
+- The key is improving automatically through experience.
+- It uses algorithms that find patterns without being explicitly programmed for every task.
+- Relies heavily on the data prepared by Data Science.
+- Examples: Recommendation engines and spam filters.
+
+How ML Learns
+- Supervised Learning: Learns from labeled training data.
+- Unsupervised Learning: Finds hidden patterns in unlabeled data.
+- Reinforcement Learning: Learns by trial and error with rewards.
+- The more quality data it receives, the better it performs.
+- It is the engine that powers many predictive features.
+
+What is Artificial Intelligence?
+- The broadest concept of the three.
+- It is the grand vision of creating intelligent machines.
+- Aims to simulate human intelligence and decision-making.
+- Encompasses everything from simple rule-based bots to futuristic concepts.
+- Machine Learning is a primary method used to achieve AI.
+- The ultimate goal is a system that can reason and act.
+
+AI in Action
+- Ranges from simple to highly complex systems.
+- Includes rule-based chatbots that follow predefined scripts.
+- Powers sophisticated tools like self-driving cars.
+- Enables virtual assistants like Siri and Alexa.
+- Involves computer vision for image recognition.
+- The umbrella term for any machine displaying "smart" behavior.
+
+How They Connect
+- Think of it as a set of Russian nesting dolls.
+- Artificial Intelligence is the largest, overarching field.
+- Machine Learning is a critical subset of AI.
+- Data Science is a separate field that provides the fuel.
+- Data Science prepares the data that ML algorithms need.
+- ML is the tool that enables many advanced AI applications.
+
+Quick Recap
+- Data Science: Finds insights from data.
+- Machine Learning: Uses data to learn and predict.
+- Artificial Intelligence: The broad goal of intelligent machines.
+- All three are deeply interconnected fields.
+- They work together to create powerful technologies.
+- Understanding their roles demystifies the tech around us.

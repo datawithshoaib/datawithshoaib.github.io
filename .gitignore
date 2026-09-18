@@ -27,8 +27,9 @@ assets/js/dist
 
 # other
 _source/*_cache
-_drafts/
+_portfolio/drafts/
 _archives/
 .obsidian/
 Excalidraw/
 .vscode/
+templates/

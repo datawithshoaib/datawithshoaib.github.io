@@ -1,0 +1,65 @@
+Unlock Interactive Storytelling in Power BI
+
+Why Use Bookmarks?
+- They capture the current state of a report page
+- This includes filters, slicers, and visual visibility
+- They let you create custom navigation experiences
+- Go beyond the standard next/previous buttons
+- Build guided analytical narratives for your users
+- Create toggle features for a cleaner look
+
+The Bookmark Pane
+- Find it on the View tab in the ribbon
+- It shows a list of all your bookmarks
+- Use it to create, update, and organize bookmarks
+- The "Data" option captures filter/slicer states
+- The "Display" option captures visibility and focus
+- The "All" option is selected by default
+
+Building a Narrative
+- Create a series of bookmarks for each story point
+- Each bookmark shows a specific insight or view
+- Use shapes or buttons as your navigation controls
+- Link these buttons to your bookmarks via Action
+- Users can click through the story step-by-step
+- This guides them through a data-driven conclusion
+
+Toggle Features
+- Use bookmarks to show and hide report elements
+- Create two bookmarks for the same view
+- One with a visual or text box visible
+- The other with the same item hidden
+- Link both to a single button or shape
+- Users click to toggle the feature on/off
+
+The Selection Pane
+- This is your key to visibility toggles
+- Find it next to the Bookmark pane
+- It lists all objects on your report page
+- Use the eye icon to show or hide items
+- Rename objects here for easy identification
+- Clear names are crucial for managing bookmarks
+
+Pro Tip: Default State
+- Always create a "Reset" or "Home" bookmark
+- This bookmark should show your default report view
+- Set its options to capture all data and display states
+- Add a clear button so users can always start over
+- This improves user experience and navigation
+- It prevents users from getting lost in the story
+
+Avoid Common Mistakes
+- Forgetting to update bookmarks after changing visuals
+- Not using the Selection Pane to name objects clearly
+- Overcomplicating the story with too many steps
+- Ignoring mobile layout when using bookmarks
+- Not testing all toggle and navigation paths
+- Assuming users will know how to navigate
+
+Your Action Plan
+- Open a Power BI report you are working on
+- Identify one area that needs explanation
+- Create two bookmarks to tell a simple story
+- Add a button to navigate between them
+- Try creating a toggle for a key or legend
+- Share your interactive report with a colleague

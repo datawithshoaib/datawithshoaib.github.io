@@ -1,0 +1,81 @@
+Top 10 Concepts You Must Know in Power BI
+
+Data Modeling Basics
+- A model defines how your data tables connect.
+- It is the foundation for all your reports.
+- Relationships link tables using key columns.
+- The most common relationship type is one-to-many.
+- Avoid circular relationships to prevent errors.
+- A well-structured model ensures accurate calculations.
+
+DAX Formulas Explained
+- DAX is the formula language for custom calculations.
+- It is used to create measures and columns.
+- Understanding filter context is key to mastering DAX.
+- Common functions include CALCULATE, SUMX, and RELATED.
+- Measures are calculated on the fly during analysis.
+- Columns are computed during data refresh.
+
+Power of CALCULATE
+- CALCULATE is the most powerful DAX function.
+- It modifies the filter context of a calculation.
+- You can add or remove filters with it.
+- It is essential for time intelligence calculations.
+- Often used with functions like ALL or FILTER.
+- Mastering CALCULATE is a major step in DAX.
+
+Time Intelligence Functions
+- These functions simplify time-based analysis.
+- Examples include TOTALYTD, SAMEPERIODLASTYEAR, and DATESBETWEEN.
+- They require a properly marked date table.
+- Enable easy period-over-period comparisons.
+- Calculate running totals, moving averages, and more.
+- Crucial for financial and sales reporting.
+
+Row Context vs Filter
+- Row context is like a loop through table rows.
+- It exists when creating a calculated column.
+- Filter context is the set of filters applied.
+- It is created by slicers, visuals, and filters.
+- CALCULATE can transform row context into filter context.
+- Confusing them is a common beginner mistake.
+
+Power Query ETL
+- Power Query is the tool for data preparation.
+- ETL stands for Extract, Transform, and Load.
+- Clean and shape your data before modeling.
+- Remove errors, split columns, and pivot data.
+- Combine data from multiple sources into one.
+- Queries can be reused and scheduled to refresh.
+
+M Language Basics
+- M is the language behind Power Query.
+- It handles the data transformation steps.
+- You can see the M code in the Advanced Editor.
+- Custom M code allows for complex transformations.
+- Understanding M helps automate data cleaning tasks.
+- It is different from the DAX formula language.
+
+Using Measures Correctly
+- Measures are for dynamic, aggregated calculations.
+- They save memory compared to calculated columns.
+- Use them for ratios, sums, and complex logic.
+- Always define measures in the fact table.
+- They respond to user filters and slicers.
+- Improper use can lead to slow reports.
+
+Optimizing Report Performance
+- Reduce the number of visuals on a page.
+- Limit the use of high-cardinality columns.
+- Avoid complex DAX in calculated columns.
+- Use summarized tables instead of detailed data.
+- Check performance with the Performance Analyzer tool.
+- A fast report provides a better user experience.
+
+Putting It All Together
+- Start with a clean data model in Power Query.
+- Build relationships between your tables.
+- Create core measures using DAX for analysis.
+- Utilize time intelligence for trend reporting.
+- Design intuitive and performant report pages.
+- Continuous learning is key to mastering Power BI.

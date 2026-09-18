@@ -1,0 +1,65 @@
+Mix Data Modes Without Slowing Down Power BI
+
+What Are They?
+- A Composite Model blends Import and DirectQuery modes.
+- It allows a single report to use both types.
+- Import mode caches data in Power BI for speed.
+- DirectQuery mode runs queries live on the source database.
+- Use it when you need real-time data on top of historical data.
+- It is powerful but requires careful planning.
+
+The Golden Rule
+- Push transformations to the source system whenever possible.
+- Avoid complex calculated columns in DirectQuery tables.
+- Let the database engine do the heavy lifting.
+- Use Import mode for small, frequently filtered tables.
+- Use DirectQuery for large, frequently updated tables.
+- Prioritize performance over minor data preparation convenience.
+
+Optimize Storage Modes
+- Set smaller tables to Dual or Import mode.
+- These can act as filters for larger DirectQuery tables.
+- This reduces the number of queries sent to the source.
+- Use Import for static data like date or category tables.
+- Use DirectQuery for fact tables with billions of rows.
+- Review table properties to assign the correct storage mode.
+
+Mind Your Relationships
+- Ensure relationships are based on indexed database columns.
+- Prefer single-directional relationships in the model.
+- Avoid bi-directional relationships across Composite Models.
+- They can force unnecessary data source queries.
+- Use integer-based keys for relationships for best performance.
+- Validate relationships to prevent cross-database joins if possible.
+
+Calculated Columns Caution
+- Creating calculated columns on DirectQuery tables is expensive.
+- Each is computed during the query, slowing response time.
+- Create these columns in the source database instead.
+- If you must, keep them very simple.
+- Use Import mode for tables requiring complex calculations.
+- This improves overall report rendering speed.
+
+Limit Visual Interactions
+- Each visual can trigger a query to the database.
+- Too many interactive visuals on one page creates congestion.
+- Use bookmarks and buttons to navigate instead.
+- Design pages with a clear purpose and limited visuals.
+- Use slicers wisely, as they trigger queries on change.
+- Test page performance with all interactions enabled.
+
+Leverage Aggregations
+- Use Aggregations to dramatically improve performance.
+- Create an Import summary table for a huge DirectQuery fact table.
+- Power BI automatically uses the faster Import aggregate.
+- It only goes to DirectQuery for detailed drill-through.
+- This is a top technique for managing massive datasets.
+- It provides a balance between speed and data freshness.
+
+Test and Monitor
+- Always test with realistic data volumes and user filters.
+- Use Performance Analyzer in Power BI Desktop to find bottlenecks.
+- Monitor query execution times on your database server.
+- Start simple and add complexity only if needed.
+- Document your model's design for future reference.
+- A well-planned model is a fast and scalable model.

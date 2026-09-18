@@ -1,0 +1,53 @@
+Understanding Classification Evaluation Metrics
+
+Accuracy Explained
+- Accuracy is the overall correctness.
+- It measures the percentage of correct predictions.
+- Calculated as (True Positives + True Negatives) / Total Predictions.
+- High accuracy doesn't always mean a good model.
+- Can be misleading when classes are imbalanced.
+
+What is Precision?
+- Precision measures the accuracy of positive predictions.
+- Out of all the instances predicted as positive, how many are actually positive?
+- Calculated as True Positives / (True Positives + False Positives).
+- High precision minimizes false positives.
+- Important when false positives are costly.
+
+Recall Defined
+- Recall (Sensitivity) measures the model's ability to find all relevant instances.
+- Out of all the actual positive instances, how many did the model identify?
+- Calculated as True Positives / (True Positives + False Negatives).
+- High recall minimizes false negatives.
+- Important when missing important positive cases is detrimental.
+
+The Trade-off
+- Precision and Recall often conflict.
+- Improving one can decrease the other.
+- It's a balancing act depending on the application.
+- Consider the costs of false positives vs. false negatives.
+
+F1-Score Introduced
+- F1-score combines precision and recall.
+- It's the harmonic mean of precision and recall.
+- Provides a single score to assess a model's performance.
+- Useful when you want a balanced view.
+
+Confusion Matrix
+- A visual representation of predictions vs. actual values.
+- Shows True Positives, False Positives, True Negatives, and False Negatives.
+- Helps in understanding the model's strengths and weaknesses.
+- Excellent for diagnosing model errors.
+
+Choosing the Right Metric
+- The best metric depends on the problem.
+- For example, in medical diagnosis, recall is crucial.
+- In spam detection, precision might be more important.
+- Always consider the context of your application.
+
+Beyond Basic Metrics
+- Consider other evaluation metrics like ROC curves and AUC.
+- These metrics provide a more comprehensive view.
+- Experiment with different metrics to find the best fit.
+- Continuous monitoring is key to model performance.
+

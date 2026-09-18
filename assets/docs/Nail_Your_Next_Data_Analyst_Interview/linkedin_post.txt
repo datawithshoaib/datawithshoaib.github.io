@@ -1,0 +1,57 @@
+Nail Your Next Data Analyst Interview
+
+Core Concepts
+- What is Power BI and its key components?
+- Differentiate between Power BI Desktop, Service, and Mobile.
+- Explain the ETL process within Power BI.
+- What are the different data source types Power BI can connect to?
+- Describe the role of a data model.
+
+Data Transformation
+- What is Power Query and what is it used for?
+- How do you handle errors or null values in your data?
+- Explain the difference between merging and appending queries.
+- When would you use a custom column vs. a calculated column?
+- Describe a time you unpivoted data for analysis.
+
+Data Modeling Basics
+- What is a relationship between tables?
+- Differentiate between a star and snowflake schema.
+- When would you use a bidirectional filter?
+- What is a bridge table and its purpose?
+- Explain the difference between calculated columns and measures.
+
+DAX Fundamentals
+- What is DAX and where is it used?
+- Explain the difference between SUM and SUMX.
+- What are filter and row context in DAX?
+- How do you use the CALCULATE function?
+- What are iterator functions (X functions)?
+
+Essential DAX Functions
+- How do you create a year-to-date (YTD) calculation?
+- Use RANKX to rank customers by sales.
+- How does the RELATED function work?
+- Create a measure to calculate market share.
+- Handle division by zero errors in a measure.
+
+Report Visualization
+- What factors do you consider when choosing a visualization?
+- How do you use bookmarks for report navigation?
+- Explain the use of tooltips and drillthrough pages.
+- What are the different types of filters and their hierarchy?
+- How do you ensure reports are accessible and user-friendly?
+
+Performance & Deployment
+- How do you improve report performance?
+- What is query folding and why is it important?
+- Describe the difference between import and DirectQuery modes.
+- Explain the purpose of a Power BI gateway.
+- What is the difference between a workspace and an app?
+
+Advanced & Scenario-Based
+- How do you implement row-level security (RLS)?
+- What are Power BI service refresh types?
+- Handle many-to-many relationships in your model.
+- Describe a complex DAX measure you've built.
+- How do you stay updated with new Power BI features?

@@ -1,0 +1,65 @@
+Unlock the Magic of Interactive Power BI Reports
+
+Why Bookmarks Rule
+- They capture the state of a report page.
+- This includes filters, slicers, and visibility.
+- You can jump between these saved states.
+- This creates a dynamic, guided experience.
+- It moves users from passive viewers to active explorers.
+- They are the secret to interactive dashboards.
+
+Navigation Made Easy
+- Create a dedicated menu or navigation page.
+- Use buttons as your interactive menu items.
+- Assign a bookmark to each button.
+- Buttons can link to different pages or views.
+- Guide users through your data story seamlessly.
+- Never let a user get lost in the data.
+
+Toggle Visuals On Demand
+- Show different charts in the same space.
+- Create buttons for each visual you want to toggle.
+- Use bookmarks to set a visual as visible or hidden.
+- This keeps your report clean and uncluttered.
+- Lets users choose what data they see.
+- Perfect for comparing related metrics.
+
+Crafting Your Story
+- Plan a narrative flow for your data.
+- Use bookmarks to build the story step-by-step.
+- Reveal insights progressively to create impact.
+- Guide the audience to a clear conclusion.
+- Turn a standard report into a persuasive presentation.
+- Storytelling makes data memorable and actionable.
+
+Button Setup Basics
+- Insert a button from the Insert ribbon.
+- Choose a shape and format its color and text.
+- Use the Button Tools format pane for styling.
+- Make it clear and intuitive to click.
+- Good design improves user experience.
+- Consistent styling makes your report look professional.
+
+Action Assignment
+- Select your formatted button.
+- Go to the Format button pane.
+- Turn the Action toggle to On.
+- Set Type to Bookmark.
+- Select the bookmark you want to link.
+- Test the button to ensure it works.
+
+Pro Tips
+- Use the Selection pane to name objects clearly.
+- This makes managing visibility much easier.
+- Group related bookmarks for better organization.
+- Utilize the Bookmark pane to arrange order.
+- Always test all navigation links thoroughly.
+- Small details make a huge difference in usability.
+
+Your Turn to Build
+- Start simple with two bookmarks and a button.
+- Practice creating a show/hide toggle for a visual.
+- Build a basic navigation menu between pages.
+- Experiment with different button styles and actions.
+- Review existing reports for improvement opportunities.
+- Transform your next report with interactivity.

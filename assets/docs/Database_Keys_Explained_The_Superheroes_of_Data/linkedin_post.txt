@@ -1,0 +1,64 @@
+Database Keys Explained: The Superheroes of Data
+
+What Are Keys?
+- Keys are special fields in a database table.
+- They help to uniquely identify each record.
+- They create relationships between different tables.
+- They are fundamental for organizing data.
+- Think of them as a unique ID or a reference tag.
+- Using keys ensures data integrity and avoids duplicates.
+- They make finding and linking information fast and efficient.
+
+The Primary Key
+- A primary key is a table's unique identifier.
+- Every table can have only one primary key.
+- Each value in this column must be completely unique.
+- A primary key value cannot be null (empty).
+- It is the main way to find a specific record.
+- Common examples: User ID, Product SKU, Order Number.
+- It guarantees no two rows are identical.
+
+Primary Key Example
+- Table: Employees
+- Columns: EmployeeID, Name, Department
+- EmployeeID is the primary key.
+- It holds a unique number for each person.
+- Example values: 101 (Alice), 102 (Bob), 103 (Charlie).
+- You can instantly find Bob's record by searching for 102.
+- No other employee can ever have the ID 102.
+
+The Foreign Key
+- A foreign key creates a link between two tables.
+- It is a field in one table that points to a primary key in another.
+- It establishes a relationship between the data.
+- A table can have multiple foreign keys.
+- Foreign key values can repeat and can be null.
+- It acts as a cross-reference between tables.
+- It ensures consistency across related data.
+
+Foreign Key Example
+- Table: Orders
+- Columns: OrderID (Primary Key), CustomerID (Foreign Key)
+- The CustomerID points to the Customers table.
+- The Customers table has CustomerID as its primary key.
+- This link shows which customer placed which order.
+- Many orders can have the same CustomerID (a customer can have many orders).
+- This connects the order data to the specific customer data.
+
+How They Work Together
+- Primary keys and foreign keys define relationships.
+- A primary key is the parent; a foreign key is the child.
+- The foreign key depends on the primary key for its value.
+- This connection is called a relational database.
+- It allows you to combine data from multiple tables in a query.
+- For example, join Orders and Customers to get a customer's name for their order.
+- This keeps data organized and non-repetitive.
+
+Quick Recap
+- Primary Key: Unique ID for a table's records.
+- Foreign Key: A reference to a primary key in another table.
+- Primary Key = Your Social Security Number.
+- Foreign Key = Your SSN listed on your tax forms.
+- PK ensures uniqueness within its own table.
+- FK creates a reliable link to a different table.
+- Together, they form the backbone of relational databases.

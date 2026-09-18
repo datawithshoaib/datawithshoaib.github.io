@@ -1,0 +1,65 @@
+Stop Doing Power BI Chores Manually.
+
+Why Automate?
+- Saves you hours of repetitive manual work
+- Reduces human error in deployment processes
+- Enables more frequent and reliable data refreshes
+- Frees you up for high-value analysis tasks
+- Provides consistency across all your workspaces
+- Makes your entire deployment process auditable
+
+Automate Data Refreshes
+- Trigger refreshes on-demand without opening the service
+- Start multiple dataset refreshes simultaneously
+- Schedule refreshes outside standard UI time slots
+- Check refresh status and history programmatically
+- Retry failed refreshes automatically with scripts
+- Get notified instantly upon refresh completion or failure
+
+Streamline Deployments
+- Move content between dev, test, and prod automatically
+- Update data sources and parameters during deployment
+- Apply consistent security rules across environments
+- Version control your datasets and reports
+- Deploy entire workspaces with a single script
+- Ensure everyone uses the correct, approved version
+
+Proactive Monitoring
+- Monitor dataset health and performance metrics
+- Track capacity usage and throttle limits
+- Get alerts for refresh failures or performance dips
+- Audit user activities and permissions changes
+- Export usage metrics for historical analysis
+- Create dashboards to monitor your entire tenant
+
+PowerShell Power
+- Use the MicrosoftPowerBIMgmt PowerShell module
+- Execute commands like Invoke-PowerBIRefresh
+- Write scripts to handle complex multi-step processes
+- Schedule scripts to run via Task Scheduler
+- Integrate scripts with Azure Automation for cloud scale
+- Leverage familiar command-line tools for control
+
+API Flexibility
+- Use the Power BI REST API for ultimate control
+- Integrate Power BI with other apps and services
+- Build custom monitoring and management dashboards
+- Automate using any language like Python or C#
+- Manage service principals (app-only authentication)
+- Automate workspace and user management tasks
+
+Getting Started
+- Install the Power BI PowerShell module from gallery
+- Register an Azure AD app for API access
+- Start with simple scripts, like a single refresh
+- Use service principals for secure, unattended access
+- Explore Microsoft’s documentation and examples
+- Build complexity gradually as your comfort grows
+
+Your Action Plan
+- Identify one repetitive task to automate first
+- Document the current manual process steps
+- Choose between PowerShell or API for your need
+- Build and test your script in a development workspace
+- Schedule it to run automatically
+- Move on to your next automation project

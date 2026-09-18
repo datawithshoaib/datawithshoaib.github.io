@@ -1,0 +1,65 @@
+See Your Data, Tell Your Story.
+
+The Universal Workhorse
+- Bar charts compare quantities across different categories.
+- Use them to show rankings or highlight differences.
+- Vertical bars are called column charts.
+- Horizontal bars are best for long category names.
+- Avoid cluttering with too many categories.
+- Stacked bars show part-to-whole relationships.
+
+Tracking Trends Over Time
+- Line charts show data trends at equal intervals.
+- Perfect for visualizing progress and changes over time.
+- Use them to plot continuous data like sales or growth.
+- Multiple lines can compare different trends.
+- Keep lines distinct and easy to differentiate.
+- The X-axis must represent a continuous scale (e.g., time).
+
+Location Matters
+- Maps display data points based on geographical location.
+- They reveal regional patterns, trends, and concentrations.
+- Use them for sales territories, customer density, or logistics.
+- Choropleth maps color regions to represent values.
+- Bubble maps use sized circles to show magnitude.
+- Ensure your audience is familiar with the geography shown.
+
+Drilling Down Data
+- The decomposition tree breaks down a measure by multiple dimensions.
+- It is interactive, allowing users to explore data freely.
+- Perfect for ad-hoc analysis and root cause investigation.
+- It automatically visualizes the impact of different factors.
+- No pre-built hierarchies are needed for exploration.
+- It helps answer "why" something happened.
+
+The Story of Change
+- Waterfall charts show a running total as values are added or subtracted.
+- They illustrate how an initial value reaches a final value.
+- Ideal for revealing the cumulative effect of sequential changes.
+- Commonly used for financial statements like profit and loss.
+- The first column is the starting value, the last is the total.
+- Intermediate columns show increases (green) and decreases (red).
+
+Choosing Your Visual
+- Match the chart type to your story and data.
+- Comparing categories? Use a bar chart.
+- Showing a trend over time? A line chart is best.
+- Need geographical insight? Choose a map.
+- Decomposing factors? Use a decomposition tree.
+- Explaining sequential changes? A waterfall chart fits.
+
+Clarity is Key
+- Always start with a clear question for your data.
+- Label your axes and provide a clear title.
+- Remove any unnecessary clutter or decoration.
+- Use color strategically to highlight important information.
+- Ensure your visual tells a story at a glance.
+- The goal is to communicate insight, not just show data.
+
+Master Your Narrative
+- Practice building these core five visuals.
+- Your analysis is only as strong as your communication.
+- Great visuals make complex data understandable.
+- They empower your audience to make informed decisions.
+- Start using these charts to tell powerful data stories.
+- What is your go-to chart? Share in the comments.

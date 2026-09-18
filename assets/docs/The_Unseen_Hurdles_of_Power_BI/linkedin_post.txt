@@ -1,0 +1,65 @@
+The Unseen Hurdles of Power BI
+
+Data Modeling Maze
+- Connecting different data sources is the first big hurdle
+- Cleaning and transforming messy data takes most of your time
+- Creating relationships between tables is confusing at first
+- Understanding star schema vs flat table isn't intuitive
+- DAX formulas for calculated columns behave differently than Excel
+- A small mistake in the model breaks all your reports
+
+DAX Formula Frustration
+- DAX looks like Excel formulas but works completely differently
+- Context transition and filter context are difficult to master
+- Simple calculations like year-to-date require complex formulas
+- Errors are often cryptic and hard to troubleshoot
+- Measures vs calculated columns is a constant source of confusion
+- Online examples often don't work with your specific model
+
+Performance Pain Points
+- Reports become painfully slow as your data grows
+- Bad data models lead to long loading times
+- You don't know what's slowing things down
+- Optimizing performance requires advanced knowledge
+- Refreshing large datasets can take hours
+- Users get frustrated waiting for visuals to update
+
+Dashboard Design Dilemmas
+- Making visuals look clean and professional is harder than it seems
+- Default charts often don't show what you need
+- Aligning elements and managing layouts is fiddly
+- Custom visuals require additional learning and configuration
+- Creating a cohesive color scheme and branding takes time
+- Mobile responsiveness is not automatic
+
+Gateway & Refresh Gremlins
+- Setting up the gateway for scheduled refresh is complex
+- Permissions and security settings are confusing to configure
+- Refresh failures give vague error messages
+- Troubleshooting requires server and IT knowledge
+- Data sources often need specific drivers installed
+- Keeping everything running smoothly is a hidden job
+
+Collaboration Complications
+- Sharing reports securely with the right people is tricky
+- Workspace roles and permissions are not straightforward
+- Version control and development lifecycles are manual
+- Multiple developers working on one file causes conflicts
+- Getting feedback and making changes is not streamlined
+- End users often request changes you didn't anticipate
+
+The Learning Cliff
+- Basic drag-and-drop is deceptively simple to start
+- Advanced features have a steep learning curve
+- Tutorials often use perfect data, unlike your real-world data
+- Finding the right learning resource is overwhelming
+- Concepts are interconnected, so one gap hurts your entire understanding
+- You constantly find new things you didn't know you needed to learn
+
+Embrace The Journey
+- Accept that proficiency takes time and practice
+- Start with a clear business question, not just the data
+- Focus on mastering data modeling first
+- Break complex problems into smaller, manageable steps
+- Use the community and forums for help
+- The difficulty leads to valuable and highly sought-after skills

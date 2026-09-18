@@ -1,0 +1,57 @@
+Your Power BI Success Starts With Governance
+
+Why Governance Matters
+- Prevents data chaos and report confusion
+- Ensures data is trustworthy and reliable
+- Scales your BI environment effectively
+- Reduces security risks and errors
+- Saves time and money in the long run
+
+Workspace Standards
+- Classify workspaces by purpose: Dev, Test, Prod
+- Assign dedicated owners for each workspace
+- Establish clear publishing and promotion processes
+- Use descriptions to state the workspace's purpose
+- Implement a consistent archiving policy for old content
+
+Security Best Practices
+- Apply the principle of least privilege access
+- Use Microsoft 365 Groups for easier user management
+- Build security into your data model with RLS
+- Regularly audit and review user permissions
+- Document security protocols for all workspace roles
+
+Naming Conventions
+- Create a simple, logical naming structure
+- Include project or department name as a prefix
+- Indicate the object type (e.g., Report, Dataset)
+- Add a version or environment suffix if needed
+- Avoid spaces and special characters; use underscores
+
+Dataset Management
+- Promote a single source of truth for metrics
+- Encourage reusability to reduce redundancy
+- Document refresh schedules and data sources
+- Set performance benchmarks and monitor them
+- Establish certification and endorsement processes
+
+Ownership & Responsibilities
+- Define clear roles for developers and admins
+- Assign a business owner for every report
+- Create a process for handling access requests
+- Designate a team to oversee governance standards
+- Ensure there is a plan for employee turnover
+
+Documentation is Key
+- Maintain a central inventory of all reports
+- Document the purpose of each dataset and report
+- Keep a record of all data sources used
+- Make your naming conventions document easy to find
+- Use a wiki or SharePoint site for easy access
+
+Start Simple & Iterate
+- Begin with a pilot group or project
+- Focus on the most critical standards first
+- Train your team on the new guidelines
+- Gather feedback and be ready to adapt
+- Communicate the benefits to drive adoption

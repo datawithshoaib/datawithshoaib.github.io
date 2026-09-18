@@ -1,0 +1,65 @@
+Is Your Power BI Report Slow? Fix This First.
+
+The Star Schema Goal
+- A core goal of good data modeling is speed
+- Fast reports mean happy and productive users
+- Slow reports lead to frustration and abandoned insights
+- The star schema is the gold standard for performance
+- It simplifies the data structure for the engine
+- A clean model is easier to maintain and understand
+
+Mistake 1: Flat Tables
+- Avoid using one giant, wide table for everything
+- Flat tables contain redundant, repeated data
+- This dramatically increases the data model size
+- Larger models require more memory and processing
+- Relationships and filters become difficult to manage
+- Always split data into facts and dimensions
+
+Fix: Build Facts & Dimensions
+- Fact tables hold numerical values you want to analyze
+- Examples include sales amounts, quantities, or costs
+- Dimension tables hold descriptive attributes for filtering
+- Examples include dates, products, customers, or regions
+- Connect them with simple, single-column relationships
+- This is the foundation of the star schema
+
+Mistake 2: Many-To-Many
+- Relationships should ideally be one-to-many
+- A many-to-many relationship is often a red flag
+- It can cause duplicate aggregation of numbers
+- This leads to incorrect results in your reports
+- The engine must work harder to resolve the logic
+- It is a common side effect of poor table design
+
+Fix: Use Bridge Tables
+- Resolve many-to-many relationships with a bridge table
+- A bridge table sits between two dimension tables
+- It breaks the complex link into two simple ones
+- This ensures accurate filtering and correct calculations
+- Always validate your numbers after implementing a bridge
+- This maintains data integrity and report accuracy
+
+Mistake 3: Wrong Data Types
+- Using text data types for numbers or dates is costly
+- Text columns are much larger and slower to process
+- Operations like sorting numbers stored as text are inefficient
+- Always use the most specific data type possible
+- Use whole numbers for IDs and decimal numbers for values
+- Use date data types for all date fields
+
+Pro Performance Tips
+- Hide unnecessary columns from the model view
+- This reduces clutter and improves model refresh time
+- Avoid creating calculated columns when possible
+- Use measures for on-the-fly calculations instead
+- Limit the use of bi-directional relationships
+- They can cause ambiguity and performance overhead
+
+Review & Next Steps
+- Audit your current models for flat table structures
+- Identify and fix any many-to-many relationships
+- Verify all column data types are set correctly
+- Hide any columns not used in reporting
+- Test report performance after each change
+- A clean star schema is the key to speed

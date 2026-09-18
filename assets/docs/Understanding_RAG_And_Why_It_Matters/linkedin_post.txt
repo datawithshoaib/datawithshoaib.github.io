@@ -1,0 +1,66 @@
+Understanding RAG And Why It Matters
+
+What Is RAG
+- RAG stands for Retrieval Augmented Generation
+- It is a technique that improves AI answers
+- Traditional AI only uses its training data
+- RAG gives AI access to external information
+- This helps the AI provide better responses
+- It combines searching facts with generating text
+
+Step One Retrieval
+- The process starts when a user asks a question
+- The system searches through a database of documents
+- It looks for the most relevant pieces of information
+- This search uses a method called semantic search
+- The goal is to find facts related to the query
+- Only the best matching data is selected for next step
+
+Step Two Augmentation
+- The retrieved information is added to the original question
+- This creates a much richer and more detailed prompt
+- The AI now has specific context to work with
+- It no longer has to guess the missing details
+- The combined text is sent to the language model
+- This ensures the answer is grounded in real data
+
+Step Three Generation
+- The language model receives the augmented prompt
+- It uses the provided context to formulate an answer
+- The generated response is based on the retrieved facts
+- This produces a highly accurate and relevant output
+- The final answer is delivered to the user
+- The entire process happens in just a few seconds
+
+Reducing AI Hallucinations
+- Standard AI models sometimes make up false information
+- This phenomenon is known as hallucination
+- RAG drastically reduces these incorrect statements
+- The AI pulls answers from verified documents
+- It cannot invent facts if it does not have them
+- This leads to much higher trust in the output
+
+Always Up To Date
+- Training an AI model takes a lot of time and money
+- The knowledge becomes outdated very quickly after training
+- RAG solves this by using live external databases
+- You can update the database without retraining the model
+- The AI can access the latest news and documents
+- This ensures the information is always current and fresh
+
+How Similarity Works
+- The system converts text into numerical vectors
+- It then calculates the distance between these vectors
+- A common formula used is cosine similarity
+- The equation is similarity equals dot product divided by magnitude product
+- A higher score means the texts are more similar
+- This math ensures the most relevant data is picked
+
+Why RAG Matters
+- RAG bridges the gap between raw AI and real world data
+- It makes AI applications much more reliable and practical
+- Businesses can use their own private data safely
+- It lowers the cost compared to retraining large models
+- RAG transforms AI from a guessing game to a tool
+- Adopting RAG is essential for modern AI solutions
+

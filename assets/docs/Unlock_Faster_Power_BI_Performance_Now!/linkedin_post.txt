@@ -1,0 +1,57 @@
+Unlock Faster Power BI Performance Now!
+
+What is Query Folding?
+- Combines data transformations into one SQL-like query
+- Prevents pulling raw data into Power BI
+- Uses source system logic for faster processing
+- Mimics how data was originally structured
+- Reduces memory and processing load
+
+Why Check for Folding?
+- Speed up Power BI report refreshes
+- Avoids unnecessary data downloads
+- Lowers server strain and costs
+- Ensures smooth user experience
+- Catches errors early in data pipelines
+
+How to Check Folding Status
+- Use Power BI’s Query Diagnostics tool
+- Look for "folded" status in data view
+- Test with small datasets first
+- Compare performance before/after
+- Monitor during refreshes for delays
+
+Design Steps for Folding
+- Build queries in Power Query Editor
+- Avoid manual overrides in M-code
+- Match transformations to source database
+- Keep flattening columns simple
+- Test with source data recall
+
+Use Built-In Features
+- Leverage Power BI’s auto-folding rules
+- Use native transformations like split columns
+- Avoid complex custom functions
+- Maintain consistent data types
+- Sync schemas regularly
+
+Maintain Folding Long-Term
+- Update queries when source data changes
+- Avoid over-complicating steps
+- Document folding logic for teams
+- Recheck after schema updates
+- Clean up unused data steps
+
+Tools to Aid Folding
+- Power BI’s Data Lineage feature
+- Query Diagnostics for foldability
+- Performance analyzer reports
+- SQL query logs from source
+- Third-party profiling tools
+
+Final Tips for Success
+- Start small, scale gradually
+- Prioritize source system optimization
+- Monitor refresh times weekly
+- Train teams on best practices
+- Stay updated with Power BI changes

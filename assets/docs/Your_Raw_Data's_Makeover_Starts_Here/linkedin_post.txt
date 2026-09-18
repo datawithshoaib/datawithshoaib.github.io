@@ -1,0 +1,55 @@
+Your Raw Data's Makeover Starts Here
+
+The Transformation Goal
+- Turn messy, raw data into a clean format
+- Ensure data is accurate and consistent
+- Structure data for easy analysis
+- Build a reliable foundation for your reports
+- Make your data models more efficient
+- Save time during the report creation phase
+- Enable powerful and trustworthy insights
+
+Meet Power Query
+- This is the built-in engine for data transformation
+- Access it through the Power Query Editor window
+- Connect to hundreds of different data sources
+- Perform all cleaning steps in one place
+- See a preview of your changes instantly
+- Every action is recorded as an applied step
+- Your original data source remains untouched
+
+Essential Cleaning Steps
+- Remove unnecessary columns and rows
+- Fix data type errors (text to numbers, dates)
+- Replace null or error values appropriately
+- Rename columns to be clear and consistent
+- Trim text to remove extra spaces
+- Filter out irrelevant or duplicate records
+- Standardize text cases for uniformity
+
+Pivoting and Unpivoting Data
+- Unpivot columns to transform them into rows
+- This is crucial for data stored in a wide format
+- It creates a tall, skinny, analysis-friendly table
+- Pivot rows to transform them into columns
+- Use this to create summary matrices
+- These are some of the most powerful transformations
+- Master them to handle any spreadsheet layout
+
+Creating Custom Columns
+- Use the Add Column tab to create new data
+- Write custom formulas with the M language
+- Perform calculations based on other columns
+- Merge data from multiple columns into one
+- Split text columns using delimiters
+- Create conditional logic with if-then-else statements
+- Extend your data model with bespoke metrics
+
+Best Practices to Follow
+- Always review applied steps for efficiency
+- Use descriptive names for your queries and columns
+- Group similar queries together for organization
+- Leverage parameters for dynamic data sources
+- Document your process within the Advanced Editor
+- Refresh your data to test the transformation
+- Build once and automate for all future reports

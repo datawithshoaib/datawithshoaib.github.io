@@ -1,0 +1,65 @@
+Stop Repeating Your Data Work.
+
+What Are Dataflows?
+- A Power BI feature for data preparation.
+- Lets you build reusable data transformations.
+- Centralizes your ETL (Extract, Transform, Load) logic.
+- Creates a single source of cleansed data.
+- Dataflows are built and managed in the Power BI service.
+- Think of them as a shared data kitchen.
+
+The Repeating Problem
+- Same data prep is often done for multiple reports.
+- This wastes valuable time and effort.
+- Leads to inconsistencies in calculations and definitions.
+- Makes it hard to maintain and update logic.
+- One change requires updating many reports.
+- Creates a fragmented and messy data landscape.
+
+How Dataflows Help
+- Build your transformation logic just once.
+- Any report can then use this prepared data.
+- Ensures everyone uses the same definitions.
+- Simplifies report development significantly.
+- Makes maintenance and updates much easier.
+- Creates a single source of truth for data.
+
+Key Benefits
+- Saves significant time and development effort.
+- Improves data consistency and accuracy across reports.
+- Empowers self-service for business users.
+- Simplifies data governance and management.
+- Faster to build new reports on trusted data.
+- Reduces load on source systems.
+
+Building a Dataflow
+- Connect to your original data source.
+- Apply necessary transformations and cleansing steps.
+- Define computed columns and new measures.
+- Create relationships between different entities.
+- Schedule a refresh to keep data current.
+- Publish it to your Power BI workspace.
+
+Connecting Your Reports
+- From Power BI Desktop, get data from Power BI.
+- Select the published dataflow as your source.
+- Choose the specific entities you need.
+- The data is imported, already transformed and ready.
+- Build your reports on this consistent foundation.
+- No more starting from raw, messy data.
+
+Ideal Use Cases
+- Standardizing fiscal periods and date tables.
+- Combining data from multiple source systems.
+- Applying complex business logic and rules.
+- Cleansing customer or product information.
+- Creating certified, gold-standard datasets.
+- When many reports need the same base data.
+
+Get Started Today
+- Identify a common transformation you repeat often.
+- Open the Power BI service in your browser.
+- Create a new dataflow in your workspace.
+- Connect to a data source and build your ETL.
+- Publish and share with your team.
+- Start building smarter, more consistent reports.

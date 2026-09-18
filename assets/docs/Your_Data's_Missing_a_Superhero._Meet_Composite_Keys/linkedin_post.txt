@@ -1,0 +1,65 @@
+Your Data's Missing a Superhero. Meet Composite Keys.
+
+The Common Problem
+- Two tables need to be joined together
+- But neither has a single unique ID column
+- A single column has duplicate values across rows
+- Sales data might only have Order ID and Product ID
+- Customer data might have First Name and Last Name
+- This makes creating a relationship impossible
+
+What is a Composite Key?
+- It's a key made from two or more columns
+- The combination of these columns is unique
+- Think of it as creating a new, unique identifier
+- For example: OrderID + ProductID together are unique
+- Or: FirstName + LastName + ZipCode together are unique
+- This combination becomes the bridge between tables
+
+Before You Start
+- Identify the tables you need to relate
+- Find the columns that logically link them together
+- Confirm the combination of columns is truly unique
+- Check for and handle any null values in these columns
+- Ensure data types match between the linking columns
+- Plan to create these keys in both tables
+
+Step-by-Step Setup
+- In Power BI, open the 'Manage Relationships' dialog
+- Click 'New' to create a new relationship
+- Select your first table and the first column for the key
+- Hold the 'Ctrl' key and click the second column
+- Repeat for the second table, selecting the matching columns
+- Power BI will show a '1..*' indicating a composite relationship
+
+Creating the Key in DAX
+- Sometimes you need a calculated column
+- Use the COMBINEVALUES function in DAX
+- Syntax: NewColumn = COMBINEVALUES(",", [Column1], [Column2])
+- The delimiter (like a comma) separates the values
+- This creates a single, unique key from multiple columns
+- Use this new column to form the relationship
+
+Important Considerations
+- Composite keys can impact performance on very large datasets
+- Always use the most minimal set of columns needed
+- Be cautious with text-based keys as they are larger
+- The order of columns in the key matters for the relationship
+- Test the relationship thoroughly with your reports and visuals
+- Document which columns are used in the composite key
+
+Real-World Use Cases
+- Linking sales orders to specific product lines
+- Connecting patient visits to diagnoses and procedures
+- Relating shipping manifests to orders and destinations
+- Analyzing website clicks by session ID and page URL
+- Combining financial transactions by account and date
+- Tracking inventory movements by warehouse and SKU
+
+Your New Superpower
+- You are no longer stopped by missing unique IDs
+- You can model complex, real-world data more accurately
+- Your relationships will be more precise and meaningful
+- Your data model becomes a truer reflection of reality
+- This is a fundamental skill for advanced data modeling
+- Start experimenting with composite keys in your next project

@@ -1,0 +1,65 @@
+Your Power BI Report is Ready. Now What?
+
+Power BI Desktop
+- The application for building reports
+- Where you design and create data models
+- You develop all visuals and dashboards here
+- Think of it as the 'authoring' tool
+- It is a free Windows application
+- You save your work as a .pbix file
+
+Power BI Service
+- The online platform for sharing
+- Accessed via a web browser
+- This is where you publish your reports
+- Hosts and secures your data content
+- Enables sharing and collaboration features
+- Often referred to as 'the cloud'
+
+Publishing Your Report
+- Open your .pbix file in Desktop
+- Click the 'Publish' button on the ribbon
+- Select your destination workspace
+- The service processes and uploads the data
+- Your report is now live online
+- Refresh schedules are managed in the service
+
+Understanding Workspaces
+- Workspaces are like shared folders
+- They group related reports and dashboards
+- My Workspace is for your personal use
+- Create new workspaces for teams or projects
+- Workspaces have roles: Admin, Member, Contributor, Viewer
+- Apps package workspaces for broad distribution
+
+Sharing Reports Securely
+- Share with individuals directly via email
+- Set permissions: View or Build access
+- Recipients need a Power BI license
+- Avoid attaching .pbix files in emails
+- Use Microsoft Groups for easier management
+- Always audit your sharing permissions regularly
+
+Exporting Data & Pages
+- Users can export summarized data to .csv
+- Export visuals to PDF, PowerPoint, or .png
+- Admins can restrict export capabilities
+- Exporting does not share the underlying dataset
+- Be mindful of data security when exporting
+- Use subscriptions to email report snapshots
+
+Embedding Reports
+- Embed securely in SharePoint Online
+- Embed in public websites with publish to web
+- Publish to web creates a public link
+- Use the secure embed feature for internal sites
+- Always validate embedding permissions
+- Private embedding requires user authentication
+
+Best Practices Recap
+- Publish to the service, don't email files
+- Use workspaces to organize content logically
+- Share via apps for a clean user experience
+- Grant the least privileged access needed
+- Regularly review who has access to what
+- Always consider data security first

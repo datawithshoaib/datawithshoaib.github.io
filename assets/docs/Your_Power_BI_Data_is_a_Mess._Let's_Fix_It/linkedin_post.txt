@@ -1,0 +1,65 @@
+Your Power BI Data is a Mess. Let's Fix It.
+
+Why Clean Data?
+- Clean data builds trust in your reports
+- Accurate data leads to better business decisions
+- It prevents errors and misleading visuals
+- Saves time during analysis and troubleshooting
+- Forms a solid foundation for all your metrics
+- It is the most crucial step in any project
+
+Remove Duplicate Rows
+- Find the option in the Home or Transform ribbon
+- Power Query identifies duplicates across all columns
+- Select specific columns to check for duplicates only there
+- Review the preview before removing to avoid mistakes
+- Removes all but the first instance of a duplicate entry
+- Essential for accurate count and sum calculations
+
+Unpivot Your Data
+- Turns columns into rows for proper analysis
+- Fixes data spread across many column headers
+- Select the columns you want to keep as identifiers
+- Choose the columns to unpivot (often date or category columns)
+- Creates two new columns: Attribute and Value
+- Transforms wide, messy data into a tall, clean format
+
+Split Columns Easily
+- Break one column into multiple new columns
+- Use by delimiter like a comma, space, or hyphen
+- Choose to split at each occurrence or a specific number
+- Split by number of characters for fixed-width data
+- You can split into rows instead of columns
+- Perfect for separating full names or product codes
+
+Text Transformation Tricks
+- Use Trim to remove leading and trailing spaces
+- Clean eliminates non-printable characters
+- Change case to Upper, Lower, or Proper for consistency
+- Extract text before, after, or between delimiters
+- Replace values to fix typos or standardize categories
+- Add a conditional column for custom text rules
+
+Date & Time Fixes
+- Change data type to Date to ensure proper recognition
+- Use the culture setting to fix day/month mix-ups
+- Extract year, quarter, month, or day name for grouping
+- Calculate age or duration using date subtraction
+- Create a date table from a simple list of dates
+- Fix invalid dates that would cause load errors
+
+Filter & Replace Values
+- Apply filters to remove blank or null entries
+- Replace errors with a null or a default value
+- Replace specific values across the entire column
+- Use the fill feature to handle missing data
+- Filter out irrelevant rows early to improve performance
+- Preview changes immediately in the query editor
+
+Apply & Refresh
+- All steps are recorded in the APPLIED STEPS pane
+- You can edit or delete any step at any time
+- Changes are applied only when you click Close & Apply
+- Your data model updates with the clean results
+- Set up scheduled refresh to automate the cleaning
+- Your reports now run on perfect, analysis-ready data

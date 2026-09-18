@@ -1,0 +1,73 @@
+Your Power BI Report is Only as Good as Its Data Model
+
+Why Data Modeling Matters
+- Foundation for all Power BI reports and dashboards
+- Directly impacts performance and speed
+- Ensures accurate calculations and metrics
+- Simplifies the user experience for report consumers
+- Makes maintenance and changes easier later
+- Turns raw data into a trusted analytics asset
+- Separates amateurs from professionals
+
+Meet the Star Schema
+- The gold standard for Power BI data models
+- Central fact table surrounded by dimension tables
+- Fact tables hold measurable data (e.g., sales amount, quantity)
+- Dimension tables hold descriptive data (e.g., product, date, customer)
+- Designed for high performance and simplicity
+- Resembles a star in the relationship view
+- The recommended model by Microsoft
+
+The Snowflake Schema
+- A variation of the star schema
+- Dimension tables are normalized into multiple related tables
+- Can resemble a snowflake in the relationship view
+- May be necessary for complex, hierarchical dimensions
+- Generally not recommended for Power BI
+- Can lead to more complex models and DAX
+- May negatively impact query performance
+
+Star vs Snowflake: Choose Wisely
+- Prefer Star Schema for most Power BI scenarios
+- Star is simpler for end-users to understand
+- Star typically delivers better performance
+- Snowflake might be used for very large dimensions
+- Avoid snowflaking unless you have a specific reason
+- Always denormalize dimensions into single tables when possible
+- Your goal is simplicity and speed
+
+Relationship Best Practices
+- Use single-direction, filter cross-filtering
+- Avoid bidirectional relationships where possible
+- Always define the correct cardinality (one-to-many, etc.)
+- Hide unnecessary fields from report view
+- Ensure active relationships are set correctly
+- Use descriptive table and column names
+- Validate relationships with data preview
+
+Common Modeling Mistakes
+- Importing every available column from a source
+- Creating a single large, flat table
+- Using unnecessary bidirectional relationships
+- Leaving auto-date/time tables enabled
+- Not setting a date table for time intelligence
+- Building a model without business user input
+- Ignoring data types and format settings
+
+Pro Tips for Success
+- Start with a clear business question
+- Collaborate with business stakeholders on the design
+- Use a consistent and clear naming convention
+- Implement role-playing dimensions correctly
+- Leverage the Model View to organize tables
+- Document your model for future users
+- Test with real-world questions and data volumes
+
+Your Action Plan
+- Audit your existing models for star schema compliance
+- Review and simplify complex relationships
+- Eliminate any unnecessary columns from your tables
+- Set a designated date table for your time intelligence
+- Practice building a new model from scratch
+- Share your knowledge with your team
+- Build a solid foundation for better reports

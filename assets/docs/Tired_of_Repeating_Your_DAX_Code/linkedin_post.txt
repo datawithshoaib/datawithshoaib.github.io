@@ -1,0 +1,63 @@
+Tired of Repeating Your DAX Code?
+
+The Repetitive Problem
+- Many reports need time intelligence measures
+- Think Year-to-Date (YTD), Month-to-Date (MTD)
+- And Prior Year (PY) comparisons
+- Writing these for every single measure is tedious
+- It creates a long, messy list of measures
+- Maintenance becomes a nightmare
+
+Enter Calculation Groups
+- This is a powerful Power BI Premium feature
+- It lets you group common calculations together
+- You define the logic just once
+- Then apply it to multiple base measures
+- It simplifies your model significantly
+- It's created using Tabular Editor
+
+What is Tabular Editor?
+- An essential external tool for Power BI
+- It provides an advanced interface for your data model
+- You can manage complex changes more efficiently
+- It's where you create and manage Calculation Groups
+- Many pros consider it a must-have tool
+
+How It Works
+- You create a "Calculation Group"
+- Inside, you add "Calculation Items"
+- Each item is a single calculation pattern
+- For example, one item for YTD logic
+- Another item for MTD logic
+- And another for PY logic
+
+One Logic, Many Measures
+- Your YTD calculation is written one time
+- This single pattern can then be applied
+- To your [Sales Amount] measure
+- To your [Profit Margin] measure
+- To your [Order Count] measure
+- Instantly creating [Sales Amount YTD], [Profit Margin YTD], etc.
+
+Huge Benefits
+- Drastically reduces the number of measures
+- Makes your model cleaner and easier to navigate
+- Speeds up development and maintenance
+- Ensures consistency across your reports
+- Changes only need to be made in one place
+
+Using It is Easy
+- Select a measure in your report
+- A new field will appear for the Calculation Group
+- It might be called "Time Calculation"
+- Simply choose YTD, MTD, or PY from the list
+- The measure automatically updates with the logic
+- No need to write complex DAX each time
+
+Your Next Step
+- Ensure you have a Power BI Premium capacity
+- Download and install Tabular Editor (free version available)
+- Explore official documentation and tutorials
+- Start by creating a simple test group
+- Transform how you handle time-based analysis
+- Simplify your reports today

@@ -1,0 +1,65 @@
+Who Can See Your Power BI Data? Access Demystified.
+
+Why Roles Matter
+- Control who can see your reports and data
+- Prevent unauthorized access to sensitive information
+- Manage who can edit and publish content
+- Assign the right level of power to team members
+- Ensure a secure and organized analytics environment
+- They are the foundation of good data governance
+
+The Viewer Role
+- Can view reports and dashboards in the workspace
+- Cannot edit any content or data models
+- Cannot create new reports or add data sources
+- Ideal for most end-users and stakeholders
+- Perfect for distributing finished analytics products
+- Lowest level of permission available
+
+The Contributor Role
+- Can do everything a Viewer can do
+- Can create and edit their own reports
+- Can add new reports to the workspace
+- Cannot modify datasets created by others
+- Cannot delete others' content or publish to web
+- Great for report developers and analysts
+
+The Member Role
+- Has all the capabilities of a Contributor
+- Can also edit and modify existing datasets
+- Can refresh data for all datasets in the workspace
+- Can publish or update apps for the group
+- Cannot add other users to the workspace
+- This is a powerful role for developers
+
+The Admin Role
+- Has full control over the entire workspace
+- Can add or remove users and assign their roles
+- Can delete any content, including all datasets
+- Can update workspace settings and details
+- Should be limited to a few trusted individuals
+- Ultimate responsibility for the workspace
+
+Key Differences Summarized
+- Viewer: Consume content only
+- Contributor: Create new reports only
+- Member: Manage all content and datasets
+- Admin: Manage people and workspace settings
+- Permissions are cumulative from Viewer to Admin
+- Always assign the least privileged role needed
+
+Best Practices
+- Start users with the Viewer role; promote as needed
+- Use the Contributor role for testing new reports
+- Reserve the Admin role for team leads only
+- Regularly audit user access and roles
+- Name workspaces clearly to avoid confusion
+- Train team members on their permission level
+
+Putting It All Together
+- Roles are essential for security and collaboration
+- Understand the tasks each user needs to perform
+- Match the role to the user's responsibility
+- Incorrect roles lead to risk or frustration
+- Proper setup enables a smooth workflow
+- Now you can confidently manage your workspace

@@ -1,0 +1,66 @@
+Bagging vs Boosting Explained
+
+What is Bagging
+- Bagging stands for Bootstrap Aggregating
+- It combines multiple models to reduce variance
+- Works by training models on different subsets of data
+- Each model makes predictions independently
+- Final prediction is an average of all models
+- Reduces overfitting by diversifying data samples
+
+How Bagging Works
+- Random subsets of data are created with replacement
+- Each subset trains a separate model
+- Models are typically decision trees
+- Predictions are combined for final output
+- Example: Random Forest uses bagging
+- Works well with high-variance models
+
+What is Boosting
+- Boosting combines weak learners into a strong model
+- Models are trained sequentially
+- Each new model corrects errors of previous ones
+- Focuses on misclassified instances
+- Example: AdaBoost, Gradient Boosting
+- Reduces bias by focusing on hard cases
+
+How Boosting Works
+- First model is trained on the full dataset
+- Errors are identified and weighted higher
+- Next model focuses more on these errors
+- Process repeats for a set number of models
+- Final prediction is a weighted vote
+- Requires careful tuning of learning rate
+
+Key Differences
+- Bagging trains models in parallel
+- Boosting trains models sequentially
+- Bagging reduces variance
+- Boosting reduces bias
+- Bagging is more robust to outliers
+- Boosting can overfit if not controlled
+
+When to Use Bagging
+- When dataset is large and noisy
+- When models have high variance
+- For tasks requiring stability
+- When parallel processing is available
+- Example: Random Forest for classification
+- Works well with decision trees
+
+When to Use Boosting
+- When dataset is small and clean
+- When models have high bias
+- For tasks needing high accuracy
+- When interpretability is important
+- Example: XGBoost for structured data
+- Requires careful hyperparameter tuning
+
+Summary
+- Bagging reduces variance by averaging
+- Boosting reduces bias by focusing on errors
+- Bagging is parallel, Boosting is sequential
+- Choose based on data size and model needs
+- Both improve model performance
+- Experiment to find the best fit
+

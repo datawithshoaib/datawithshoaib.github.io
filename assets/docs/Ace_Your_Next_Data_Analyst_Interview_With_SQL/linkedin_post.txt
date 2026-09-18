@@ -1,0 +1,57 @@
+Ace Your Next Data Analyst Interview With SQL
+
+Core SQL Foundations
+- Explain the difference between WHERE and HAVING.
+- What are the different types of SQL JOINs?
+- Describe the difference between UNION and UNION ALL.
+- What is the purpose of the CASE statement?
+- How do you remove duplicate records from a query result?
+
+Data Retrieval & Filtering
+- How would you find the second highest salary from a table?
+- Write a query to select all employees whose name starts with 'A'.
+- How do you filter for records that contain a null value?
+- Retrieve the top 5 most recent orders from a table.
+- Explain how the LIKE operator is used with wildcards.
+
+Aggregation & Grouping
+- What is the difference between COUNT(*) and COUNT(column_name)?
+- How do you calculate a cumulative sum or running total?
+- Find the department with the highest average salary.
+- Calculate the month-over-month sales growth percentage.
+- Get a count of orders per customer for only those with more than 5 orders.
+
+Advanced Query Techniques
+- What is a correlated subquery and how does it work?
+- Explain the purpose of Common Table Expressions (CTEs).
+- How would you rank rows without using the RANK() function?
+- Describe a scenario where you would use a self-join.
+- Compare using a subquery versus a CTE for readability.
+
+Data Modification & Management
+- What is the difference between DELETE, TRUNCATE, and DROP?
+- How would you update prices for a specific product category?
+- Write a query to insert data from one table into another.
+- Explain the concept of ACID properties in databases.
+- What is a transaction and why is it important?
+
+Window Functions Mastery
+- Explain the difference between RANK, DENSE_RANK, and ROW_NUMBER.
+- How do you use the LAG and LEAD functions?
+- Calculate a 7-day moving average of sales using a window function.
+- Partition data by department to calculate internal rankings.
+- What is the frame clause in a window function?
+
+Database Design & Theory
+- What is the difference between a primary key and a unique key?
+- Explain database normalization and its benefits.
+- Describe the different types of relationships between tables.
+- What is an index and how does it improve query performance?
+- Define a foreign key and its role in relational databases.
+
+Scenario-Based Problem Solving
+- How would you find users who made purchases two days in a row?
+- Design a query to identify the employee with the nth highest salary.
+- Calculate the retention rate of users from one month to the next.
+- How would you merge two tables with slightly different schemas?
+- Describe your process for troubleshooting a slow-running query.
