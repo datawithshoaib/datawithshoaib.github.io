@@ -111,7 +111,7 @@ permalink: /resources/
         <article class="card h-100 resource-card border shadow-sm">
           <!-- Thumbnail Frame (Aspect 4:5 matching 1080x1350 slides) -->
           <a
-            href="#{{ res.slug }}"
+            href="{{ '/resources/' | relative_url }}"
             class="resource-thumbnail-wrapper deck-open-link d-block text-decoration-none"
             data-slug="{{ res.slug | escape }}"
             aria-label="View slide carousel for {{ res.title | escape }}"
@@ -153,7 +153,7 @@ permalink: /resources/
           <!-- Card Details -->
           <div class="card-body d-flex flex-column p-3">
             <h3 class="resource-card-title mb-2">
-              <a href="#{{ res.slug }}" class="deck-open-link text-decoration-none" data-slug="{{ res.slug | escape }}">
+              <a href="{{ '/resources/' | relative_url }}" class="deck-open-link text-decoration-none" data-slug="{{ res.slug | escape }}">
                 {{ res.title }}
               </a>
             </h3>
