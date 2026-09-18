@@ -9,7 +9,6 @@ tags:
   - ML
 categories:
   - ML
-image:
 toc: true
 ---
 When building a machine learning model, one common question is:

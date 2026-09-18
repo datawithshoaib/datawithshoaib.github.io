@@ -8,7 +8,7 @@ tags:
   - Python
 categories:
   - Python
-image: ""
+
 toc: true
 ---
 Have you ever wondered why some Python files start with this strange line?

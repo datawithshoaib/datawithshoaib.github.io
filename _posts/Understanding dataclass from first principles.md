@@ -9,7 +9,6 @@ tags:
   - dataclass
 categories:
   - Python
-image: ""
 toc: true
 ---
 # First: Why do we need `dataclass`?

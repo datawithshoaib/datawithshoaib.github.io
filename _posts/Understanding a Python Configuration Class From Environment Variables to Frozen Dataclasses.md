@@ -4,12 +4,12 @@ title: Understanding a Python Configuration Class From Environment Variables to 
 date: 2026-09-17
 permalink: /posts/2026/09/understanding-a-python-configuration-class-from-environment-variables-to-frozen-dataclasses/
 excerpt_separator: <!--more-->
+toc: true
 tags:
     - Python
 categories:
     - Python
-image: ""
-toc: true
+
 ---
 When you see code like this for the first time:
 
