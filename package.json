@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "clean": "node -e \"import('node:fs').then(fs => { try { fs.rmSync('dist', { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch (e) {} });\"",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "npm run clean && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
