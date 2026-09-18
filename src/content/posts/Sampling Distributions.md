@@ -3,11 +3,10 @@ layout: post
 title: Sampling Distributions
 date: 2024-10-19
 permalink: /posts/2024/10/sampling-distributions/
-tags:
-  - Statistics
-  - Maths
+tags: ['Statistics', 'Sampling Distributions', 'Central Limit Theorem', 'Data Science', 'Inference']
 toc: true
-categories: ["Statistics"]
+categories: ['Python & Machine Learning']
+description: "Foundational concepts in statistical inference, sampling distribution of the mean, and the Central Limit Theorem."
 
 ---
 

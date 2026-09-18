@@ -3,11 +3,11 @@ layout: post
 title: My first App in Power Apps
 date: 2024-12-27
 permalink: /posts/2024/12/my-first-app-in-power-apps/
-tags:
-  - Power Apps
+tags: ['Power Apps', 'Power Platform', 'Low-Code', 'App Development']
 image: /assets/img/posts/myfirstpowerapp.png
 toc: true
-categories: ["Power Platform"]
+categories: ['Power BI & Power Platform']
+description: "Building my first low-code business application using Microsoft Power Apps and cloud data sources."
 
 ---
 
@@ -20,7 +20,7 @@ I started learning Power Apps, and this is my first canvas app.
 
 Data source is an Excel file with below details, images are stored in a separate folder:
 
-![img]({{ site.baseurl }}/assets/img/posts/contoso-ex-table.png)
+![img](/assets/img/posts/contoso-ex-table.png)
 _Table in the Excel file_
 
 This excel file and image folder are in OneDrive.
@@ -46,7 +46,7 @@ This creates 3 screens in our app
 
 This is Power Apps Studio with our app
 
-![power apps img]({{ site.baseurl }}/assets/img/posts/pwr-app-canvas.png)
+![power apps img](/assets/img/posts/pwr-app-canvas.png)
 
 ### Controls in Power Apps
 

@@ -4,11 +4,10 @@ title: Finally, Microsoft Power BI Certified!!!
 date: 2025-02-23
 permalink: /posts/2025/02/powerbi-certified/
 excerpt_separator: <!--more-->
-tags:
-  - PowerBI
-  - PL-300
+tags: ['PL-300', 'Power BI', 'Certification', 'Data Analytics', 'Career Journey']
 toc: true
-categories: ["General"]
+categories: ['Power BI & Power Platform']
+description: "Reflections and study roadmap on achieving the Microsoft Certified: Power BI Data Analyst Associate (PL-300) credential."
 image: /assets/img/posts/pbi-cert.png
 
 ---

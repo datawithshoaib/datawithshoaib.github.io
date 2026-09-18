@@ -4,11 +4,9 @@ title: "Guardrails & Safety"
 author: Shoaib
 date: 2026-09-14
 permalink: /experiments/guardrails-safety/
-tags:
-  - AI
-  - Safety
-  - Guardrails
-categories: ["AI"]
+tags: ['AI Safety', 'Guardrails', 'Output Validation', 'Hallucination Prevention', 'Trustworthy AI']
+categories: ['Safety & Guardrails']
+description: "Multi-layer safety constraints, content filtering, hallucination prevention, and alignment verification for AI systems."
 ---
 
 Guardrails are rules and constraints designed to keep AI systems safer and more trustworthy. They can be applied at multiple layers: before generation, during generation, and after the output is produced.

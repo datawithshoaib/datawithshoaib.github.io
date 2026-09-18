@@ -3,12 +3,11 @@ layout: post
 title: Configure a Hierarchical Namespace for Azure Data Lake
 date: 2024-12-19
 permalink: /posts/2024/12/configure-hierarchical-namespace-azure-data-lake/
-tags:
-  - Azure
-  - Data Lake
+tags: ['Azure Data Lake', 'ADLS Gen2', 'Hierarchical Namespace', 'Storage', 'Cloud Architecture']
 image: /assets/img/posts/datalake/conf/image.png
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Understanding ADLS Gen2 hierarchical namespace, folder-level operations, and POSIX-like access controls."
 
 ---
 
@@ -16,11 +15,11 @@ Understanding how to configure a hierarchical namespace for Azure Data Lake.
 
 ## 1. Create a storage account
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image.png)
+![alt text](/assets/img/posts/datalake/conf/image.png)
 
 Enable the hierarchical namespace to create a Data Lake
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-1.png)
+![alt text](/assets/img/posts/datalake/conf/image-1.png)
 
 ---
 
@@ -42,17 +41,17 @@ Answer: A
 
 ## 2. Create a container
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-2.png)
+![alt text](/assets/img/posts/datalake/conf/image-2.png)
 
 Go to the container and update the shared access tokens
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-3.png)
+![alt text](/assets/img/posts/datalake/conf/image-3.png)
 
 Click on Generate SAS token and URL
 
 Create 2 directories in this container
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-4.png)
+![alt text](/assets/img/posts/datalake/conf/image-4.png)
 
 ### 3. Run performance benchmarks to optimize and ingest data for a data lake
 
@@ -60,9 +59,9 @@ Create an Azure Cloud Shell (PowerShell) session by using the values in the foll
 
 Click mount storage account
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-5.png)
+![alt text](/assets/img/posts/datalake/conf/image-5.png)
 
-![alt text]({{ site.baseurl }}/assets/img/posts/datalake/conf/image-6.png)
+![alt text](/assets/img/posts/datalake/conf/image-6.png)
 
 ---
 

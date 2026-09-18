@@ -2,7 +2,9 @@
 title: Next word Prediction using LSTM and GRU
 date: 2025-12-21
 permalink: /projects/Next-word-Prediction-LSTM-GRU/
-categories: [Projects, Deep Learning]
+categories: ['Machine Learning & AI']
+github: 'https://github.com/theshoaibakthar/Deep-Learning-Projects/tree/main/Next-Word-Prediction-LSTM-GRU'
+tags: ['Deep Learning', 'TensorFlow', 'Keras', 'LSTM', 'GRU', 'NLP']
 excerpt: Developed a deep learning model for predicting the next word in a given sequence of words, built using LSTM and GRU networks.
 collection: portfolio
 ---

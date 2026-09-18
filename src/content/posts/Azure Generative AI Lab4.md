@@ -4,14 +4,12 @@ title: Develop a multimodal generative AI app
 date: 2025-05-01
 permalink: /posts/2025/05/develop-a-multimodal-generative-ai-app/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - GenAI
-  - Multimodal
+tags: ['Prompt Flow', 'LLMOps', 'Chat Workflows', 'Conversation State', 'Azure AI']
 image:
   path: /assets/img/posts/mmdl.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Designing, running, and managing conversation history in chat applications using Azure Prompt Flow."
 
 ---
 

@@ -3,12 +3,10 @@ layout: post
 title: "Importing Excel Data into SharePoint List using Power Automate"
 date: 2025-01-15
 permalink: /posts/2025/01/importing-excel-data-into-sharepoint-list-using-power-automate/
-tags:
- - Excel
- - SharePoint
- - Power Automate
+tags: ['Power Automate', 'SharePoint', 'Excel', 'Workflow Automation', 'Power Platform']
 toc: true
-categories: ["Power Platform"]
+categories: ['Power BI & Power Platform']
+description: "Step-by-step automated workflow to parse Excel rows and synchronize them into a SharePoint Online list."
 image: /assets/img/posts/power-automate-flow-bnr.png
 
 ---
@@ -73,7 +71,7 @@ For our understanding, I will take a simple example to demonstrate how to create
 
 Imagine you have an Excel file in your OneDrive with this table:
 
-![img]({{ site.baseurl }}/assets/img/posts/pwr-atmt-ex-table.png)
+![img](/assets/img/posts/pwr-atmt-ex-table.png)
 _Table in Excel with name “employees”_
 
 1. Ensure your SharePoint list is created with the following columns:
@@ -139,7 +137,7 @@ After running the flow, go to your SharePoint list and verify that the data from
 - Error Handling: Add “Configure Run After” to handle any failures (e.g., to log errors if the SharePoint list is not accessible).
 - Notifications: Add actions like Send an email or Post a message in Teams to notify users when the flow completes or fails.
 
-![flow|400]({{ site.baseurl }}/assets/img/posts/pat-flow.png)
+![flow|400](/assets/img/posts/pat-flow.png)
 _Power Automate Flow to import data from Excel to SharePoint List_
 
 ### Conclusion

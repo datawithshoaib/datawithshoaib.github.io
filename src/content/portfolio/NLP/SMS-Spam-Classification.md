@@ -2,7 +2,9 @@
 title: SMS Spam Classification
 date: 2025-11-01
 permalink: /projects/NLP/SMS-Spam-Classification/
-categories: [Projects, NLP]
+categories: ['Machine Learning & AI']
+github: 'https://github.com/theshoaibakthar/NLP-Projects/tree/main/SMS-Spam-Classification'
+tags: ['Python', 'NLP', 'Naive Bayes', 'TF-IDF', 'Text Classification']
 excerpt: "A comprehensive spam detection system implementing multiple text classification approaches including Bag of Words (BOW), \rTF-IDF Vectorization with Multinomial Naive Bayes, \rWord2Vec with Random Forest Classifier"
 collection: portfolio
 ---

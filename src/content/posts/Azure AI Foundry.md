@@ -4,13 +4,11 @@ title: What is Azure AI Foundry?
 date: 2025-04-29
 permalink: /posts/2025/04/what-is-azure-ai-foundry/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - GenAI
-  - Azure AI Foundry
+tags: ['Azure AI Foundry', 'Generative AI', 'LLMs', 'Model Catalog', 'Cloud AI']
 image: /assets/img/posts/aaifnd.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "An introductory guide to Azure AI Foundry, exploring foundational models, safety evaluation, and enterprise AI app development."
 
 ---
 

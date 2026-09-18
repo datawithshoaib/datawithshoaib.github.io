@@ -4,12 +4,11 @@ title: AI-900 Preparation Notes
 date: 2025-03-06
 permalink: /posts/2025/03/ai-900-preparation-notes/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - AI-900
+tags: ['AI-900', 'Certification', 'Azure AI', 'Machine Learning', 'Computer Vision', 'NLP']
 image: /assets/img/posts/AI900-Prep.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Comprehensive preparation notes and key concept summaries for passing the Microsoft AI-900 certification exam."
 
 ---
 

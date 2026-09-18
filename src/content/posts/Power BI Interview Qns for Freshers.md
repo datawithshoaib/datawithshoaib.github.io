@@ -1,14 +1,12 @@
 ---
+categories: ['Power BI & Power Platform']
+description: "Curated compilation of top 50 Power BI interview questions, core concepts, and practical answers for data analysts."
 layout: post
 title: Top 50 Power BI Interview Questions & Answers (for Freshers)
 date: 2025-09-04
 permalink: /posts/2025/09/top50-pbi-qns/
 excerpt_separator: <!--more-->
-tags:
-  - PowerBI
-  - DAX
-categories:
-  - Power BI
+tags: ['Power BI', 'Interview Prep', 'DAX', 'Power Query', 'Data Modeling']
 ---
 
 If you’re preparing for your first data analyst role, these 50 interview questions and answers will help you get ready.

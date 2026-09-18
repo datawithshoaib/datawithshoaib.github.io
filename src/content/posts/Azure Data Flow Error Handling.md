@@ -4,12 +4,10 @@ title: "Configuring Azure Data Flow Error Handling"
 author: Shoaib
 date: 2024-12-20
 permalink: /posts/2024/12/configuring-azure-data-flow-error-handling/
-tags:
-  - Azure
-  - Data Flow
-  - Azure Data Factory
+tags: ['Azure Data Flow', 'Error Handling', 'Data Quality', 'Row-Level Errors', 'ETL']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Robust design patterns for handling bad data rows, logging failed records, and ensuring pipeline resilience."
 
 ---
 
@@ -77,7 +75,7 @@ Choose sink for bad records -> bad-records container
 
 - choose output as single file and give the file name
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowerrhd/image.png)
+![alt text](/assets/img/posts/dataflowerrhd/image.png)
 
 ## 4. Create pipeline and run
 Create a pipeline, and publish all

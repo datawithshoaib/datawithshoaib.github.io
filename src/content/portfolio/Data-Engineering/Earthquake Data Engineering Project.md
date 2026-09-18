@@ -2,7 +2,9 @@
 title: Earthquake Data Engineering Project
 date: 2026-01-03
 permalink: /projects/Earthquake-Data-Engineering-Project-Fabric/
-categories: [Projects, Data Engineering]
+categories: ['Data Engineering']
+github: 'https://github.com/theshoaibakthar/Fabric-Projects/tree/main/Earthquake-Data-Project'
+tags: ['Microsoft Fabric', 'PySpark', 'Lakehouse', 'Medallion Architecture', 'APIs']
 excerpt: A complete end-to-end data engineering and analytics solution implemented using Microsoft Fabric for Earthquake data from USGS
 collection: portfolio
 ---

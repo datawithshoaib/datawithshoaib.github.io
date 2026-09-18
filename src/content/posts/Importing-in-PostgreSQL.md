@@ -4,11 +4,10 @@ title: How to import data into PostgreSQL?
 date: 2025-07-19
 permalink: /posts/2025/07/import-to-postgresql/
 excerpt_separator: <!--more-->
-tags:
-  - SQL
-  - PostgreSQL
+tags: ['PostgreSQL', 'SQL', 'Data Import', 'CSV', 'Database Administration']
 toc: true
-categories: ["Database"]
+categories: ['SQL & Databases']
+description: "Practical guide to importing CSV files and external data into PostgreSQL using psql, COPY command, and pgAdmin."
 
 ---
 

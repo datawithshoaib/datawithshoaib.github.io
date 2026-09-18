@@ -2,7 +2,9 @@
 title: Walmart Sales Analysis using SQL
 date: 2024-07-20
 permalink: /projects/Walmart-Sales-Analysis-SQL/
-categories: [Projects, Data Analytics]
+categories: ['SQL & Analytics']
+github: 'https://github.com/theshoaibakthar/SQL-Projects/tree/main/Walmart-Sales-Analysis'
+tags: ['SQL', 'MySQL', 'Sales Analysis', 'Business Analytics', 'CTEs']
 excerpt: Explored Walmart transaction data to uncover sales trends, top products, and customer segments. Highlighted category performance and optimization areas. Used SQL CTEs for efficient querying.
 collection: portfolio
 ---

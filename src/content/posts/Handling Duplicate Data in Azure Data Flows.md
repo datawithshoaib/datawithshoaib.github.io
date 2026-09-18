@@ -3,18 +3,16 @@ layout: post
 title: Handling Duplicate Data in Azure Data Flows
 date: 2024-12-20
 permalink: /posts/2024/12/handling-duplicate-data-in-azure-data-flows/
-tags:
-  - Azure
-  - Data Flow
-  - Azure Data Factory
+tags: ['Azure Data Flow', 'Deduplication', 'Window Functions', 'ETL Pipelines', 'Data Quality']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Eliminating duplicate rows and retaining latest records using Aggregate and Window transformations in Data Flow."
 
 ---
 
 In this task, we are going to remove duplicates from a csv file present in a container.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowduprem/image.png)
+![alt text](/assets/img/posts/dataflowduprem/image.png)
 
 ## Open data factory
 
@@ -28,13 +26,13 @@ We can modify the data flow using a script as well. Click on script icon at the 
 
 We use distinct Rows transformation to remove the duplicates.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowduprem/image-1.png)
+![alt text](/assets/img/posts/dataflowduprem/image-1.png)
 
 ### 4. Create new pipeline and run it
 
 Now, if we check the container, we have a new file.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowduprem/image-2.png)
+![alt text](/assets/img/posts/dataflowduprem/image-2.png)
 
 ---
 

@@ -4,11 +4,9 @@ title: "Agentic Workflows"
 author: Shoaib
 date: 2026-09-13
 permalink: /experiments/agentic-workflows/
-tags:
-  - AI
-  - Agents
-  - Automation
-categories: ["AI"]
+tags: ['Agentic AI', 'LangGraph', 'Tool Calling', 'Autonomous Agents', 'Multi-Agent Workflows']
+categories: ['Agentic AI']
+description: "Designing autonomous agentic workflows that plan, reason, and leverage tools across multi-step execution graphs."
 ---
 
 Agentic workflows use AI to plan, reason, and take actions across a sequence of steps rather than answering in a single pass. This makes them useful for tasks that involve more than simple Q&A.

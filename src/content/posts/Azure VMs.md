@@ -3,12 +3,11 @@ layout: post
 title: Azure Virtual Machine
 date: 2024-12-15
 permalink: /posts/2024/12/azure-virtual-machine/
-tags:
-  - Azure
-  - VMs
+tags: ['Azure VMs', 'IaaS', 'Virtual Machines', 'Compute', 'Networking']
 image: /assets/img/posts/azvm.png
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Provisioning, configuring, sizing, and securing virtual machines in Microsoft Azure cloud infrastructure."
 
 ---
 

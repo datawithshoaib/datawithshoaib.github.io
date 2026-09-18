@@ -1,29 +1,557 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
 import { getAllSortedExperiments, getExperimentUrl } from '../../utils/content';
 
 const allExperiments = await getAllSortedExperiments();
+const totalExperiments = allExperiments.length;
+
+// Categories for experiments
+const categoryOrder = [
+  'Agentic AI',
+  'RAG & Retrieval',
+  'Prompt Engineering',
+  'Evaluation & Benchmarks',
+  'Safety & Guardrails',
+  'AI in Analytics',
+];
+
+const categoryCounts: Record<string, number> = {
+  'Agentic AI': 0,
+  'RAG & Retrieval': 0,
+  'Prompt Engineering': 0,
+  'Evaluation & Benchmarks': 0,
+  'Safety & Guardrails': 0,
+  'AI in Analytics': 0,
+};
+
+allExperiments.forEach((exp) => {
+  const cat = (exp.data.categories && exp.data.categories[0]) || 'AI';
+  if (categoryCounts[cat] !== undefined) {
+    categoryCounts[cat]++;
+  } else {
+    categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+  }
+});
+
+const topicPills = [
+  { label: 'All Topics', value: 'all' },
+  { label: 'LangGraph', value: 'langgraph' },
+  { label: 'RAG', value: 'rag' },
+  { label: 'Vector Search', value: 'vector' },
+  { label: 'Prompting', value: 'prompt' },
+  { label: 'Evaluation', value: 'evaluation' },
+  { label: 'Guardrails', value: 'guardrails' },
+  { label: 'Analytics', value: 'analytics' },
+];
+
+function getCategorySlug(cat: string): string {
+  return cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+}
+
+function getCategoryIcon(cat: string): string {
+  switch (cat) {
+    case 'Agentic AI':
+      return 'fas fa-robot';
+    case 'RAG & Retrieval':
+      return 'fas fa-database';
+    case 'Prompt Engineering':
+      return 'fas fa-terminal';
+    case 'Evaluation & Benchmarks':
+      return 'fas fa-check-double';
+    case 'Safety & Guardrails':
+      return 'fas fa-shield-alt';
+    case 'AI in Analytics':
+      return 'fas fa-chart-line';
+    default:
+      return 'fas fa-flask';
+  }
+}
 ---
 
 <BaseLayout
   title="Experiments"
-  description="A collection of small AI experiments, tooling notes, and practical concept explorations."
+  description="Hands-on explorations, architecture blueprints, evaluation frameworks, and practical notes in modern AI."
 >
-  <div class="px-1">
-    <h1 class="dynamic-title mb-2">Experiments</h1>
-    <p class="lead text-muted mb-4">A collection of small AI experiments, tooling notes, and practical concept explorations.</p>
+  <div class="experiments-container px-1">
+    <!-- Header -->
+    <div class="experiment-header mb-4">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <span class="badge experiment-eyebrow">
+          <i class="fas fa-flask me-1"></i> AI Lab &amp; Research
+        </span>
+      </div>
 
-    <div id="post-list" class="flex-grow-1">
-      {allExperiments.map((exp) => (
-        <PostCard
-          title={exp.data.title}
-          url={getExperimentUrl(exp)}
-          date={exp.data.date}
-          description={exp.data.description}
-          categories={exp.data.categories}
-        />
-      ))}
+      <h1 class="dynamic-title mb-2">Experiments</h1>
+      <p class="lead text-muted mb-3">
+        Hands-on explorations, architecture blueprints, evaluation frameworks, and practical notes in modern artificial intelligence and machine learning.
+      </p>
+
+      <!-- Stats Summary Badges -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="exp-stat-badge">
+          <i class="fas fa-flask me-1 text-primary"></i> <strong>{totalExperiments}</strong> Total Experiments
+        </span>
+        {categoryOrder.map((cat) => (
+          categoryCounts[cat] ? (
+            <span class="exp-stat-badge">
+              <i class={`${getCategoryIcon(cat)} me-1 cat-icon-${getCategorySlug(cat)}`}></i>
+              <strong>{categoryCounts[cat]}</strong>&nbsp;{cat}
+            </span>
+          ) : null
+        ))}
+      </div>
+
+      <!-- Search & Filter Controls Card -->
+      <div class="experiment-controls card p-3 shadow-sm border-0 mb-4">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-5">
+            <div class="input-group">
+              <span class="input-group-text bg-transparent border-end-0">
+                <i class="fas fa-search text-muted"></i>
+              </span>
+              <input
+                type="text"
+                id="exp-search-input"
+                class="form-control border-start-0 ps-0"
+                placeholder="Search concepts, RAG, agents, prompts, evaluation..."
+                aria-label="Search experiments"
+              />
+              <button
+                class="btn btn-outline-secondary border-start-0 d-none"
+                type="button"
+                id="exp-search-clear"
+                title="Clear search"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Category filter buttons -->
+          <div class="col-12 col-md-7">
+            <div class="d-flex flex-wrap gap-1 justify-content-md-end" id="exp-category-filters">
+              <button type="button" class="btn btn-sm exp-filter-btn active" data-category="all">
+                All ({totalExperiments})
+              </button>
+              {categoryOrder.map((cat) => (
+                <button type="button" class="btn btn-sm exp-filter-btn" data-category={cat.toLowerCase()}>
+                  {cat} ({categoryCounts[cat] || 0})
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic Pills -->
+        <div class="d-flex flex-wrap gap-1 align-items-center mt-3 pt-2 border-top">
+          <span class="small text-muted me-2"><i class="fas fa-tag me-1"></i> Focus Topic:</span>
+          {topicPills.map((pill, idx) => (
+            <button
+              type="button"
+              class={`btn btn-sm exp-topic-btn ${idx === 0 ? 'active' : ''}`}
+              data-topic={pill.value}
+            >
+              {pill.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Experiments Grid -->
+    <div class="row g-4" id="experiments-grid">
+      {allExperiments.map((exp) => {
+        const category = (exp.data.categories && exp.data.categories[0]) || 'AI';
+        const catSlug = getCategorySlug(category);
+        const tags = exp.data.tags || [];
+        const expUrl = getExperimentUrl(exp);
+        const formattedDate = exp.data.date
+          ? new Date(exp.data.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+            })
+          : '';
+        const description = exp.data.description || exp.data.excerpt || '';
+
+        return (
+          <div
+            class="col-12 col-md-6 exp-card-col"
+            data-title={exp.data.title.toLowerCase()}
+            data-category={category.toLowerCase()}
+            data-topic={tags.join(' ').toLowerCase()}
+            data-desc={description.toLowerCase()}
+          >
+            <article class="card h-100 exp-card border shadow-sm">
+              <div class="card-body d-flex flex-column p-3">
+                <!-- Header badge and date -->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <span class={`badge cat-badge cat-badge-${catSlug}`}>
+                    <i class={`${getCategoryIcon(category)} me-1`}></i>
+                    {category}
+                  </span>
+                  {formattedDate && (
+                    <span class="small text-muted">
+                      <i class="far fa-calendar-alt me-1"></i>
+                      {formattedDate}
+                    </span>
+                  )}
+                </div>
+
+                <!-- Title -->
+                <h3 class="card-title exp-title mb-2">
+                  <a href={expUrl} class="text-decoration-none" title={exp.data.title}>
+                    {exp.data.title}
+                  </a>
+                </h3>
+
+                <!-- Description / excerpt -->
+                {description && (
+                  <p class="card-text exp-desc text-muted small mb-3" title={description}>
+                    {description}
+                  </p>
+                )}
+
+                <!-- Tags wrap -->
+                {tags.length > 0 && (
+                  <div class="exp-tags-wrap mb-3 mt-auto">
+                    {tags.slice(0, 4).map((tag) => (
+                      <span class="exp-tag-pill">{tag}</span>
+                    ))}
+                    {tags.length > 4 && (
+                      <span class="exp-tag-pill exp-tag-more">+{tags.length - 4}</span>
+                    )}
+                  </div>
+                )}
+
+                <!-- Card Footer -->
+                <div class="exp-card-footer pt-3 mt-auto d-flex align-items-center justify-content-between">
+                  <a
+                    href={expUrl}
+                    class="btn btn-sm btn-outline-primary exp-action-btn"
+                  >
+                    <span>Read Notes</span>
+                    <i class="fas fa-arrow-right ms-1"></i>
+                  </a>
+
+                  <span class="small text-muted">
+                    <i class="fas fa-file-alt me-1"></i> Notes
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="exp-no-results" class="text-center py-5 d-none">
+      <div class="card p-5 border shadow-sm empty-card">
+        <i class="fas fa-search text-muted mb-3" style="font-size: 2.5rem;"></i>
+        <h5 class="text-muted fw-bold">No matching experiments found</h5>
+        <p class="text-muted small mb-3">Try adjusting your keywords, selecting "All" categories, or resetting filters.</p>
+        <div>
+          <button type="button" id="exp-reset-btn" class="btn btn-sm btn-primary px-3">
+            <i class="fas fa-redo me-1"></i> Reset Filters
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+.experiment-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  background-color: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.exp-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--text-color, #212529);
+}
+
+.experiment-controls {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.75rem;
+}
+
+#exp-search-input {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef);
+}
+
+.exp-filter-btn, .exp-topic-btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e0e0e0);
+  transition: all 0.2s ease;
+}
+
+.exp-filter-btn:hover, .exp-topic-btn:hover {
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--heading-color, #212529);
+}
+
+.exp-filter-btn.active, .exp-topic-btn.active {
+  background-color: var(--link-color, #007bff);
+  color: #ffffff;
+  border-color: var(--link-color, #007bff);
+  font-weight: 600;
+}
+
+.exp-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--card-bg, #ffffff);
+  border-color: var(--card-border-color, #e9ecef) !important;
+  border-radius: 0.85rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.exp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--link-color, #007bff) !important;
+}
+
+.exp-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+}
+
+.exp-title a {
+  color: var(--heading-color, #212529);
+  transition: color 0.2s ease;
+}
+
+.exp-title a:hover {
+  color: var(--link-color, #007bff);
+}
+
+.exp-desc {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cat-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.cat-badge-agentic-ai {
+  background-color: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.cat-badge-rag-retrieval {
+  background-color: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+  border: 1px solid rgba(14, 165, 233, 0.25);
+}
+
+.cat-badge-prompt-engineering {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.cat-badge-evaluation-benchmarks {
+  background-color: rgba(139, 92, 246, 0.12);
+  color: #7c3aed;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.cat-badge-safety-guardrails {
+  background-color: rgba(236, 72, 153, 0.12);
+  color: #db2777;
+  border: 1px solid rgba(236, 72, 153, 0.25);
+}
+
+.cat-badge-ai-in-analytics {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.cat-icon-agentic-ai { color: #6366f1; }
+.cat-icon-rag-retrieval { color: #0284c7; }
+.cat-icon-prompt-engineering { color: #059669; }
+.cat-icon-evaluation-benchmarks { color: #7c3aed; }
+.cat-icon-safety-guardrails { color: #db2777; }
+.cat-icon-ai-in-analytics { color: #d97706; }
+
+.exp-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.exp-tag-pill {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.exp-tag-more {
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.exp-card-footer {
+  border-top: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.exp-action-btn {
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+}
+
+.empty-card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('exp-search-input');
+    const searchClearBtn = document.getElementById('exp-search-clear');
+    const categoryBtns = document.querySelectorAll('.exp-filter-btn');
+    const topicBtns = document.querySelectorAll('.exp-topic-btn');
+    const cards = document.querySelectorAll('.exp-card-col');
+    const noResults = document.getElementById('exp-no-results');
+    const resetBtn = document.getElementById('exp-reset-btn');
+
+    let activeCategory = 'all';
+    let activeTopic = 'all';
+    let searchQuery = '';
+
+    function filterExperiments() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = card.getAttribute('data-title') || '';
+        const category = card.getAttribute('data-category') || '';
+        const topic = card.getAttribute('data-topic') || '';
+        const desc = card.getAttribute('data-desc') || '';
+
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        const matchesTopic = activeTopic === 'all' || topic.includes(activeTopic) || title.includes(activeTopic);
+        const matchesSearch = !searchQuery || (
+          title.includes(searchQuery) ||
+          category.includes(searchQuery) ||
+          topic.includes(searchQuery) ||
+          desc.includes(searchQuery)
+        );
+
+        if (matchesCategory && matchesTopic && matchesSearch) {
+          card.classList.remove('d-none');
+          visibleCount++;
+        } else {
+          card.classList.add('d-none');
+        }
+      });
+
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('d-none');
+        } else {
+          noResults.classList.add('d-none');
+        }
+      }
+    }
+
+    searchInput?.addEventListener('input', function(e) {
+      searchQuery = e.target.value.trim().toLowerCase();
+      if (searchClearBtn) {
+        if (searchQuery.length > 0) searchClearBtn.classList.remove('d-none');
+        else searchClearBtn.classList.add('d-none');
+      }
+      filterExperiments();
+    });
+
+    searchClearBtn?.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      searchClearBtn.classList.add('d-none');
+      filterExperiments();
+    });
+
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener('click', function() {
+        categoryBtns.forEach((b) => b.classList.remove('active'));
+        this.classList.add('active');
+        activeCategory = this.getAttribute('data-category') || 'all';
+        filterExperiments();
+      });
+    });
+
+    topicBtns.forEach((btn) => {
+      btn.addEventListener('click', function() {
+        topicBtns.forEach((b) => b.classList.remove('active'));
+        this.classList.add('active');
+        activeTopic = this.getAttribute('data-topic') || 'all';
+        filterExperiments();
+      });
+    });
+
+    resetBtn?.addEventListener('click', function() {
+      if (searchInput) searchInput.value = '';
+      if (searchClearBtn) searchClearBtn.classList.add('d-none');
+      searchQuery = '';
+      activeCategory = 'all';
+      activeTopic = 'all';
+
+      categoryBtns.forEach((b, idx) => {
+        if (idx === 0) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      topicBtns.forEach((b, idx) => {
+        if (idx === 0) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      filterExperiments();
+    });
+  });
+</script>

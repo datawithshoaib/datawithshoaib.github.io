@@ -4,12 +4,11 @@ title: DP-900 Practice Questions
 date: 2025-01-23
 permalink: /posts/2025/01/dp-900-practice-questions/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - DP-900
+tags: ['DP-900', 'Azure Data Fundamentals', 'Relational', 'Non-Relational', 'Analytics']
 image: /assets/img/posts/dp900-qns.png
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Practice questions and concept breakdowns for the Microsoft Certified: Azure Data Fundamentals (DP-900) exam."
 
 ---
 

@@ -338,10 +338,15 @@ blockquote.prompt-danger {
   transform: translateY(-2px);
 }
 
-/* Image zoom styling */
+/* Image styling in post content */
 .content img {
+  max-width: 100%;
+  height: auto;
   border-radius: 8px;
-  margin: 1rem 0;
+  margin: 1.5rem auto;
+  display: block;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--card-border-color, #e9ecef);
 }
 
 /* Category & Tag Badges */

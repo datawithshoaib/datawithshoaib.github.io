@@ -3,12 +3,10 @@ layout: post
 title: Azure Data Flow Derived Columns
 date: 2024-12-20
 permalink: /posts/2024/12/azure-data-flow-derived-columns/
-tags:
-  - Azure
-  - Data Flow
-  - Azure Data Factory
+tags: ['Azure Data Flow', 'Expression Builder', 'Data Transformation', 'Data Cleansing']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Creating new columns, modifying schema types, and applying expressions using derived column transformations."
 
 ---
 
@@ -44,17 +42,17 @@ Now, we select a transformation by clicking on the + icon
 
 Surrogate Key creates a new column with unique identifier for each record. It creates incremental values so that the values are unique starting from a start value.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowdercol/image-1.png)
+![alt text](/assets/img/posts/dataflowdercol/image-1.png)
 
 Next, we're going to split our name column, for this we use a transformation called derived column.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowdercol/image-2.png)
+![alt text](/assets/img/posts/dataflowdercol/image-2.png)
 
 Now, we use "select" transformation to select the columns we want in the next step.
 
 Using this, we can remove the columns we don't want in the next step
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowdercol/image-3.png)
+![alt text](/assets/img/posts/dataflowdercol/image-3.png)
 
 
 At the end, we select the sink for our output.
@@ -66,7 +64,7 @@ In settings, set output to single file and give name to the output file..
 
 Create a pipeline by dragging the data flow created and publish all. Then, trigger now..
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowdercol/image-4.png)
+![alt text](/assets/img/posts/dataflowdercol/image-4.png)
 
 We now have the new file with applied transformations.
 

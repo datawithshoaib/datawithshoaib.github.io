@@ -1,14 +1,12 @@
 ---
+categories: ['Python & Machine Learning']
+description: "A clear explanation of hyperparameter optimization and cross-validation using Scikit-learn GridSearchCV."
 layout: post
 title: Understanding GridSearchCV
 date: 2026-06-30
 permalink: /posts/2026/06/understanding-gridsearchcv/
 excerpt_separator: <!--more-->
-tags:
-  - GridSearchCV
-  - ML
-categories:
-  - ML
+tags: ['Machine Learning', 'Scikit-learn', 'GridSearchCV', 'Hyperparameter Tuning', 'Cross-Validation']
 toc: true
 ---
 When building a machine learning model, one common question is:

@@ -1,14 +1,12 @@
 ---
+categories: ['Python & Machine Learning']
+description: "Understanding how Python dataclasses work under the hood, why they exist, and how they reduce boilerplate."
 layout: post
 title: Understanding dataclass from first principles
 date: 2026-09-17
 permalink: /posts/2026/09/understanding-dataclass-from-first-principles/
 excerpt_separator: <!--more-->
-tags:
-  - Python
-  - dataclass
-categories:
-  - Python
+tags: ['Python', 'Dataclasses', 'OOP', 'Code Quality', 'Python Fundamentals']
 toc: true
 ---
 # First: Why do we need `dataclass`?

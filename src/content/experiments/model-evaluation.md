@@ -4,11 +4,9 @@ title: "Model Evaluation"
 author: Shoaib
 date: 2026-09-15
 permalink: /experiments/model-evaluation/
-tags:
-  - AI
-  - Evaluation
-  - LLMs
-categories: ["AI"]
+tags: ['Model Evaluation', 'LLM Benchmarks', 'LLM-as-a-Judge', 'Groundedness', 'Performance Metrics']
+categories: ['Evaluation & Benchmarks']
+description: "Frameworks and metrics for evaluating factual accuracy, response relevance, groundedness, latency, and cost."
 ---
 
 Evaluating an AI model is not only about whether it can answer a question. It is also about how well it does so under constraints such as correctness, clarity, safety, speed, and cost.

@@ -2,7 +2,9 @@
 title: Student Performance Prediction
 date: 2024-05-18
 permalink: /projects/Student-Performance-Prediction/
-categories: [Projects, Machine Learning]
+categories: ['Machine Learning & AI']
+github: 'https://github.com/theshoaibakthar/Student-Performance-Prediction'
+tags: ['Python', 'Machine Learning', 'Regression', 'EDA', 'Scikit-learn']
 excerpt: Predicted student academic outcomes using demographic and educational data. Applied EDA, preprocessing, and classification models. Helped identify at-risk students early.
 collection: portfolio
 ---

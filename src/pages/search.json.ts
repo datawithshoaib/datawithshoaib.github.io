@@ -19,7 +19,7 @@ export const GET: APIRoute = async () => {
     ...portfolio.map((p) => ({
       title: p.data.title,
       url: getPortfolioUrl(p),
-      excerpt: p.data.description || '',
+      excerpt: p.data.description || p.data.excerpt || '',
       date: p.data.date ? new Date(p.data.date).toISOString() : '',
       tags: p.data.tags || [],
       categories: p.data.categories || [],
@@ -28,7 +28,7 @@ export const GET: APIRoute = async () => {
     ...experiments.map((e) => ({
       title: e.data.title,
       url: getExperimentUrl(e),
-      excerpt: e.data.description || '',
+      excerpt: e.data.description || e.data.excerpt || '',
       date: e.data.date ? new Date(e.data.date).toISOString() : '',
       tags: e.data.tags || [],
       categories: e.data.categories || [],

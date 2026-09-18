@@ -4,14 +4,11 @@ title: Create a generative AI app that uses your own data
 date: 2025-05-03
 permalink: /posts/2025/05/create-a-generative-ai-app-that-uses-your-own-data/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - GenAI
-  - RAG
-  - Azure AI Foundry
+tags: ['Fine-Tuning', 'Content Filtering', 'AI Safety', 'Guardrails', 'Model Alignment']
 image: /assets/img/posts/genai-rag.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Fine-tuning foundational models and configuring Azure Content Safety filters to ensure responsible AI deployments."
 
 ---
 

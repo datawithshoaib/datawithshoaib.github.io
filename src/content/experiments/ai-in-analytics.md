@@ -4,11 +4,9 @@ title: "AI in Analytics"
 author: Shoaib
 date: 2026-09-12
 permalink: /experiments/ai-in-analytics/
-tags:
-  - AI
-  - Analytics
-  - Business Intelligence
-categories: ["AI"]
+tags: ['AI Analytics', 'Text-to-SQL', 'Automated Insights', 'Business Intelligence', 'Data Copilots']
+categories: ['AI in Analytics']
+description: "Applying language models to data exploration, natural-language SQL queries, metric anomaly diagnosis, and automated BI reporting."
 ---
 
 AI can support analytics in several meaningful ways, from auto-summarizing reports to helping users ask natural-language questions about data. The key is to use AI as an augmentation layer rather than a replacement for sound data reasoning.

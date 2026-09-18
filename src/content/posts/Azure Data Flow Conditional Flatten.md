@@ -3,12 +3,10 @@ layout: post
 title: Azure Data Flow Conditional Flatten
 date: 2024-12-20
 permalink: /posts/2024/12/azure-data-flow-conditional-flatten/
-tags:
-  - Azure
-  - Data Flow
-  - Azure Data Factory
+tags: ['Azure Data Flow', 'Azure Data Factory', 'ETL', 'JSON Flattening', 'Data Engineering']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Techniques for unrolling and flattening complex nested arrays and JSON structures conditionally in Azure Data Factory."
 
 ---
 
@@ -41,20 +39,20 @@ Unroll by albums.tracks
 
 If we look at the data preview, we can see the data is flattened.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowcondflatten/img1.png) 
+![alt text](/assets/img/posts/dataflowcondflatten/img1.png) 
 
 
 We need to set the sink options to output to single file and give a file name.
 
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowcondflatten/img2.png) 
+![alt text](/assets/img/posts/dataflowcondflatten/img2.png) 
 
 
 Now, we create the pipeline by dragging this data flow and trigger it.
 
 If we go to the container, a new file is created as shown below.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowcondflatten/img3.png)
+![alt text](/assets/img/posts/dataflowcondflatten/img3.png)
 
 ---
 

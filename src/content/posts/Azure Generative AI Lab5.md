@@ -4,14 +4,11 @@ title: Use a prompt flow to manage conversation in a chat app
 date: 2025-05-03
 permalink: /posts/2025/05/use-prompt-flow-to-manage-conversation-in-chat-app/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - GenAI
-  - PromptFlow
-  - Azure AI Foundry
+tags: ['RAG', 'Azure AI Search', 'Enterprise Data', 'Vector Search', 'Context Grounding']
 image: /assets/img/posts/prmpt-flow.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Connecting external enterprise data to language models using Retrieval-Augmented Generation (RAG) in Azure AI."
 
 ---
 

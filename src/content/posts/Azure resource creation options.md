@@ -4,13 +4,11 @@ title: How to create and manage Azure resources?
 date: 2025-04-28
 permalink: /posts/2025/04/create-and-manage-azure-resources/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - Resource Management
-  - Infrastructure
+tags: ['Azure Management', 'Azure Portal', 'Resource Groups', 'Subscriptions', 'Governance']
 image: /assets/img/posts/az-res.png
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Best practices for structuring management groups, subscriptions, resource groups, and tagging in Microsoft Azure."
 
 ---
 

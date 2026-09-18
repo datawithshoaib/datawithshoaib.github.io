@@ -3,12 +3,10 @@ layout: post
 title: TCO Calculator in Azure
 date: 2024-12-17
 permalink: /posts/2024/12/tco-calculator-in-azure/
-tags:
-  - Azure
-  - TCO
-  - Calculators
+tags: ['Azure TCO', 'Total Cost of Ownership', 'Cloud Migration', 'Cost Analysis']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Evaluating total cost of ownership, on-premises vs cloud ROI, and migration savings with the Azure TCO Calculator."
 
 ---
 
@@ -32,7 +30,7 @@ Let's say that:
 
 TCO Calculator involves 3 steps:
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image.png)
+![alt text](/assets/img/posts/tco/image.png)
 
 ---
 
@@ -40,9 +38,9 @@ TCO Calculator involves 3 steps:
 
 Go to the [TCO Calculator](https://azure.microsoft.com/en-gb/pricing/tco/calculator/)
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image-1.png)
+![alt text](/assets/img/posts/tco/image-1.png)
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image-2.png)
+![alt text](/assets/img/posts/tco/image-2.png)
 
 ## Adjust assumptions
 
@@ -53,7 +51,7 @@ In practice, you would adjust any cost assumptions and make any adjustments to m
 - At the top of the page, select your currency. This example uses US Dollar ($).
 - Select Next.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image-3.png)
+![alt text](/assets/img/posts/tco/image-3.png)
 
 ## View the report
 
@@ -64,11 +62,11 @@ To make these adjustments:
 - Set Timeframe to 3 Years.
 - Set Region to North Europe.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image-4.png)
+![alt text](/assets/img/posts/tco/image-4.png)
 
 Scroll to the summary at the bottom. You see a comparison of running your workloads in the datacenter versus on Azure.
 
-![alt text]({{ site.baseurl }}/assets/img/posts/tco/image-5.png)
+![alt text](/assets/img/posts/tco/image-5.png)
 
 Select Download to download or print a copy of the report in PDF format.
 

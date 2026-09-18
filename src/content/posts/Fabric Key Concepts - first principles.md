@@ -7,10 +7,8 @@ excerpt_separator: <!--more-->
 tags:
   - Fabric
   - DP-600
-image:
 toc: true
-categories:
-  - Fabric
+categories: ['Azure & Cloud']
 ---
 Instead of memorizing definitions, think about the fundamental problem each component solves.
 

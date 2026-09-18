@@ -1,18 +1,15 @@
 ---
+categories: ['Power BI & Power Platform']
+description: "A 15-day progressive guide to mastering Data Analysis Expressions (DAX) in Microsoft Power BI."
 layout: post
 title: 15 Days of DAX Series
 date: 2025-03-09
 permalink: /posts/2025/03/15-days-of-dax-series/
 excerpt_separator: <!--more-->
-tags:
-  - PowerBI
-  - DAX
-  - Series
+tags: ['Power BI', 'DAX', 'Data Modeling', 'CALCULATE', 'Time Intelligence']
 image: /assets/img/posts/15daysofdax.png
 featured: false
 toc: true
-categories:
-  - Power BI
 ---
 
 This is the 15 days of DAX series that I have created on LinkedIn. Learn 50+ common DAX functions in Power BI with simple examples.

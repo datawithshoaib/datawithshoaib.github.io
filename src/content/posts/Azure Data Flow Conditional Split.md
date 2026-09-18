@@ -3,12 +3,10 @@ layout: post
 title: Azure Data Flow Conditional Split
 date: 2024-12-20
 permalink: /posts/2024/12/azure-data-flow-conditional-split/
-tags:
-  - Azure
-  - Data Flow
-  - Azure Data Factory
+tags: ['Azure Data Flow', 'Data Transformation', 'ETL Pipelines', 'Azure Data Factory']
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Routing data rows to different stream destinations based on specific business rule conditions in Azure Data Flow."
 
 ---
 
@@ -59,7 +57,7 @@ age int not null
 )
 ```
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowcondsplit/image.png)
+![alt text](/assets/img/posts/dataflowcondsplit/image.png)
 
 ---
 
@@ -72,7 +70,7 @@ we need to create datasets that points to those 3 tables
 
 ### 3. Create data flows
 
-![alt text]({{ site.baseurl }}/assets/img/posts/dataflowcondsplit/img1.png)
+![alt text](/assets/img/posts/dataflowcondsplit/img1.png)
 
 ### 4. Create pipeline
 

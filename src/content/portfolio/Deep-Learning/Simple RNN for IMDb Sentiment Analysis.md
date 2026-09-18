@@ -2,7 +2,9 @@
 title: Simple RNN for IMDb Sentiment Analysis
 date: 2025-12-20
 permalink: /projects/Simple-RNN-IMDb-Sentiment-Analysis/
-categories: [Projects, Deep Learning]
+categories: ['Machine Learning & AI']
+github: 'https://github.com/theshoaibakthar/Deep-Learning-Projects/tree/main/Simple-RNN-IMDb'
+tags: ['Deep Learning', 'TensorFlow', 'Keras', 'RNN', 'Sentiment Analysis']
 excerpt: Developed an end-to-end deep learning project using a simple RNN on the IMDb movie reviews dataset.
 collection: portfolio
 ---

@@ -3,13 +3,11 @@ layout: post
 title: Why do we need to subtract 3 in word index in IMDb dataset from Tensorflow?
 date: 2025-12-20
 permalink: /posts/2025/12/why-subtract-3-in-word-index-in-IMDb-dataset-tensorflow/
-tags:
-  - IMDb
-  - Tensorflow
-  - Keras
+tags: ['TensorFlow', 'Keras', 'Deep Learning', 'IMDb', 'NLP', 'Tokenization']
 excerpt_separator: <!--more-->
 toc: true
-categories: ["General"]
+categories: ['Python & Machine Learning']
+description: "Solving the common mystery of why index 3 must be offset when decoding sequences in Keras IMDb reviews."
 
 ---
 As I was working with IMDb dataset, I noticed while decoding, we need to subtract 3 in the word index to get the corresponding word. Let's understand why.

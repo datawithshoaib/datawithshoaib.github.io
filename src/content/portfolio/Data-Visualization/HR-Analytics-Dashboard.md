@@ -2,7 +2,9 @@
 title: HR Analytics Dashboard
 date: 2024-04-12
 permalink: /projects/HR-Analytics-Dashboard/
-categories: [Projects, Data Visualization]
+categories: ['Business Intelligence']
+github: 'https://github.com/theshoaibakthar/PowerBI-Projects/tree/main/HR-Analytics'
+tags: ['Power BI', 'DAX', 'Power Query', 'HR Analytics', 'Workforce Insights']
 excerpt: Built a Power BI dashboard to visualize headcount, salaries, leave data, and demographics. Used DAX and Power Query for dynamic insights. Supports strategic HR decisions through clear, interactive visuals.
 collection: portfolio
 ---

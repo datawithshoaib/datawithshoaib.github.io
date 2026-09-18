@@ -3,13 +3,11 @@ layout: post
 title: Choose and deploy a language model
 date: 2025-05-01
 permalink: /posts/2025/05/choose-and-deploy-a-language-model/
-tags:
-  - Azure
-  - GenAI
-  - Model Deployment
+tags: ['LLM Deployment', 'Model Catalog', 'Azure OpenAI', 'Llama', 'API Endpoints']
 image: /assets/img/posts/llm-deploy.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "How to browse, evaluate, select, and deploy large language models in Azure AI Studio for production endpoints."
 
 ---
 

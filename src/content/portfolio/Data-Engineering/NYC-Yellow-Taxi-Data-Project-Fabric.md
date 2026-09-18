@@ -2,7 +2,9 @@
 title: NYC Yellow Taxi Data Project using Fabric
 date: 2025-12-06
 permalink: /projects/NYC-Yellow-Taxi-Data-Project-Fabric/
-categories: [Projects, Data Engineering]
+categories: ['Data Engineering']
+github: 'https://github.com/theshoaibakthar/Fabric-Projects/tree/main/NYC-Yellow-Taxi-Data-Project'
+tags: ['Microsoft Fabric', 'PySpark', 'Delta Lake', 'Lakehouse', 'ETL Pipelines']
 excerpt: A complete end-to-end data engineering and analytics solution implemented using Microsoft Fabric for NYC Yellow Taxi trip data (January– October 2025)
 collection: portfolio
 ---

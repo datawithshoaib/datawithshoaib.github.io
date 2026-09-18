@@ -2,7 +2,9 @@
 title: Kindle Review Sentiment Analysis
 date: 2025-11-01
 permalink: /projects/NLP/Kindle-Review-Sentiment-Analysis/
-categories: [Projects, NLP]
+categories: ['Machine Learning & AI']
+github: 'https://github.com/theshoaibakthar/NLP-Projects/tree/main/Kindle-Review-Sentiment-Analysis'
+tags: ['Python', 'NLP', 'Sentiment Analysis', 'TF-IDF', 'Word2Vec', 'Scikit-learn']
 excerpt: "Sentiment analysis on Amazon Kindle reviews using various NLP techniques: Implemented multiple text vectorization methods (BOW, TF-IDF, Word2Vec), \rbuilt and compared different classification models, processed and analyzed the Kindle Reviews dataset."
 collection: portfolio
 ---

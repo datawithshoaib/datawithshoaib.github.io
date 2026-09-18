@@ -2,7 +2,9 @@
 title: Danny's Diner SQL Case Study
 date: 2024-10-15
 permalink: /projects/8-Week-SQL-Challenge/Dannys-Diner/
-categories: [Projects, 8 Week SQL Challenge]
+categories: ['SQL & Analytics']
+github: 'https://github.com/theshoaibakthar/8-Week-SQL-Challenge/tree/main/1_Dannys_Diner'
+tags: ['SQL', 'PostgreSQL', 'CTEs', 'Window Functions', 'Customer Analysis']
 excerpt: Analyzed customer behavior and sales for a Japanese diner using PostgreSQL. Tackled real-world questions with CTEs and subqueries. Revealed purchase patterns and visit frequency.
 collection: portfolio
 ---

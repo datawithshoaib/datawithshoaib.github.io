@@ -4,13 +4,11 @@ title: Fine-tune and apply content filters to a language model
 date: 2025-05-03
 permalink: /posts/2025/05/fine-tune-apply-content-filter-lang-model/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - GenAI
-  - Fine-tuning
+tags: ['Multimodal AI', 'Computer Vision', 'GPT-4V', 'Prompt Design', 'Azure AI']
 image: assets/img/posts/azai-ft-cf.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Building multimodal applications using vision-enabled language models to process text and images simultaneously."
 
 ---
 

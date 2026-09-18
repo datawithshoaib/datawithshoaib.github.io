@@ -3,13 +3,11 @@ layout: post
 title: Prepare for an AI development project
 date: 2025-04-30
 permalink: /posts/2025/04/prepare-for-an-ai-development-project/
-tags:
-  - Azure
-  - GenAI
-  - AI Foundry
+tags: ['Azure AI', 'Generative AI', 'AI Projects', 'Azure Studio']
 image: /assets/img/posts/prep-aidev.png
 toc: true
-categories: ["Azure"]
+categories: ['Generative AI & LLMs']
+description: "Preparing your Azure environment, provisioning hubs and projects, and setting up role-based access for AI development."
 
 ---
 
@@ -25,7 +23,7 @@ On the home page, we have an option to create project, click on it.
 
 It will automatically create new resources and hub (if we don't have one).
 
-![img]({{ site.baseurl }}/assets/img/posts/ai-foundry-project-creation.png)
+![img](/assets/img/posts/ai-foundry-project-creation.png)
 
 Here, we can see:
 - Hub name

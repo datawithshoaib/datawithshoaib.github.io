@@ -4,12 +4,11 @@ title: DP-100 Preparation Notes
 date: 2025-04-05
 permalink: /posts/2025/04/dp-100-preparation-notes/
 excerpt_separator: <!--more-->
-tags:
-  - Azure
-  - DP-100
+tags: ['DP-100', 'Azure Machine Learning', 'MLOps', 'Model Training', 'Certification']
 image: /assets/img/posts/dp100-prep.png
 toc: true
-categories: ["Azure"]
+categories: ['Azure & Cloud']
+description: "Study notes and key topic summaries for the Microsoft Azure Data Scientist Associate (DP-100) certification."
 
 ---
 My notes to prepare for DP-100 exam. This includes some important concepts which may help.

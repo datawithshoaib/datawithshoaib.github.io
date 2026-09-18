@@ -4,11 +4,9 @@ title: "RAG Concepts"
 author: Shoaib
 date: 2026-09-16
 permalink: /experiments/rag-concepts/
-tags:
-  - AI
-  - RAG
-  - Retrieval
-categories: ["AI"]
+tags: ['RAG', 'Vector Search', 'Embeddings', 'Context Grounding', 'Information Retrieval']
+categories: ['RAG & Retrieval']
+description: "Architecting Retrieval-Augmented Generation systems to ground LLM reasoning with vector databases and semantic search."
 ---
 
 Retrieval-Augmented Generation, or RAG, combines a search/retrieval layer with a language model. The idea is to ground the model in relevant source material instead of relying only on its internal training data.
