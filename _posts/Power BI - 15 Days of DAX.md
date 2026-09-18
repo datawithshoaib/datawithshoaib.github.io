@@ -8,7 +8,7 @@ tags:
   - PowerBI
   - DAX
   - Series
-image: /files/15daysofdax.png
+image: /assets/img/posts/15daysofdax.png
 featured: false
 toc: true
 categories:

@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 tags:
   - Azure
   - AZ-900
-image: /files/az900-qns.png
+image: /assets/img/posts/az900-qns.png
 toc: true
 categories: ["Azure"]
 

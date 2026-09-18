@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 tags:
   - Azure
   - AI-900
-image: /files/AI900-Prep.png
+image: /assets/img/posts/AI900-Prep.png
 toc: true
 categories: ["Azure"]
 

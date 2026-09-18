@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 tags:
   - Azure
   - DP-900
-image: /files/dp900-qns.png
+image: /assets/img/posts/dp900-qns.png
 toc: true
 categories: ["Azure"]
 

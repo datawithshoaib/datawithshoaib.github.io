@@ -15,7 +15,7 @@ If you’re preparing for your first data analyst role, these 50 interview quest
 
 <!--more-->
 
-![img](/files/top50pbi.png)
+![img](/assets/img/posts/top50pbi.png)
 
 **1. What is Power BI?**
 Power BI is a business analytics tool by Microsoft that lets you visualize data, share insights, and make data-driven decisions using interactive dashboards and reports.

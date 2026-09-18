@@ -9,7 +9,7 @@ tags:
   - PL-300
 toc: true
 categories: ["General"]
-image: /files/pbi-cert.png
+image: /assets/img/posts/pbi-cert.png
 
 ---
 
