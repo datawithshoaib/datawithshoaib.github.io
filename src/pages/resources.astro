@@ -45,6 +45,31 @@ const categoriesList = [
   'Deep Learning',
   'Python',
 ];
+
+function getCategorySlug(cat: string): string {
+  return cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+}
+
+function getCategoryIcon(cat: string): string {
+  switch (cat) {
+    case 'Machine Learning':
+      return 'fas fa-brain';
+    case 'Power BI':
+      return 'fas fa-chart-pie';
+    case 'SQL & Databases':
+      return 'fas fa-database';
+    case 'Data Analytics':
+      return 'fas fa-chart-line';
+    case 'Generative AI':
+      return 'fas fa-robot';
+    case 'Deep Learning':
+      return 'fas fa-network-wired';
+    case 'Python':
+      return 'fab fa-python';
+    default:
+      return 'fas fa-layer-group';
+  }
+}
 ---
 
 <BaseLayout
@@ -64,54 +89,37 @@ const categoriesList = [
         Visual slide decks, educational carousels, and downloadable guides covering Python, Data Analytics, Power BI, SQL, Machine Learning, Deep Learning, and Generative AI.
       </p>
 
-      <!-- Stats Summary Badges -->
-      <div class="d-flex flex-wrap gap-2 mb-4">
-        <span class="resource-stat-badge">
-          <i class="fas fa-layer-group me-1 text-primary"></i> <strong>{totalCount}</strong> Total Decks
-        </span>
+      <!-- Category Badges / Filter Buttons -->
+      <div class="d-flex flex-wrap gap-2 mb-4" id="resource-category-filters">
+        <button type="button" class="resource-stat-badge resource-filter-btn active" data-category="All">
+          <i class="fas fa-layer-group me-1 text-primary"></i> <strong>{totalCount}</strong>&nbsp;Total Decks
+        </button>
         {categoriesList.map((cat) => (
           categoryCounts[cat] ? (
-            <span class="resource-stat-badge">
+            <button type="button" class="resource-stat-badge resource-filter-btn" data-category={cat}>
+              <i class={`${getCategoryIcon(cat)} me-1 cat-icon-${getCategorySlug(cat)}`}></i>
               <strong>{categoryCounts[cat]}</strong>&nbsp;{cat}
-            </span>
+            </button>
           ) : null
         ))}
       </div>
 
-      <!-- Search & Filter Controls -->
+      <!-- Search Controls -->
       <div class="resource-controls card p-3 shadow-sm border-0 mb-4">
-        <div class="row g-2 align-items-center">
-          <div class="col-12 col-md-5">
-            <div class="input-group">
-              <span class="input-group-text bg-transparent border-end-0">
-                <i class="fas fa-search text-muted"></i>
-              </span>
-              <input
-                type="text"
-                id="resource-search-input"
-                class="form-control border-start-0 ps-0"
-                placeholder="Search guides, Python, Power BI, SQL, ML, AI..."
-                aria-label="Search resources"
-              />
-              <button class="btn btn-outline-secondary border-start-0 d-none" type="button" id="resource-search-clear" title="Clear search">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Category filter pills -->
-          <div class="col-12 col-md-7">
-            <div class="d-flex flex-wrap gap-1 justify-content-md-end" id="resource-category-filters">
-              <button type="button" class="btn btn-sm resource-filter-btn active" data-category="All">
-                All ({totalCount})
-              </button>
-              {categoriesList.map((cat) => (
-                <button type="button" class="btn btn-sm resource-filter-btn" data-category={cat}>
-                  {cat} ({categoryCounts[cat] || 0})
-                </button>
-              ))}
-            </div>
-          </div>
+        <div class="input-group">
+          <span class="input-group-text bg-transparent border-end-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input
+            type="text"
+            id="resource-search-input"
+            class="form-control border-start-0 ps-0"
+            placeholder="Search guides, Python, Power BI, SQL, ML, AI..."
+            aria-label="Search resources"
+          />
+          <button class="btn btn-outline-secondary border-start-0 d-none" type="button" id="resource-search-clear" title="Clear search">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -152,6 +160,7 @@ const categoriesList = [
                 )}
 
                 <span class={`resource-badge-overlay badge-bottom-left cat-tag-${catSlug}`}>
+                  <i class={`${getCategoryIcon(res.category)} me-1`}></i>
                   {res.category}
                 </span>
 
@@ -301,6 +310,30 @@ const categoriesList = [
   border: 1px solid var(--card-border-color, #e9ecef);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   color: var(--text-color, #212529);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  line-height: 1.5;
+}
+
+.resource-stat-badge:hover {
+  background-color: var(--btn-border-color, #f1f3f5);
+  border-color: var(--link-color, #007bff);
+  color: var(--heading-color, #212529);
+  transform: translateY(-1px);
+}
+
+.resource-stat-badge.active {
+  background-color: var(--link-color, #007bff);
+  color: #ffffff !important;
+  border-color: var(--link-color, #007bff);
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+.resource-stat-badge.active i,
+.resource-stat-badge.active strong {
+  color: #ffffff !important;
 }
 
 .resource-controls {
@@ -313,28 +346,6 @@ const categoriesList = [
   background-color: transparent !important;
   color: var(--text-color, #212529) !important;
   border-color: var(--card-border-color, #e9ecef);
-}
-
-.resource-filter-btn {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  background: transparent;
-  color: var(--text-muted-color, #6c757d);
-  border: 1px solid var(--card-border-color, #e0e0e0);
-  transition: all 0.2s ease;
-}
-
-.resource-filter-btn:hover {
-  background-color: var(--btn-border-color, #f1f3f5);
-  color: var(--heading-color, #212529);
-}
-
-.resource-filter-btn.active {
-  background-color: var(--link-color, #007bff);
-  color: #ffffff;
-  border-color: var(--link-color, #007bff);
-  font-weight: 600;
 }
 
 .resource-card {
@@ -427,6 +438,14 @@ const categoriesList = [
 .cat-tag-generative-ai { background-color: rgba(236, 72, 153, 0.95); }
 .cat-tag-deep-learning { background-color: rgba(139, 92, 246, 0.95); }
 .cat-tag-python { background-color: rgba(59, 130, 246, 0.95); }
+
+.cat-icon-machine-learning { color: #6366f1; }
+.cat-icon-power-bi { color: #f59e0b; }
+.cat-icon-sql-databases { color: #0ea5e9; }
+.cat-icon-data-analytics { color: #10b981; }
+.cat-icon-generative-ai { color: #ec4899; }
+.cat-icon-deep-learning { color: #8b5cf6; }
+.cat-icon-python { color: #3b82f6; }
 
 .resource-hover-hint {
   position: absolute;
@@ -552,6 +571,25 @@ const categoriesList = [
   justify-content: space-between;
   padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.deck-modal-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.deck-modal-category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background-color: var(--btn-border-color, #e9ecef);
+  color: var(--text-color, #495057);
+  display: inline-flex;
+  align-items: center;
 }
 
 .deck-modal-title {
@@ -795,6 +833,27 @@ const categoriesList = [
       }, 3000);
     }
 
+    function getCategoryIconClass(cat) {
+      switch (cat) {
+        case 'Machine Learning':
+          return 'fas fa-brain';
+        case 'Power BI':
+          return 'fas fa-chart-pie';
+        case 'SQL & Databases':
+          return 'fas fa-database';
+        case 'Data Analytics':
+          return 'fas fa-chart-line';
+        case 'Generative AI':
+          return 'fas fa-robot';
+        case 'Deep Learning':
+          return 'fas fa-network-wired';
+        case 'Python':
+          return 'fab fa-python';
+        default:
+          return 'fas fa-layer-group';
+      }
+    }
+
     function openDeck(slug, initialSlideIndex) {
       const deck = resourcesBySlug[slug];
       if (!deck || !deck.slides || deck.slides.length === 0) return;
@@ -804,7 +863,7 @@ const categoriesList = [
 
       if (modalTitle) modalTitle.textContent = deck.title;
       if (modalCategory) {
-        modalCategory.textContent = deck.category;
+        modalCategory.innerHTML = '<i class="' + getCategoryIconClass(deck.category) + ' me-1"></i>' + deck.category;
       }
 
       const pdfUrl = deck.pdf_path ? (deck.pdf_path.startsWith('/') ? deck.pdf_path : '/' + deck.pdf_path) : '#';
