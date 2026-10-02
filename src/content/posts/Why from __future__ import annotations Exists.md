@@ -1,13 +1,16 @@
 ---
-categories: ['Python & Machine Learning']
-description: "Explaining deferred type evaluation in Python, PEP 563, and why from __future__ import annotations is essential."
+categories:
+  - Python & Machine Learning
+description: Explaining deferred type evaluation in Python, PEP 563, and why from __future__ import annotations is essential.
 layout: post
 title: Why from __future__ import annotations Exists?
 date: 2026-09-17
 permalink: /posts/2026/09/why-from-__future__-import-annotations-exists/
 excerpt_separator: <!--more-->
-tags: ['Python', 'Type Hints', 'PEP 563', 'Language Internals', 'Clean Code']
-
+tags:
+  - Python
+  - Type Hints
+  - Clean Code
 toc: true
 ---
 Have you ever wondered why some Python files start with this strange line?
