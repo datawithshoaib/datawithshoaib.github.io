@@ -1,14 +1,13 @@
 ---
 title: ResearchPilot
 date: 2026-10-02
-permalink: /portfolio/ResearchPilot/
-domain: Software
-area: AI
-skills:
-  - Python
-  - LangChain
-  - LangGraph
+permalink: /projects/ResearchPilot/
+categories: ['Machine Learning & AI']
+tags: ['Python', 'LangChain', 'LangGraph']
 excerpt: A multi-agent research workflow that creates analyst personas, runs parallel interview loops with web search, and synthesizes the results into a cited report using LangGraph, LangChain, Groq, and Tavily.
+github: 'https://github.com/datawithshoaib/ResearchPilot'
+collection: portfolio
+toc: true
 ---
 Most "AI research" demos I've seen are a single prompt wrapped around a search call. They work fine for simple questions and fall apart the moment the topic gets broad or technical. I wanted to build something closer to how a real research desk operates: several people with different viewpoints, each doing their own digging, then one clean report at the end.
 

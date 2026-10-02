@@ -1,14 +1,13 @@
 ---
 title: CodeBuddy
 date: 2026-03-22
-permalink: /portfolio/CodeBuddy/
-domain: Software
-area: AI
-skills:
-  - Python
-  - LangChain
-  - LangGraph
+permalink: /projects/CodeBuddy/
+categories: ['Machine Learning & AI']
+tags: ['Python', 'LangChain', 'Groq', 'FastAPI', 'Next.js']
 excerpt: An AI-powered coding assistant built with LangGraph. It works like a multi-agent development team that can take a natural language request and transform it into a working project.
+github: 'https://github.com/datawithshoaib/CodeBuddy'
+collection: portfolio
+toc: true
 ---
 _How I used LangGraph, Groq, FastAPI, and Next.js to turn one sentence into a multi-file codebase, and what building it taught me about production agent design._
 

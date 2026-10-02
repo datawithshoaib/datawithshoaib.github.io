@@ -3,14 +3,12 @@ title: US Emissions Analysis Dashboard using Databricks
 date: 2026-02-01
 permalink: /projects/Emissions-Dashboard-Databricks/
 categories: ['Data Engineering']
-github: 'https://github.com/theshoaibakthar'
+github: 'https://github.com/datawithshoaib'
 tags: ['Databricks', 'PySpark', 'SQL', 'Lakehouse', 'Power BI']
 excerpt: Implemented SQL queries to create the US Emissions Analysis dashboard in Databricks
 collection: portfolio
 toc: true
 ---
-[![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)](https://github.com/theshoaibakthar)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Post-blue?logo=linkedin)](https://linkedin.com/in/theshoaibakthar)
 
 ## Overview
 

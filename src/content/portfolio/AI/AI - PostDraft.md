@@ -1,14 +1,13 @@
 ---
 title: PostDraft
 date: 2026-08-28
-permalink: /portfolio/PostDraft/
-domain: Software
-area: AI
-skills:
-  - Python
-  - LangGraph
-  - Streamlit
-excerpt: Linkedin post generator using LangGraph
+permalink: /projects/PostDraft/
+categories: ['Machine Learning & AI']
+tags: ['Python', 'LangGraph']
+excerpt: Multi-agent Linkedin Post Generator using LangGraph
+github: 'https://github.com/datawithshoaib/PostDraft'
+collection: portfolio
+toc: true
 ---
 A few weeks ago, I found myself frustrated by the current state of "AI writing assistants."
 

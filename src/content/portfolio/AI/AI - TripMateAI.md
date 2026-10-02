@@ -1,98 +1,105 @@
 ---
 title: TripMateAI
 date: 2026-08-29
-permalink: /portfolio/TripMateAI/
-domain: Software
-area: AI
-skills:
-  - Python
-  - LangChain
-  - LangGraph
-  - RAG
+permalink: /projects/TripMateAI/
+categories: ['Machine Learning & AI']
+tags: ['Python', 'LangChain', 'LangGraph', 'HITL', 'Tavily', 'FastAPI', 'PostgreSQL']
 excerpt: Multi-Agent Travel System with LangGraph, MCP, and Human-in-the-Loop Orchestration
+github: 'https://github.com/datawithshoaib/TripMateAI'
+collection: portfolio
+toc: true
 ---
-> **A technical deep dive and engineering case study on designing, building, and deploying a production-ready multi-agent system featuring dynamic supervisor routing, input guardrails, Model Context Protocol (MCP) integrations, and stateful PostgreSQL persistence.**
 
----
+*How I designed a supervisor-driven agent system with guardrails, real-time tools over MCP, and pause-and-resume execution backed by PostgreSQL.*
 
-[![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph%20v1.2-blue?style=for-the-badge&logo=python)](https://github.com/langchain-ai/langgraph)
-[![MCP](https://img.shields.io/badge/Protocol-Model%20Context%20Protocol%20(MCP)-orange?style=for-the-badge)](https://modelcontextprotocol.io)
-[![Groq](https://img.shields.io/badge/LLM-Llama%203.3%2070B%20on%20Groq-purple?style=for-the-badge)](https://groq.com)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
-[![PostgreSQL](https://img.shields.io/badge/Persistence-PostgreSQL%20Saver-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org)
-[![Docker](https://img.shields.io/badge/Deployment-Docker-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
+**Stack:** LangGraph · Model Context Protocol (MCP) · Groq (Llama 3.3 70B) · FastAPI · PostgreSQL · Docker
+**Code:** [github.com/datawithshoaib/TripMateAI](https://github.com/datawithshoaib/TripMateAI)
 
 ---
 
-## 📌 Executive Summary (The Recruiter's TL;DR)
+## Why a single agent wasn't enough
 
-Most AI demos today are simple prompt wrappers: a user submits a prompt, a single large language model (LLM) calls a search tool, and returns a wall of text. While impressive for simple Q&A, **monolithic single-agent setups collapse when tasked with complex, multi-variable workflows** like end-to-end travel planning. Real-world planning requires coordinating flight databases, live hotel availability, weather forecasts, budget feasibility calculations, and strict safety guardrails—all while allowing the user to review and tweak the plan before finalizing.
+The first version of any LLM travel assistant is easy to build: take the user's prompt, give the model a search tool, and return whatever it writes. It works for simple questions, but trip planning is not one question. It is five or six that depend on each other:
 
-I built **TripMate AI** to demonstrate how to transition from brittle prompt chains to a **robust, enterprise-grade multi-agent architecture**.
+- Which flights make sense for this route?
+- Where should the traveler stay?
+- What will the weather be like, and what should they pack?
+- Is the budget realistic?
+- How does all of that fit into a day-by-day plan?
 
-### 🌟 Key Highlights & Engineering Capabilities Demonstrated:
-- **Supervisor-Specialist Multi-Agent Pattern**: Built with **LangGraph**, delegating sub-tasks dynamically to isolated specialist agents (Flight, Hotel, Weather, Budget, Itinerary).
-- **Model Context Protocol (MCP) Integration**: Standardized tool connectivity across multiple protocols (streamable HTTP for Tavily Search, stdio subprocesses for AviationStack via `uvx`, and an in-house custom FastMCP weather server).
-- **Production Input Guardrails**: Upstream semantic filtering to eliminate prompt injections, malicious inputs, and off-topic requests before spending downstream agent tokens.
-- **True Human-in-the-Loop (HITL) Execution**: Uses LangGraph's native `interrupt()` and state hydration to pause execution, serve an interactive draft to the user, and resume execution with human feedback via `Command(resume=...)`.
-- **Stateful Thread Persistence**: Integrated **PostgreSQL Checkpointing (`PostgresSaver`)** to maintain execution state across asynchronous HTTP boundaries and server restarts.
-- **Full-Stack Delivery**: Shipped with an asynchronous **FastAPI** backend, interactive web UI with real-time agent execution telemetry, and containerized deployment with **Docker**.
+Put all of that in one prompt with one agent and a few problems show up quickly. The context gets crowded, the model picks tools inconsistently, a single failing API can spoil the whole answer, and there is no natural moment where the user can say "this looks good, but swap the second hotel."
+
+TripMate AI is my attempt at solving these problems properly. This post walks through how it is built and why I made each design choice, including the trade-offs.
 
 ---
 
-## 🏗️ High-Level System Architecture
+## What TripMate AI does
 
-TripMate AI models travel planning as a **directed state graph (StateGraph)** rather than a linear pipeline. The graph manages shared state across all nodes, enabling conditional branch execution, parallel data enrichment, and resumable execution pauses.
+In short: a user describes a trip, and the system returns a reviewed itinerary.
 
-### Architecture Workflow Diagram
+1. A **supervisor** checks that the request is about travel and extracts structured trip constraints.
+2. It decides which **specialist agents** are needed (flights, hotels, weather, budget) and runs only those.
+3. An **itinerary agent** merges the results into a draft.
+4. The run **pauses** and shows the draft to the user.
+5. The user approves it or sends feedback, and a **final agent** produces the finished plan.
+
+Here is the whole flow:
 
 ```mermaid
 flowchart TD
     User([User Prompt]) --> API[FastAPI /api/travel]
     API --> Graph[LangGraph StateGraph]
-    
+
     subgraph Core Graph Execution
-        START([START]) --> Supervisor[Supervisor Agent & Input Guardrail]
-        
-        Supervisor -->|Off-topic / Harmful| GuardrailBlocked[Guardrail Blocked Agent]
-        GuardrailBlocked --> END_NODE([END])
-        
-        Supervisor -->|Valid Travel Request| DynamicRouter{Dynamic Agent Router}
-        
-        DynamicRouter -->|Selected| Flight[Flight Specialist Agent]
-        DynamicRouter -->|Selected| Hotel[Hotel Specialist Agent]
-        DynamicRouter -->|Selected| Weather[Weather Specialist Agent]
-        DynamicRouter -->|Selected| Budget[Budget Analyst Agent]
-        
-        Flight -.->|MCP Stdio Tool| AviationMCP[AviationStack MCP Server]
-        Hotel -.->|MCP Streamable HTTP| TavilyMCP[Tavily Search MCP]
-        Weather -.->|Custom FastMCP Stdio| WeatherMCP[Custom Weather MCP Server]
-        
-        Flight --> Itinerary[Itinerary Synthesizer Agent]
+        START([START]) --> Supervisor[Supervisor + Input Guardrail]
+
+        Supervisor -->|Off-topic / harmful| Blocked[Guardrail Blocked]
+        Blocked --> END_NODE([END])
+
+        Supervisor -->|Valid travel request| Router{Dynamic Router}
+
+        Router -->|if selected| Flight[Flight Agent]
+        Router -->|if selected| Hotel[Hotel Agent]
+        Router -->|if selected| Weather[Weather Agent]
+        Router -->|if selected| Budget[Budget Agent]
+
+        Flight -.->|stdio| AviationMCP[AviationStack MCP]
+        Hotel -.->|streamable HTTP| TavilyMCP[Tavily MCP]
+        Weather -.->|stdio| WeatherMCP[Custom Weather MCP]
+
+        Flight --> Itinerary[Itinerary Agent]
         Hotel --> Itinerary
         Weather --> Itinerary
         Budget --> Itinerary
-        
-        Itinerary --> HITL[Human Approval Node - interrupt]
+
+        Itinerary --> HITL[Human Approval - interrupt]
     end
 
-    HITL -->|Pauses & Persists State| DB[(PostgreSQL Checkpointer)]
-    DB -.->|Presents Draft| WebUI[User Web UI Review]
-    
-    WebUI -->|Approve / Feedback Revision| ResumeAPI[FastAPI /api/travel/approve]
-    ResumeAPI -->|Command resume| FinalAgent[Final Response Generator Agent]
-    FinalAgent --> END_NODE
+    HITL -->|Pause + persist state| DB[(PostgreSQL Checkpointer)]
+    DB -.->|Draft shown| WebUI[Web UI Review]
+
+    WebUI -->|Approve / revise| ResumeAPI[FastAPI /api/travel/approve]
+    ResumeAPI -->|Command resume| Final[Final Response Agent]
+    Final --> END_NODE
 ```
+
+One note on the diagram: the selected specialists run sequentially in a fixed order, skipping any that weren't chosen. I'll come back to parallel execution near the end.
 
 ---
 
-## 🧭 Step-by-Step Implementation Guide
+## Design principle: let the graph own the control flow
 
-### Step 1: Designing the Typed Shared State & PostgreSQL Checkpoint
+The most important decision was to use LangGraph's `StateGraph` rather than a free-running ReAct loop or a linear chain.
 
-In LangGraph, state is the single source of truth. Every agent receives the state, enriches specific attributes, and returns a delta to update the state graph.
+- A **linear chain** can't branch or pause. Travel planning needs both.
+- A **ReAct loop** gives the model control over what happens next, which is flexible but can lead to repeated tool calls and a ballooning context.
+- A **state graph** keeps the sequence of steps explicit and deterministic, while the LLM still does the reasoning inside each node.
 
-Instead of loosely typed dictionaries, I implemented a strict `TypedDict` schema with reducer annotations:
+In other words, the graph decides *what runs next*, and the model decides *what to say* at each step. That split made the system much easier to debug.
+
+### A typed, shared state
+
+Every node reads from and writes to one shared state object. I defined it as a `TypedDict` so each field has a clear owner:
 
 ```python
 # backend.py
@@ -100,21 +107,21 @@ class TravelState(TypedDict, total=False):
     messages: Annotated[list[AnyMessage], operator.add]
     user_query: str
 
-    # Supervisor & Guardrail state
+    # Supervisor and guardrail
     guardrail_allowed: bool
     guardrail_reason: str
     selected_agents: list[str]
     trip_constraints: dict[str, Any]
     supervisor_reasoning: str
 
-    # Specialist Agent Outputs
+    # Specialist outputs
     flight_results: str
     hotel_results: str
     weather_results: str
     budget_results: str
     itinerary: str
 
-    # Human-in-the-Loop & Final Delivery
+    # Review and delivery
     approval_request: str
     approved: bool
     human_feedback: str
@@ -122,19 +129,15 @@ class TravelState(TypedDict, total=False):
     llm_calls: int
 ```
 
-#### Why PostgreSQL Checkpointing?
-In a real-world web application, agent runs cannot remain locked in memory while waiting for human input. By connecting a `PostgresSaver` checkpointer:
-1. Every state transition is written into PostgreSQL tables automatically.
-2. When the graph encounters a human approval gate (`interrupt()`), the execution pauses cleanly, persists its memory state under a distinct `thread_id`, and terminates the active process.
-3. When the user reviews the itinerary hours later, the state is rehydrated from PostgreSQL without losing context.
+Nodes return only the keys they changed, and LangGraph merges them. The `messages` field uses the `operator.add` reducer, so messages accumulate instead of being overwritten. Since each agent writes to its own `*_results` field, one agent can never clobber another's output.
 
 ---
 
-### Step 2: Implementing Upstream Input Guardrails
+## Step 1: Guardrails before spending tokens
 
-Sending every raw user query into a multi-agent system is dangerous and expensive. A user could submit prompt injections, malicious commands, or completely unrelated queries (e.g., *"Write a Python script for crypto mining"*).
+If the system accepts every message, someone will eventually send something that has nothing to do with travel, or something harmful. Running a full multi-agent pipeline on that is wasteful at best.
 
-To protect downstream agents and minimize unnecessary LLM token spend, the **Supervisor Agent** runs an input guardrail check before routing:
+So the first thing the supervisor does is classify the request:
 
 ```python
 # backend.py
@@ -149,23 +152,21 @@ def supervisor_agent(state: TravelState):
     Block clearly unrelated requests and harmful instructions.
     Return strict JSON only: {{"allowed": true/false, "reason": "..."}}
     """
-    # Parse structured JSON decision
-    # If blocked, route immediately to guardrail_blocked node and abort
+    # Parse the JSON decision.
+    # If blocked, route to the guardrail_blocked node and end the run.
 ```
 
-#### Engineering Principle: Graceful Fallbacks
-If the guardrail parser encounters an unexpected formatting error, the system is designed to **fail open safely** with a logged warning rather than crashing the user experience.
+A blocked request goes to a dedicated `guardrail_blocked` node and the run ends there. No specialist is ever invoked.
+
+**A deliberate trade-off.** If the model returns something that can't be parsed as JSON, the guardrail logs a warning and lets the request through. I chose this fail-open behavior because the guardrail is a cost and relevance filter, and I didn't want a formatting hiccup to turn into a user-facing error. For a deployment where safety matters more than availability, flipping the fallback to "block" is a one-line change.
 
 ---
 
-### Step 3: Dynamic Supervisor Orchestration & Intelligent Routing
+## Step 2: Routing only to the agents that are needed
 
-Many multi-agent tutorials use fixed sequential pipelines (Agent A $\rightarrow$ Agent B $\rightarrow$ Agent C). This is inefficient. If a traveler asks: *"What are the flight options from London to Tokyo?"*, invoking the weather and hotel agents wastes money and adds latency.
+Many multi-agent demos run a fixed pipeline: agent A, then B, then C, for every request. That is simple, but if someone asks *"What are the flight options from London to Tokyo?"* there is no reason to look up hotels and weather.
 
-I implemented **Dynamic Supervisor Routing**:
-1. The Supervisor analyzes the query and extracts `trip_constraints` (destination, origin, duration, budget, travel style).
-2. It dynamically selects only the necessary agents (e.g., `["flight_agent", "itinerary_agent"]`).
-3. Conditional edge routing traverses the selected agents sequentially and skips untouched specialists:
+After the guardrail passes, the supervisor extracts `trip_constraints` (origin, destination, duration, budget, travel style) and a list of `selected_agents`. Conditional edges then walk only through the selected ones:
 
 ```python
 def route_from_supervisor(state: TravelState) -> str:
@@ -178,32 +179,36 @@ def route_after_agent(current_agent: str):
     def route(state: TravelState) -> str:
         selected = _selected_agents(state)
         current_index = AGENT_ORDER.index(current_agent)
-        for next_agent in AGENT_ORDER[current_index + 1 :]:
+        for next_agent in AGENT_ORDER[current_index + 1:]:
             if next_agent in selected:
                 return next_agent
         return "itinerary_agent"
     return route
 ```
 
+`AGENT_ORDER` defines a fixed order, and each agent's router finds the next selected agent after itself. If nothing is left, control moves to the itinerary agent. The supervisor also stores its `supervisor_reasoning` in state, which the UI later shows so users can see why certain agents ran.
+
+If the supervisor's output can't be parsed, it defaults to running the full workflow. That is the safe, if less efficient, choice.
+
 ---
 
-### Step 4: Adopting the Model Context Protocol (MCP) Standard
+## Step 3: Connecting tools through MCP
 
-Rather than writing custom, proprietary API integrations for every tool, I adopted the open **Model Context Protocol (MCP)** specification released by Anthropic. MCP standardizes how AI models discover and execute tools across remote and local environments.
+For real-time data, the agents need tools: flight data, live hotel information, and weather. Instead of writing a custom wrapper for each API, I used the [Model Context Protocol](https://modelcontextprotocol.io). MCP gives tools a standard interface, so the application doesn't care whether a tool is a hosted service, a local subprocess, or something I wrote myself.
 
-TripMate AI manages a unified `MultiServerMCPClient` spanning three distinct transport types:
+TripMate AI uses all three styles through one `MultiServerMCPClient`:
 
 ```python
 # mcp_client.py
 client = MultiServerMCPClient(
     {
-        # 1. Remote Streamable HTTP MCP (Tavily Real-Time Web Search)
+        # Remote streamable HTTP: Tavily web search
         "tavily": {
             "transport": "streamable_http",
             "url": f"https://mcp.tavily.com/mcp/?tavilyApiKey={TAVILY_API_KEY}",
         },
 
-        # 2. Local Stdio Subprocess MCP via uvx (AviationStack Flight Data)
+        # Local stdio subprocess via uvx: AviationStack flight data
         "aviationstack": {
             "transport": "stdio",
             "command": "uvx",
@@ -211,7 +216,7 @@ client = MultiServerMCPClient(
             "env": {"AVIATION_STACK_API_KEY": AVIATION_STACK_API_KEY},
         },
 
-        # 3. Custom In-House Stdio MCP Server (OpenWeatherMap API)
+        # Custom stdio server: OpenWeatherMap
         "weather": {
             "transport": "stdio",
             "command": sys.executable,
@@ -222,8 +227,11 @@ client = MultiServerMCPClient(
 )
 ```
 
-#### Writing a Custom MCP Server with FastMCP
-To expose real-time weather information, I engineered `custom_weather_mcp_server.py` using the `FastMCP` framework:
+The practical benefit shows up when extending the system. Adding another provider, such as a ride-hailing or rental service, means adding an entry to this config and pointing an agent at its tools, rather than rewriting integration code.
+
+### Writing my own MCP server
+
+There was no ready-made weather server that fit what I wanted, so I wrote one with FastMCP. It wraps OpenWeatherMap and exposes two tools:
 
 ```python
 # custom_weather_mcp_server.py
@@ -232,7 +240,7 @@ mcp = FastMCP("Weather MCP Server")
 @mcp.tool()
 def get_current_weather(city: str) -> dict[str, Any]:
     """Return the current weather conditions for a destination."""
-    # Queries OpenWeatherMap API, normalizes data, and returns JSON
+    # Queries OpenWeatherMap, normalizes the response, returns JSON
     ...
 
 @mcp.tool()
@@ -244,43 +252,48 @@ if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
 
-#### Fault Isolation Pattern
-A common bug in multi-agent systems is catastrophic cascading failure: if the weather server is down, the entire travel planner crashes. 
-In `mcp_client.py`, I built an isolated tool resolver (`_get_server_tool`) that traps MCP-level exceptions and allows individual specialist agents to supply fallback advice without terminating the workflow.
+The docstrings matter here. They become the tool descriptions the agent sees, so they are effectively part of the prompt.
+
+### Keeping one failure from sinking the whole trip
+
+If the weather service is down, the user can still get useful flights and hotels. To make that true, tool lookups go through an isolated resolver (`_get_server_tool`) in `mcp_client.py` that catches MCP-level exceptions. The affected agent then answers from general knowledge instead, such as seasonal advice rather than a live forecast, and the rest of the workflow continues.
 
 ---
 
-### Step 5: Engineering Specialized Domain Agents
+## Step 4: The specialist agents
 
-Each specialist in TripMate AI has a single, testable responsibility:
+Each specialist has one job, one data source, and a defined fallback:
 
-| Agent | Responsibility | Primary Data Source | Fallback Strategy |
+| Agent | Responsibility | Data source | Fallback |
 | :--- | :--- | :--- | :--- |
-| **Supervisor Agent** | Query validation, constraint parsing & routing | Llama 3.3 70B Versatile | Safe default to full workflow |
-| **Flight Agent** | Airport identification, routes, price warning | AviationStack MCP (`list_airports`, `list_airlines`) | General airline/route guidance |
-| **Hotel Agent** | Neighborhood analysis, accommodation matching | Tavily MCP Live Search | Non-live neighborhood advice |
-| **Weather Agent** | Climate checks, packing tips, forecasts | Custom FastMCP Server (OpenWeather) | Historical seasonal recommendations |
-| **Budget Agent** | Feasibility assessment, budget allocations | Multi-agent synthesis | Approximate price ranges |
-| **Itinerary Agent** | Merges all findings into a structured draft | LangGraph State Accumulator | Baseline day-by-day plan |
-| **Final Agent** | Polishes draft with human feedback applied | Human Review State | Retains user decisions |
+| **Supervisor** | Guardrail check, constraint extraction, routing | Llama 3.3 70B Versatile | Runs the full workflow |
+| **Flight** | Airport and airline lookup, route guidance, price caveats | AviationStack MCP (`list_airports`, `list_airlines`) | General airline and route guidance |
+| **Hotel** | Neighborhood analysis and accommodation matching | Tavily MCP (live search) | Non-live neighborhood advice |
+| **Weather** | Climate, forecast, and packing advice | Custom FastMCP server (OpenWeatherMap) | Seasonal recommendations |
+| **Budget** | Feasibility check and cost allocation | Outputs of the other agents | Approximate price ranges |
+| **Itinerary** | Merges all findings into a day-by-day draft | Shared graph state | Baseline day-by-day plan |
+| **Final** | Applies user feedback and produces the final plan | Human review state | Keeps the user's decisions |
+
+Keeping the responsibilities narrow has a side benefit: each agent's prompt stays short, and each one can be tested on its own.
 
 ---
 
-### Step 6: Native Human-in-the-Loop (HITL) with LangGraph Interrupts
+## Step 5: Pausing for the human with `interrupt()`
 
-Real-world travel plans involve human preferences and budget approvals. Autonomous agents should not make final booking assumptions without user consent.
+An autonomous system shouldn't commit to a plan the traveler hasn't seen. Budgets, hotel choices, and pacing are personal. So after the itinerary is drafted, the run stops and waits.
 
-#### The Anti-Pattern: Blocking HTTP Requests
-Many developers implement HITL by keeping an HTTP socket open or running an infinite `while` loop waiting for user input. This causes connection timeouts, exhausts server worker threads, and loses data on crashes.
+### The approach I avoided
 
-#### The Production Pattern: LangGraph `interrupt()`
-I implemented true asynchronous HITL using LangGraph's pause/resume mechanics:
+The obvious way to do this is to keep the HTTP request open, or poll in a loop, until the user answers. That ties up a worker per waiting user, hits timeouts, and loses everything if the process restarts. A user who steps away for an hour shouldn't hold a server thread hostage.
+
+### What I did instead
+
+LangGraph's `interrupt()` halts the graph at a specific node, and `Command(resume=...)` continues it later:
 
 ```python
 # backend.py
 def human_approval_agent(state: TravelState):
-    # LangGraph raises a GraphInterrupt exception under the hood
-    # and halts graph execution right here.
+    # interrupt() halts the graph here and surfaces the payload to the caller.
     review = interrupt(
         {
             "question": "Do you approve this itinerary?",
@@ -291,14 +304,14 @@ def human_approval_agent(state: TravelState):
         }
     )
 
-    # When resumed via Command(resume={...}), execution continues here!
+    # Execution continues here once the graph is resumed.
     return {
         "approved": bool(review.get("approved", False)),
         "human_feedback": str(review.get("feedback", "")).strip(),
     }
 ```
 
-When the user submits approval or feedback from the frontend, FastAPI invokes `resume_travel_agent`:
+The payload passed to `interrupt()` is what the frontend renders as the review card. When the user clicks **Approve** or **Revise with Feedback**, the API resumes the same thread:
 
 ```python
 def resume_travel_agent(thread_id: str, approved: bool, feedback: str = ""):
@@ -310,83 +323,66 @@ def resume_travel_agent(thread_id: str, approved: bool, feedback: str = ""):
     return _serialize_result(result, thread_id)
 ```
 
----
+The value passed to `Command(resume=...)` becomes the return value of `interrupt()` inside the node, so the code reads as if it never stopped.
 
-### Step 7: Production API & Frontend Interface
+### Why the checkpointer matters
 
-The backend is powered by **FastAPI**, offering high-performance asynchronous endpoints:
-- `POST /api/travel`: Dispatches a new planning request or resumes an existing thread.
-- `POST /api/travel/approve`: Submits human approval or revision requests.
-- `GET /health`: System diagnostics and active feature introspection.
+Pausing only works if the state survives. I used `PostgresSaver` as the checkpointer, which writes every state transition to PostgreSQL under a `thread_id`. That gives three properties:
 
-#### The Sync/Async Bridge Challenge
-FastAPI is natively asynchronous (`async/await`), while LangGraph's checkpointer and synchronous node operations execute in standard event loops. To prevent event loop collision when calling async MCP client tools within synchronous graph nodes, I applied `nest_asyncio.apply()`. This ensures synchronous graph nodes can seamlessly invoke `asyncio.run()` without triggering `RuntimeError: This event loop is already running`.
+1. While waiting for the user, the run consumes no server memory.
+2. The user can return later and resume from the exact saved state.
+3. A server restart doesn't lose in-progress plans.
 
-#### Frontend Experience
-The user interface (HTML5, CSS3, Vanilla JS) provides:
-1. **Live Supervisor Reasoning & Telemetry**: Shows which agents were selected and why.
-2. **Interactive HITL Card**: Renders the generated draft itinerary, providing **Approve** and **Revise with Feedback** options.
-3. **Export Utilities**: One-click clipboard copy and client-side **PDF generation** via `html2pdf.js`.
+The alternative, building my own pause/resume layer, would have meant manually saving message history, partial results, and the position in the graph. Having it handled by the framework removed a whole category of bugs.
 
 ---
 
-## 💡 Key Architectural Decisions & Engineering Trade-Offs
+## Step 6: The API and a sync/async snag
 
-Recruiters and hiring managers often evaluate engineers based on their ability to justify architectural trade-offs. Here is a breakdown of the key design decisions made in TripMate AI:
+The backend is a FastAPI app with three endpoints:
 
-### 1. LangGraph StateGraph vs. Linear Chains or LangChain ReAct
-- **Decision**: Built the core system with LangGraph `StateGraph`.
-- **Rationale**: Linear chains (like standard LCEL pipelines) cannot easily handle loops, conditional branches, or execution interruptions. ReAct loops, while flexible, are prone to "infinite tool loops" and token bloat. LangGraph provides **deterministic control over non-deterministic agents**, enabling clear state schemas, cyclic graph support, and built-in checkpointing.
+| Method | Endpoint | Purpose |
+| :--- | :--- | :--- |
+| `POST` | `/api/travel` | Start a planning request or continue a thread |
+| `POST` | `/api/travel/approve` | Submit approval or revision feedback |
+| `GET` | `/health` | Health check and active feature information |
 
-### 2. Standardized MCP vs. Custom Function Calling
-- **Decision**: Used the Model Context Protocol (MCP) instead of ad-hoc LangChain tools.
-- **Rationale**: MCP decouples tool execution from the application code. Tools can run as standalone microservices, separate subprocesses, or third-party hosted endpoints. By adopting MCP, adding a new data provider (e.g., Uber or Airbnb) requires adding an MCP configuration entry rather than rewriting prompt logic.
+The most annoying bug came from mixing sync and async code. FastAPI runs on an event loop, the MCP client is async, and my graph nodes are synchronous. Calling `asyncio.run()` from a node while a loop is already running raises `RuntimeError: This event loop is already running`.
 
-### 3. Native `interrupt()` vs. Custom Polling Database
-- **Decision**: Leveraged LangGraph's native `interrupt()` and `Command(resume=...)`.
-- **Rationale**: Writing custom database schemas to pause an agent midway through its thinking process requires saving the prompt stack, message history, and node cursor manually. LangGraph abstracts this into a single function call backed by PostgreSQL, drastically reducing bug surface area.
+My fix was `nest_asyncio.apply()`, which allows nested use of the event loop so synchronous nodes can safely call into the async MCP client. It works, but it is a workaround. Making the nodes natively async would be the cleaner long-term solution.
 
-### 4. Groq (Llama 3.3 70B Versatile) vs. Standard Cloud APIs
-- **Decision**: Deployed Groq's LPU inference engine running Llama 3.3 70B.
-- **Rationale**: Multi-agent workflows make multiple LLM invocations per user request (Supervisor $\rightarrow$ Specialists $\rightarrow$ Synthesizer $\rightarrow$ Finalizer). On standard proprietary APIs with ~30 tokens/sec, a full pipeline can take 45+ seconds. Groq delivers **300+ tokens/sec**, completing complex multi-agent reasoning in under 8 seconds.
+### The frontend
 
----
+The UI is plain HTML, CSS, and vanilla JavaScript. I wanted it to expose what the system is doing instead of hiding it:
 
-## 📊 Technical Skills Matrix Demonstrated
-
-| Competency Area | Technologies & Patterns Implemented |
-| :--- | :--- |
-| **Agentic Frameworks** | LangGraph, StateGraph, Dynamic Routing, Conditional Edges, State Reducers |
-| **Tool Orchestration** | Model Context Protocol (MCP), FastMCP, MultiServerMCPClient, Subprocess I/O |
-| **Reliability & Safety** | Input Guardrails, Fail-Open Fallback Handlers, Graceful Degradation |
-| **Human-AI Collaboration**| HITL (Human-in-the-Loop), `interrupt()`, State Hydration, Feedback Revisions |
-| **State & Persistence** | PostgreSQL, `PostgresSaver`, Thread Management, Transactional State |
-| **Backend & Web API** | FastAPI, Pydantic data validation, Uvicorn, Jinja2, Async/Sync Bridges |
-| **DevOps & Containers** | Docker, Multi-environment configuration (`.env`), Dependency Management |
+- **Supervisor reasoning:** which agents were selected, and why.
+- **Review card:** the draft itinerary with **Approve** and **Revise with Feedback**.
+- **Export:** copy to clipboard or download as PDF using `html2pdf.js`.
 
 ---
 
-## 🚀 Running the Project Locally
+## Why Groq and Llama 3.3 70B
 
-### 1. Clone & Set Up Virtual Environment
+One user request triggers several LLM calls in sequence: supervisor, one or more specialists, the itinerary synthesizer, and later the finalizer. Latency adds up across those calls, so inference speed has a larger effect here than in a single-call app. Groq's inference engine running Llama 3.3 70B Versatile kept the end-to-end wait short enough to feel interactive. I'd recommend measuring this on your own workload and region rather than relying on headline numbers.
+
+---
+
+## Running it yourself
+
+You'll need Python, a PostgreSQL database, [`uv`](https://docs.astral.sh/uv/) (for `uvx`), and API keys for Groq, Tavily, OpenWeatherMap, and AviationStack.
+
 ```bash
 git clone https://github.com/datawithshoaib/TripMateAI.git
 cd TripMateAI
 
 python -m venv .venv
-# On Windows:
-.venv\Scripts\Activate.ps1
-# On macOS/Linux:
-source .venv/bin/activate
-```
+source .venv/bin/activate          # Windows: .venv\Scripts\Activate.ps1
 
-### 2. Install Dependencies
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
-Create a `.env` file in the root directory:
+Create a `.env` file:
+
 ```env
 GROQ_API_KEY=your_groq_api_key
 DATABASE_URL=postgresql://user:password@host:5432/dbname
@@ -395,31 +391,38 @@ OPENWEATHER_API_KEY=your_openweather_key
 AVIATION_STACK_API_KEY=your_aviationstack_key
 ```
 
-### 4. Launch Application
+Then start the server:
+
 ```bash
 uvicorn app:app --reload --host 127.0.0.1 --port 8000
 ```
-Visit `http://127.0.0.1:8000` to interact with the system.
+
+Open `http://127.0.0.1:8000`.
 
 ---
 
-## 🔮 Future Roadmap & Production Scaling
+## What I learned
 
-If scaling TripMate AI for millions of production users, the next engineering milestones would be:
-1. **Parallel Specialist Execution**: Utilizing LangGraph's fan-out / fan-in branching (`Send` API) to execute Flight, Hotel, and Weather agents concurrently, cutting latency by another 50%.
-2. **Persistent User Vector Memory**: Integrating pgvector to remember user travel history, dietary restrictions, and airline loyalty preferences across sessions.
-3. **Autonomous Transactional Booking**: Implementing safe MCP transaction adapters (with two-factor authentication) to book refundable reservations directly upon final approval.
-
----
-
-## 👨‍💻 About the Author
-
-I am an AI Engineer passionate about designing stateful, reliable multi-agent systems. 
-
-- **GitHub**: [github.com/datawithshoaib](https://github.com/datawithshoaib)
-- **Project Repository**: [TripMateAI](https://github.com/datawithshoaib/TripMateAI)
+- **Explicit control flow beats hoping the model sorts it out.** Letting the graph decide what runs next, and the model decide what to say, made behavior predictable.
+- **Design for partial failure from the start.** Every agent needing a fallback felt like extra work, but it is why one broken API doesn't break a trip plan.
+- **Persistence is what makes human-in-the-loop real.** `interrupt()` is a small API, but it only becomes useful once state is stored somewhere durable.
+- **Tool descriptions are prompts.** The wording of an MCP tool's docstring changes how reliably an agent uses it.
+- **Guardrails are cheapest at the front door.** Rejecting a bad request before any specialist runs saves both tokens and complexity.
 
 ---
 
-*If you found this technical breakdown valuable or are looking to hire engineers who understand how to build resilient AI agents, feel free to reach out or star the repository!*
+## Limitations and next steps
 
+- **Sequential execution.** Selected specialists run one after another. Flights, hotels, and weather are independent, so LangGraph's `Send` API could fan them out in parallel and join before the itinerary step.
+- **Event loop workaround.** `nest_asyncio` should eventually give way to fully async nodes.
+- **No memory across sessions.** Each plan starts fresh. Storing preferences (dietary needs, preferred airlines, past trips) in something like pgvector would make plans more personal.
+- **No booking.** The system plans but doesn't transact. Adding MCP adapters for reservations, gated behind the same approval step, is a natural extension, starting with refundable bookings.
+- **Guardrail strictness.** The fail-open fallback is a conscious choice that may not suit every deployment.
+
+---
+
+## Closing thoughts
+
+TripMate AI started as an experiment to see whether a travel assistant could be more than a prompt wrapper. The pieces that made the biggest difference weren't the models themselves, but the structure around them: a typed state, a supervisor that routes, tools behind a standard protocol, failures that stay local, and a pause button backed by a database.
+
+If you're building something similar, the full source is on [GitHub](https://github.com/datawithshoaib/TripMateAI). Questions and feedback are welcome.
