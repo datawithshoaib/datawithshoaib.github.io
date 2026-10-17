@@ -5,7 +5,7 @@ date: 2025-01-18
 permalink: /posts/2025/01/az-900-practice-questions/
 excerpt_separator: <!--more-->
 tags: ['AZ-900', 'Azure Fundamentals', 'Cloud Concepts', 'Certification Prep']
-image: /assets/img/posts/az900-qns.png
+image: /images/posts_az900-qns.png
 toc: true
 categories: ['Azure & Cloud']
 description: "Curated practice questions and explanations covering core Azure architecture, governance, and cloud services."
@@ -18,11 +18,11 @@ Some practice questions to prepare for AZ-900 exam.
 ## Q1
 Your company has virtual machines (VMs) hosted in Microsoft Azure. The VMs are located in a single Azure virtual network named VNet1.  
 The company has users that work remotely. The remote workers require access to the VMs on VNet1. You need to provide access for the remote workers. What should you do?  
-- A.Â Configure a Site-to-Site (S2S) VPN.
-- B.Â Configure a VNet-toVNet VPN.
-- C.Â Configure a Point-to-Site (P2S) VPN.
-- D.Â Configure DirectAccess on a Windows Server 2012 server VM.
-- E.Â Configure a Multi-Site VPN
+- A. Configure a Site-to-Site (S2S) VPN.
+- B. Configure a VNet-toVNet VPN.
+- C. Configure a Point-to-Site (P2S) VPN.
+- D. Configure DirectAccess on a Windows Server 2012 server VM.
+- E. Configure a Multi-Site VPN
 
 Answer: C
 A Point-to-Site (P2S) VPN gateway connection lets you create a secure connection to your virtual network from an individual client computer. P2S VPN is useful solution instead of S2S VPN when you have only a few clients that need to connect to a VNet.
@@ -44,11 +44,11 @@ Answer: A
 
 ## Q4
 What are two characteristics of the public cloud?
-- A.Â dedicated hardware
-- B.Â unsecured connections
-- C.Â limited storage
-- D.Â metered pricing
-- E.Â self-service management
+- A. dedicated hardware
+- B. unsecured connections
+- C. limited storage
+- D. metered pricing
+- E. self-service management
 
 Answer: D, E
 
@@ -71,7 +71,7 @@ Azure Site Recovery provides
 Answer: A
 
 ## Q7
-Yes/No questions:
+Yes_No questions:
 1. You can create a resource group inside another resource group - No
 2. An Azure virtual machine can be in multiple resource groups - No
 3. A resource group can contain resources from multiple Azure regions - Yes

@@ -5,14 +5,14 @@ date: 2025-05-03
 permalink: /posts/2025/05/use-prompt-flow-to-manage-conversation-in-chat-app/
 excerpt_separator: <!--more-->
 tags: ['RAG', 'Azure AI Search', 'Enterprise Data', 'Vector Search', 'Context Grounding']
-image: /assets/img/posts/prmpt-flow.png
+image: /images/posts_prmpt-flow.png
 toc: true
 categories: ['Generative AI & LLMs']
 description: "Connecting external enterprise data to language models using Retrieval-Augmented Generation (RAG) in Azure AI."
 
 ---
 
-Use Azure AI Foundry portalâ€™s prompt flow to create a custom chat app that uses a user prompt and chat history as inputs, and uses a GPT model from Azure OpenAI to generate an output.
+Use Azure AI Foundry portal’s prompt flow to create a custom chat app that uses a user prompt and chat history as inputs, and uses a GPT model from Azure OpenAI to generate an output.
 
 <!--more-->
 
@@ -20,15 +20,15 @@ Create a project in Azure AI Foundry by entering the required details like subsc
 
 ## Configure resource authorization
 
-After creating the project,Â  the next step is to make sure that Azure AI services have access to storage account, especially blob storage, because prompt flow uses folder assets in order to store the details related to Prompt flow.
+After creating the project,  the next step is to make sure that Azure AI services have access to storage account, especially blob storage, because prompt flow uses folder assets in order to store the details related to Prompt flow.
 
-Open **management center** and go toÂ  project overview page. We can find the resource group link,Â  click on it to open the resource group related to this hub in the Azure portal.
+Open **management center** and go to  project overview page. We can find the resource group link,  click on it to open the resource group related to this hub in the Azure portal.
 
 Select **Azure AI services resource** and under **Resource Management** go to *Identity* and turn on the status. This creates the Microsoft Entra ID for our resource, which can be used to manage access to other resources to use in Azure AI Foundry.
 
-Next go to storage account,Â  identity and access management (IAM) and add **Storage Blob Data Reader role.**
+Next go to storage account,  identity and access management (IAM) and add **Storage Blob Data Reader role.**
 
-While adding this role,Â  we need to select the ID that we have created earlier for our Azure AI services resource.
+While adding this role,  we need to select the ID that we have created earlier for our Azure AI services resource.
 
 ## Deploy the model
 

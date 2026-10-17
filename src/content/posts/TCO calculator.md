@@ -30,17 +30,17 @@ Let's say that:
 
 TCO Calculator involves 3 steps:
 
-![alt text](/assets/img/posts/tco/image.png)
+![alt text](/images/posts_tco_image.png)
 
 ---
 
 ## Define your workloads
 
-Go to the [TCO Calculator](https://azure.microsoft.com/en-gb/pricing/tco/calculator/)
+Go to the [TCO Calculator](https:_/azure.microsoft.com/en-gb/pricing/tco/calculator/)
 
-![alt text](/assets/img/posts/tco/image-1.png)
+![alt text](/images/posts_tco_image-1.png)
 
-![alt text](/assets/img/posts/tco/image-2.png)
+![alt text](/images/posts_tco_image-2.png)
 
 ## Adjust assumptions
 
@@ -51,7 +51,7 @@ In practice, you would adjust any cost assumptions and make any adjustments to m
 - At the top of the page, select your currency. This example uses US Dollar ($).
 - Select Next.
 
-![alt text](/assets/img/posts/tco/image-3.png)
+![alt text](/images/posts_tco_image-3.png)
 
 ## View the report
 
@@ -62,11 +62,11 @@ To make these adjustments:
 - Set Timeframe to 3 Years.
 - Set Region to North Europe.
 
-![alt text](/assets/img/posts/tco/image-4.png)
+![alt text](/images/posts_tco_image-4.png)
 
 Scroll to the summary at the bottom. You see a comparison of running your workloads in the datacenter versus on Azure.
 
-![alt text](/assets/img/posts/tco/image-5.png)
+![alt text](/images/posts_tco_image-5.png)
 
 Select Download to download or print a copy of the report in PDF format.
 

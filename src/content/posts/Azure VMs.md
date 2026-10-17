@@ -4,7 +4,7 @@ title: Azure Virtual Machine
 date: 2024-12-15
 permalink: /posts/2024/12/azure-virtual-machine/
 tags: ['Azure VMs', 'IaaS', 'Virtual Machines', 'Compute', 'Networking']
-image: /assets/img/posts/azvm.png
+image: /images/posts_azvm.png
 toc: true
 categories: ['Azure & Cloud']
 description: "Provisioning, configuring, sizing, and securing virtual machines in Microsoft Azure cloud infrastructure."
@@ -67,7 +67,7 @@ az vm create
 ---
 
 7. **`--generate-ssh-keys`**
-   - Automatically generates a new SSH key pair (if one doesn't already exist in the default location, typically `~/.ssh`).
+   - Automatically generates a new SSH key pair (if one doesn't already exist in the default location, typically `~_.ssh`).
    - The public key is stored in the VM to enable secure SSH access.
 
 ---
@@ -591,7 +591,7 @@ This Azure CLI command lists the **security rules** in a **Network Security Grou
 ---
 #### Example Output
 
-Hereâ€™s what the table might look like:
+Here’s what the table might look like:
 
 | Name             | Priority | Port | Access |
 | ---------------- | -------- | ---- | ------ |
@@ -673,7 +673,7 @@ This Azure CLI command **creates a new Network Security Group (NSG) rule** to al
 #### Use Case
 
 - **Allow Web Traffic**:
-  - If youâ€™ve set up a web server (like **Nginx or Apache**) on a virtual machine, you need to allow **port 80** in the NSG to serve HTTP requests.
+  - If you’ve set up a web server (like **Nginx or Apache**) on a virtual machine, you need to allow **port 80** in the NSG to serve HTTP requests.
 - **Control Traffic**:
   - Ensures only specific types of traffic are allowed while denying all other types by default.
 

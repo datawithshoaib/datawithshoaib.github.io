@@ -5,7 +5,7 @@ date: 2025-04-05
 permalink: /posts/2025/04/dp-100-preparation-notes/
 excerpt_separator: <!--more-->
 tags: ['DP-100', 'Azure Machine Learning', 'MLOps', 'Model Training', 'Certification']
-image: /assets/img/posts/dp100-prep.png
+image: /images/posts_dp100-prep.png
 toc: true
 categories: ['Azure & Cloud']
 description: "Study notes and key topic summaries for the Microsoft Azure Data Scientist Associate (DP-100) certification."
@@ -46,38 +46,38 @@ Azure Databricks is a fast, easy, and collaborative Apache Spark-based analytics
 ---
 ## CUDA - Compute Unified Device Architecture
 
-CUDA (Compute Unified Device Architecture) is a parallel computing platform and programming model developed by **NVIDIA**. It allows developers to harness the **power of NVIDIA GPUs** (Graphics Processing Units) to perform **general-purpose computing** tasks—beyond just graphics.
+CUDA (Compute Unified Device Architecture) is a parallel computing platform and programming model developed by **NVIDIA**. It allows developers to harness the **power of NVIDIA GPUs** (Graphics Processing Units) to perform **general-purpose computing** tasks�beyond just graphics.
 
-### 🔍 What does CUDA do?
+### ?? What does CUDA do?
 
-It enables software developers to **run code on the GPU**, which can process thousands of threads simultaneously—greatly speeding up tasks that involve heavy computation like:
+It enables software developers to **run code on the GPU**, which can process thousands of threads simultaneously�greatly speeding up tasks that involve heavy computation like:
 
 - Matrix operations
 - Image and video processing
 - Deep learning
 - Scientific simulations
 
-### 💻 How does it work?
+### ?? How does it work?
 
 Normally, your CPU does most of the computing. But with CUDA:
 
-- You write programs (usually in C/C++ or Python via libraries like Numba or PyCUDA)
+- You write programs (usually in C_C++ or Python via libraries like Numba or PyCUDA)
 - These programs send compute-heavy parts to run on the GPU
 - The GPU executes thousands of threads in parallel, much faster than a CPU can
 
-### 🔧 Key Concepts:
+### ?? Key Concepts:
 
 - **Kernels**: Functions written to run on the GPU
 - **Threads**: Lightweight processes that run in parallel on the GPU
 - **Blocks and Grids**: Threads are organized in blocks, and blocks in grids, allowing structured parallel computation
 
-### ⚡ Example Use Cases:
+### ? Example Use Cases:
 
 - **AI/ML frameworks** like TensorFlow or PyTorch use CUDA under the hood to train models faster
 - **Gaming engines** for real-time physics or rendering
 - **Financial simulations**, **medical imaging**, etc.
 
-### 🐍 Python Example (Using `Numba` for CUDA)
+### ?? Python Example (Using `Numba` for CUDA)
 
 Numba is a Python library that allows you to write CUDA kernels using Python syntax.
 
@@ -107,11 +107,11 @@ print("First 10 results:", result[:10])
 
 ```
 
-### 🎯 **Goal:**
+### ?? **Goal:**
 
-We’re using the **GPU** to add two vectors (arrays) of 1000 random numbers each, element by element.
+We�re using the **GPU** to add two vectors (arrays) of 1000 random numbers each, element by element.
 
-### 🔧 Step-by-step Explanation:
+### ?? Step-by-step Explanation:
 
 #### 1. **Imports:**
 
@@ -138,7 +138,7 @@ def add_vectors_gpu(a, b, result):
 - `cuda.grid(1)` returns the **index of the thread** running the code (1D grid in this case).
 - Each thread adds one element from `a` and `b` and stores it in `result`.
 
-💡 Think of it as 1000 mini-workers (GPU threads), each doing one addition at the same time.
+?? Think of it as 1000 mini-workers (GPU threads), each doing one addition at the same time.
 
 #### 3. **Create Vectors:**
 
@@ -181,10 +181,10 @@ print("First 10 results:", result[:10])
 
 - Shows the first 10 values of the result, just to confirm the addition worked correctly.
 
-### 🧠 In Simple Terms:
+### ?? In Simple Terms:
 
-It’s like you're hiring 1000 workers (GPU threads) to each do one tiny task at the same time:  
-**add a[i] + b[i] → result[i]**
+It�s like you're hiring 1000 workers (GPU threads) to each do one tiny task at the same time:  
+**add a[i] + b[i] ? result[i]**
 
 This is what makes GPU computing so powerful for large-scale tasks!
 
@@ -193,7 +193,7 @@ This is what makes GPU computing so powerful for large-scale tasks!
 
 A **Deep Learning Virtual Machine** is a ready-to-use virtual environment designed for training and deploying deep learning models. It comes pre-loaded with all the tools and libraries needed for machine learning and AI tasks.
 
-### 🔑 Key Features:
+### ?? Key Features:
 
 - **Pre-installed Tools:** DLVMs include popular deep learning frameworks like TensorFlow, PyTorch, and Keras, along with data science tools like Jupyter Notebook and scikit-learn.
     
@@ -201,14 +201,14 @@ A **Deep Learning Virtual Machine** is a ready-to-use virtual environment design
     
 - **Cloud-based & Scalable:** You can easily scale up (more power) or down (less cost) depending on the size of your project.
 
-### ⚙️ Typical Use Cases:
+### ?? Typical Use Cases:
 
 - Training deep learning models
 - Running experiments with large datasets
 - Deploying AI models into production
 - Collaborating on machine learning projects without worrying about setting up the environment
 
-### 🎯 Benefits:
+### ?? Benefits:
 
 - **No Setup Hassle:** Everything is ready from the start, so you save time on installing libraries.
 - **Consistency:** Everyone on the team works in the same environment.
@@ -217,11 +217,11 @@ A **Deep Learning Virtual Machine** is a ready-to-use virtual environment design
 In short, DLVMs give you a powerful, plug-and-play workspace to build, test, and run deep learning models efficiently.
 
 ---
-## 💻 Data Science Virtual Machine
+## ?? Data Science Virtual Machine
 
 A **Data Science Virtual Machine** is a **pre-configured virtual environment** designed specifically for data science and machine learning tasks. It includes a collection of **popular tools, frameworks, and libraries** so you can start analyzing data or building models without setting anything up manually.
 
-### 🧰 What’s Inside a DSVM?
+### ?? What�s Inside a DSVM?
 
 - **Programming Languages:** Python, R, Julia, etc.
 - **IDE Tools:** Jupyter Notebook, Visual Studio Code, RStudio
@@ -230,14 +230,14 @@ A **Data Science Virtual Machine** is a **pre-configured virtual environment** d
 - **Big Data Tools (optional):** Apache Spark, Hadoop
 - **Visualization Tools:** Power BI, Matplotlib, Seaborn
 
-### 🚀 Key Benefits:
+### ?? Key Benefits:
 
-- **Ready-to-Use Environment:** No need to install anything—just log in and start working.
+- **Ready-to-Use Environment:** No need to install anything�just log in and start working.
 - **Cross-Platform:** Works on Windows or Linux, usually available on cloud platforms like Azure, AWS, or Google Cloud.
 - **GPU/CPU Support:** You can run it with high-powered CPUs or GPUs for faster computation.
-- **Consistency:** Everyone on your team can use the same environment, reducing “it works on my machine” issues.
+- **Consistency:** Everyone on your team can use the same environment, reducing �it works on my machine� issues.
 
-### 📦 Typical Use Cases:
+### ?? Typical Use Cases:
 
 - Data exploration and analysis
 - Machine learning and deep learning model development
@@ -245,7 +245,7 @@ A **Data Science Virtual Machine** is a **pre-configured virtual environment** d
 - Teaching or collaborative projects
 - Working with big datasets in the cloud
 
-### 🔄 DSVM vs DLVM:
+### ?? DSVM vs DLVM:
 
 | Feature   | Data Science VM                | Deep Learning VM                |
 | --------- | ------------------------------ | ------------------------------- |
@@ -253,14 +253,14 @@ A **Data Science Virtual Machine** is a **pre-configured virtual environment** d
 | Libraries | Python, R, SQL tools, BI tools | TensorFlow, PyTorch, CUDA, etc. |
 | Use Case  | General Data Science           | Intensive model training        |
 
-In short, a **Data Science Virtual Machine** is like a fully stocked workstation in the cloud—ready for any data science task the moment you turn it on.
+In short, a **Data Science Virtual Machine** is like a fully stocked workstation in the cloud�ready for any data science task the moment you turn it on.
 
 ---
-## 🤖 What is Caffe2
+## ?? What is Caffe2
 
 **Caffe2** is a **lightweight, modular, and scalable deep learning framework** developed by Facebook (now Meta). It's designed to be **flexible and production-ready**, allowing developers to train and deploy deep learning models efficiently on **mobile devices**, **cloud servers**, and **edge devices**.
 
-### 🧠 Key Features of Caffe2:
+### ?? Key Features of Caffe2:
 
 - **Cross-platform support:** Works on CPU and GPU, and supports Android and iOS.
 - **Highly scalable:** Suitable for both small experiments and large-scale production.
@@ -268,19 +268,19 @@ In short, a **Data Science Virtual Machine** is like a fully stocked workstation
 - **Mobile-first:** One of the first frameworks focused on deploying deep learning models on mobile phones.
 - **Modular architecture:** Easy to plug and play different components.
 
-### 🔄 Caffe2 vs PyTorch
+### ?? Caffe2 vs PyTorch
 
 - **Caffe2** was originally separate from **PyTorch**    
 - In 2018, **Facebook merged Caffe2 into PyTorch** to unify both frameworks.
 - Now, PyTorch incorporates Caffe2's strengths in deployment and mobile support.
 
-### 💡 Use Cases:
+### ?? Use Cases:
 
 - Real-time image recognition on mobile devices
 - Deploying trained models in production environments
 - Running inference on edge devices with limited resources
 
-**Caffe2** was built for performance, portability, and flexibility—especially focused on deploying deep learning models beyond just research labs. While it's now part of **PyTorch**, many of its capabilities live on in tools like **TorchScript** and **PyTorch Mobile**.
+**Caffe2** was built for performance, portability, and flexibility�especially focused on deploying deep learning models beyond just research labs. While it's now part of **PyTorch**, many of its capabilities live on in tools like **TorchScript** and **PyTorch Mobile**.
 
 - Caffe2 was officially supported on **Ubuntu 16.04**.
 - Ubuntu provides better GPU support and compatibility with frameworks like CUDA and cuDNN, which are crucial for running Caffe2.
@@ -298,7 +298,7 @@ A **Geo AI Data Science Virtual Machine (Geo-DSVM)** is a specialized type of **
     - **Azure Machine Learning tools**
     - Tools for working with **satellite imagery**, **remote sensing**, and **geospatial data processing**
 
-### 💡 Main Use Cases
+### ?? Main Use Cases
 
 - Satellite image analysis
 - Geospatial predictive modeling
@@ -308,13 +308,13 @@ A **Geo AI Data Science Virtual Machine (Geo-DSVM)** is a specialized type of **
 ---
 ## SMOTE Module in Azure ML
 
-In **Azure Machine Learning**, **SMOTE** (Synthetic Minority Oversampling Technique) is a technique used to handle **imbalanced datasets**—where one class (usually the "positive" or "minority" class) has significantly fewer instances than the other.
+In **Azure Machine Learning**, **SMOTE** (Synthetic Minority Oversampling Technique) is a technique used to handle **imbalanced datasets**�where one class (usually the "positive" or "minority" class) has significantly fewer instances than the other.
 
-### 🔍 What is SMOTE?
+### ?? What is SMOTE?
 
 SMOTE generates **synthetic samples** for the minority class by interpolating between existing minority class examples. It helps improve model performance by **balancing the dataset** before training.
 
-### 📦 SMOTE in Azure Machine Learning
+### ?? SMOTE in Azure Machine Learning
 
 You can use SMOTE in Azure ML via:
 
@@ -322,7 +322,7 @@ You can use SMOTE in Azure ML via:
 
 In Azure ML Designer, you can use:
 
-- **“SMOTE” module** (under _Data Transformation > Sample and Split_).
+- **�SMOTE� module** (under _Data Transformation > Sample and Split_).
 - It allows you to apply SMOTE without writing code.
 
 ##### Inputs:
@@ -357,12 +357,12 @@ smote = SMOTE()
 X_resampled, y_resampled = smote.fit_resample(X, y)
 ```
 
-### ✅ When to Use SMOTE?
+### ? When to Use SMOTE?
 
 - When dealing with **binary classification** problems with **class imbalance** (e.g., fraud detection, churn prediction).
-- Before training a model to ensure it **doesn’t bias toward the majority class**.
+- Before training a model to ensure it **doesn�t bias toward the majority class**.
 
-### 🚫 Caution:
+### ?? Caution:
 
 - Always apply SMOTE **only on training data**, not on the test/validation set.    
 - Overuse can lead to **overfitting** due to the synthetic nature of data.

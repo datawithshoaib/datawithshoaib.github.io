@@ -5,7 +5,7 @@ date: 2025-05-03
 permalink: /posts/2025/05/create-a-generative-ai-app-that-uses-your-own-data/
 excerpt_separator: <!--more-->
 tags: ['Fine-Tuning', 'Content Filtering', 'AI Safety', 'Guardrails', 'Model Alignment']
-image: /assets/img/posts/genai-rag.png
+image: /images/posts_genai-rag.png
 toc: true
 categories: ['Generative AI & LLMs']
 description: "Fine-tuning foundational models and configuring Azure Content Safety filters to ensure responsible AI deployments."
@@ -60,5 +60,5 @@ Run the code to check if it's working.
 
 ## References
 
-[Create a generative AI app that uses your own data](https://microsoftlearning.github.io/mslearn-ai-studio/Instructions/04-Use-own-data.html)
+[Create a generative AI app that uses your own data](https:_/microsoftlearning.github.io/mslearn-ai-studio/Instructions/04-Use-own-data.html)
 

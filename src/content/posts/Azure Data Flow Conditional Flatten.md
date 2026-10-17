@@ -39,20 +39,20 @@ Unroll by albums.tracks
 
 If we look at the data preview, we can see the data is flattened.
 
-![alt text](/assets/img/posts/dataflowcondflatten/img1.png) 
+![alt text](/images/posts_dataflowcondflatten_img1.png) 
 
 
 We need to set the sink options to output to single file and give a file name.
 
 
-![alt text](/assets/img/posts/dataflowcondflatten/img2.png) 
+![alt text](/images/posts_dataflowcondflatten_img2.png) 
 
 
 Now, we create the pipeline by dragging this data flow and trigger it.
 
 If we go to the container, a new file is created as shown below.
 
-![alt text](/assets/img/posts/dataflowcondflatten/img3.png)
+![alt text](/images/posts_dataflowcondflatten_img3.png)
 
 ---
 

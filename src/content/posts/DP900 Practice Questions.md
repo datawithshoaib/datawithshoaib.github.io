@@ -5,7 +5,7 @@ date: 2025-01-23
 permalink: /posts/2025/01/dp-900-practice-questions/
 excerpt_separator: <!--more-->
 tags: ['DP-900', 'Azure Data Fundamentals', 'Relational', 'Non-Relational', 'Analytics']
-image: /assets/img/posts/dp900-qns.png
+image: /images/posts_dp900-qns.png
 toc: true
 categories: ['Azure & Cloud']
 description: "Practice questions and concept breakdowns for the Microsoft Certified: Azure Data Fundamentals (DP-900) exam."
@@ -29,7 +29,7 @@ D. Azure Files
 
 Answer: B
 
-## Q2 (yes/no)
+## Q2 (yes_no)
 Normalizing a database increases the throughput of writing transactions - No
 Analytical systems are more normalized than transactional systems - No
 Normalizing a database results in queries that require more joins - Yes

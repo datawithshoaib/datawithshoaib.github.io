@@ -4,7 +4,7 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import { getPortfolioUrl } from '../../utils/content';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('portfolio');
+  const projects = await getCollection('projects');
   const sorted = projects.sort((a, b) => {
     const aDate = a.data.date ? new Date(a.data.date).getTime() : 0;
     const bDate = b.data.date ? new Date(b.data.date).getTime() : 0;
@@ -41,7 +41,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  project: CollectionEntry<'portfolio'>;
+  project: CollectionEntry<'projects'>;
   prevPost?: { title: string; url: string } | null;
   nextPost?: { title: string; url: string } | null;
 }

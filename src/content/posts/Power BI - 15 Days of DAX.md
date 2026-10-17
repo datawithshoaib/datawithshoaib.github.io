@@ -7,7 +7,7 @@ date: 2025-03-09
 permalink: /posts/2025/03/15-days-of-dax-series/
 excerpt_separator: <!--more-->
 tags: ['Power BI', 'DAX', 'Data Modeling', 'CALCULATE', 'Time Intelligence']
-image: /assets/img/posts/15daysofdax.png
+image: /images/posts_15daysofdax.png
 featured: false
 toc: true
 ---
@@ -49,10 +49,10 @@ Returns the smallest value from a column or two scalar expressions.
 
 Note:
 - Columns can contain **Numbers, Text, Dates, Blanks**
-- **Blanks are treated as 0** (e.g., `MIN(1, Blank())` → **0**, `MIN(-1, Blank())` → **-1**)
+- **Blanks are treated as 0** (e.g., `MIN(1, Blank())` ? **0**, `MIN(-1, Blank())` ? **-1**)
 - **If both values are blank, it returns blank**
 - **Errors occur if values are not allowed**
-- **TRUE/FALSE values aren't supported** (use **MINA** instead)
+- **TRUE_FALSE values aren't supported** (use **MINA** instead)
 
 **Use Case:** Identify the lowest transaction amount in sales.
 
@@ -64,7 +64,7 @@ Returns the largest value in a column, or between two scalar expressions.
 
 The **MAX** function returns the largest value when comparing two expressions:
 
-- **Blanks are treated as 0** (`MAX(1, Blank())` → **1**, `MAX(-1, Blank())` → **0**)
+- **Blanks are treated as 0** (`MAX(1, Blank())` ? **1**, `MAX(-1, Blank())` ? **0**)
 - **If both values are blank, it returns blank**
 - **Errors occur if values are not allowed**
 - **TRUE/FALSE values aren't supported** (use **MAXA** instead)
@@ -130,8 +130,8 @@ How does `COUNT()` differ from `COUNTROWS()`?
 | **Best practice**        | Use `COUNTROWS()` instead of `COUNT()` when counting rows in a table | Preferred for counting rows, especially with filters |
 | **DirectQuery Support**  | Not supported in calculated columns or RLS                           | Not supported in calculated columns or RLS           |
 
-👉 **Use `COUNT()`** when counting **non-blank values** in a column.  
-👉 **Use `COUNTROWS()`** when counting **total rows** in a table.
+?? **Use `COUNT()`** when counting **non-blank values** in a column.  
+?? **Use `COUNTROWS()`** when counting **total rows** in a table.
 
 ---
 ## Day 2: Logical Functions
@@ -397,7 +397,7 @@ CALCULATE(SUM(Sales[Revenue]), ALL(Sales[Category]))
 
 | Feature               | REMOVEFILTERS()                                       | ALL()                                                     |
 | --------------------- | ----------------------------------------------------- | --------------------------------------------------------- |
-| Ignores relationships | ❌ No                                                  | ✅ Yes                                                     |
+| Ignores relationships | ? No                                                  | ? Yes                                                     |
 | Use case              | Removing specific filters while keeping relationships | Ignoring filters and relationships for total calculations |
 
 #### **When to Use Which?**
@@ -432,10 +432,10 @@ CALCULATE(
 
 #### Explanation
 
-- `SUM(Sales[Sales Amount])` → Calculates total sales.
-- `ALL(Sales[Order Date])` → Removes any filters on the date column.
-- `FILTER(..., Sales[Order Date] >= TODAY() - 30)` → Keeps only the last 30 days.
-- `CALCULATE(...)` → Applies the filter while keeping other filters intact.
+- `SUM(Sales[Sales Amount])` ? Calculates total sales.
+- `ALL(Sales[Order Date])` ? Removes any filters on the date column.
+- `FILTER(..., Sales[Order Date] >= TODAY() - 30)` ? Keeps only the last 30 days.
+- `CALCULATE(...)` ? Applies the filter while keeping other filters intact.
 
 ---
 ## Day 4: Date & Time Functions
@@ -491,7 +491,7 @@ The **DATEDIFF** function:
 - **Allows specifying units** like DAY, MONTH, YEAR, etc.
 - **Commonly used for calculating time gaps** in reports.
 
-**Use Case:** Find the number of days since a customer’s last purchase.
+**Use Case:** Find the number of days since a customer�s last purchase.
 
 ---
 ### EOMONTH()
@@ -872,20 +872,20 @@ You have a **Sales_Orders** table with the following columns:
 Write a **DAX measure** to calculate the **median sales value** across all orders.
 Also, create a **RANKX measure** that ranks orders based on **profit** in descending order.
 
-1️⃣ **Median Sales Measure**
+1?? **Median Sales Measure**
 
 ```D
 Median_Sales = MEDIAN(Sales_Orders[Sales])
 ```
 
-2️⃣ **Profit Rank Measure**
+2?? **Profit Rank Measure**
 
 ```D
 Profit_Rank = RANKX(ALL(Sales_Orders), Sales_Orders[Profit], , DESC, DENSE)
 ```
 
-✅ The **MEDIAN function** calculates the middle value of all sales.  
-✅ The **RANKX function** ranks orders based on profit, where the highest profit gets rank 1.
+? The **MEDIAN function** calculates the middle value of all sales.  
+? The **RANKX function** ranks orders based on profit, where the highest profit gets rank 1.
 
 ---
 ## Day 8: Table Manipulation Functions
@@ -897,7 +897,7 @@ Today, we explore **Table Manipulation functions** in DAX. These functions allow
 Creates a summary table with grouped data.
 
 ```c
-SUMMARIZE (<table>, <groupBy_columnName>[, <groupBy_columnName>]…[, <name>, <expression>]…)
+SUMMARIZE (<table>, <groupBy_columnName>[, <groupBy_columnName>]�[, <name>, <expression>]�)
 ```
 
 **Use Case:** Create a summary table showing total sales by category.
@@ -994,7 +994,7 @@ You have a **Sales_Orders** table with the following columns:
 
 Write a **DAX table formula** that creates a **summary table** showing total sales and total profit for each category. Modify the table to include only categories where total sales exceed **$10,000**.
 
-1️⃣ **Summary Table with Total Sales & Profit**
+1?? **Summary Table with Total Sales & Profit**
 
 ```c
 Category_Summary = 
@@ -1005,7 +1005,7 @@ SUMMARIZE(Sales_Orders,
 )
 ```
 
-2️⃣ **Filtered Summary Table (Sales > $10,000)**
+2?? **Filtered Summary Table (Sales > $10,000)**
 
 ```c
 Filtered_Category_Summary = 
@@ -1019,8 +1019,8 @@ FILTER(
 )
 ```
 
-✅ The **SUMMARIZE function** creates a new table grouping by category.  
-✅ The **FILTER function** removes categories with total sales below $10,000.
+? The **SUMMARIZE function** creates a new table grouping by category.  
+? The **FILTER function** removes categories with total sales below $10,000.
 
 ---
 ## Day 9: Time Intelligence Basic
@@ -1056,7 +1056,7 @@ Returns a table of dates from the same period in the previous year.
 SAMEPERIODLASTYEAR(<dates>)
 ```
 
-**Use Case:** Compare this year’s sales with the same period last year.
+**Use Case:** Compare this year�s sales with the same period last year.
 
 ```c
 SalesLY = CALCULATE(SUM(Sales[Amount]), SAMEPERIODLASTYEAR(Sales[Date]))
@@ -1141,22 +1141,22 @@ You have a **Sales_Orders** table with the following columns:
 Write a **DAX measure** to calculate the **Year-to-Date (YTD) Sales** based on the **Order Date**.
 Create another measure to calculate the **Sales for the Same Period Last Year**
 
-1️⃣ **Year-to-Date (YTD) Sales**
+1?? **Year-to-Date (YTD) Sales**
 
 ```c
 YTD_Sales = 
 TOTALYTD(SUM(Sales_Orders[Sales]), Sales_Orders[Order Date])
 ```
 
-2️⃣ **Same Period Last Year Sales**
+2?? **Same Period Last Year Sales**
 
 ```c
 SPLY_Sales = 
 CALCULATE(SUM(Sales_Orders[Sales]), SAMEPERIODLASTYEAR(Sales_Orders[Order Date]))
 ```
 
-✅ **TOTALYTD** accumulates sales from the start of the year to the selected date.  
-✅ **SAMEPERIODLASTYEAR** shifts the date range to the previous year.
+? **TOTALYTD** accumulates sales from the start of the year to the selected date.  
+? **SAMEPERIODLASTYEAR** shifts the date range to the previous year.
 
 ---
 ## Day 10: Advanced Time Intelligence
@@ -1314,7 +1314,7 @@ The **RANKX** function:
 Returns the top N rows from a table based on a measure.
 
 ```text
-TOPN(<N_Value>, <Table>, <OrderBy_Expression>, [<Order>[, <OrderBy_Expression>, [<Order>]]…])
+TOPN(<N_Value>, <Table>, <OrderBy_Expression>, [<Order>[, <OrderBy_Expression>, [<Order>]]�])
 ```
 
 **Use Case:** Identify the top 5 customers based on total purchases.
@@ -1332,7 +1332,7 @@ The **TOPN** function:
 #### Example
 
 ```text
- top 10 sold products = SUMX(
+�top 10 sold products = SUMX(
     TOPN(
         10, 
         SUMMARIZE(
@@ -1350,10 +1350,10 @@ The **TOPN** function:
 
 It calculates the **sum of sales from the top 10 products (by sales amount)** in the `InternetSales` table.
 
-✅ **1️⃣ `SUMMARIZE(...)`**  
+? **1?? `SUMMARIZE(...)`**  
 This creates a _temporary table_ that groups the `InternetSales` table **by ProductKey** and adds a calculated column:
 
-- **"TotalSales"** → which sums `SalesAmount` for each product.
+- **"TotalSales"** ? which sums `SalesAmount` for each product.
 
 So at this point, you have a table like:
 
@@ -1363,23 +1363,23 @@ So at this point, you have a table like:
 | 102        | 75,000     |
 | ...        | ...        |
 
-✅ **2️⃣ `TOPN(10, ..., [TotalSales], DESC)`**  
+? **2?? `TOPN(10, ..., [TotalSales], DESC)`**  
 From that summarized table, it **selects the top 10 products** with the highest `TotalSales`.
 
 This returns only the rows for the top-selling 10 products.
 
 
-✅ **3️⃣ `SUMX(..., [TotalSales])`**  
+? **3?? `SUMX(..., [TotalSales])`**  
 Finally, `SUMX` **iterates over the 10 rows** and sums up the `TotalSales` values.
 
 This gives you **the total combined sales amount of the top 10 products**.
 
 This measure returns **a single value** - the total sales of the 10 best-selling products.
 
-You’d use it when:
+You�d use it when:
 
 - You want to **highlight the impact of your top products** on overall sales.
-- You want to **create visuals or KPIs** showing “Top 10 products contribution”.
+- You want to **create visuals or KPIs** showing �Top 10 products contribution�.
 - You want to **compare top performers vs. total sales** for performance insights.
 
 ---
@@ -1448,10 +1448,10 @@ RANKX(
 )
 ```
 
-✅ **RANKX** ranks customers based on their total sales.  
-✅ **ALL(Sales_Orders[Customer Name])** ensures ranking is across all customers.  
-✅ **DESC** orders from highest to lowest.  
-✅ **DENSE** ensures ranks are consecutive (no gaps).
+? **RANKX** ranks customers based on their total sales.  
+? **ALL(Sales_Orders[Customer Name])** ensures ranking is across all customers.  
+? **DESC** orders from highest to lowest.  
+? **DENSE** ensures ranks are consecutive (no gaps).
 
 ---
 ## Day 12: Iterators in DAX
@@ -1487,7 +1487,7 @@ The **AVERAGEX** function:
 
 - **Iterates over a table, computing a custom expression per row.**
 - **Returns the mean of the calculated values.**
-- **Useful when simple AVERAGE() isn’t sufficient.**
+- **Useful when simple AVERAGE() isn�t sufficient.**
 
 **Use Case:** Find the average revenue per product sold.
 
@@ -1543,8 +1543,8 @@ Total_Discount_Amount =
 SUMX(Sales_Orders, Sales_Orders[Sales] * Sales_Orders[Discount (%)] / 100)
 ```
 
-✅ **SUMX** iterates over each row to compute the discount for every order.  
-✅ It multiplies **Sales** by **Discount (%)** and sums up the total discount.
+? **SUMX** iterates over each row to compute the discount for every order.  
+? It multiplies **Sales** by **Discount (%)** and sums up the total discount.
 
 ---
 ## Day 13: Advanced Filter & Context in DAX
@@ -1639,8 +1639,8 @@ CALCULATE(
 )
 ```
 
-✅ **CALCULATE** modifies the filter context to apply a specific condition.  
-✅ **FILTER** ensures only rows where **Category = "Electronics"** are considered.
+? **CALCULATE** modifies the filter context to apply a specific condition.  
+? **FILTER** ensures only rows where **Category = "Electronics"** are considered.
 
 ---
 ## Day 14: Row & Column Context in DAX
@@ -1661,7 +1661,7 @@ CALCULATE(
 
 The **EARLIER** function:
 
-- **Used inside a row context to refer to an earlier row’s value.**
+- **Used inside a row context to refer to an earlier row�s value.**
 - **Commonly used for ranking calculations.**
 - **Useful for comparing the current row to other rows in a column.**
 
@@ -1715,7 +1715,7 @@ The **LOOKUPVALUE** function:
 
 - **Works like a VLOOKUP in Excel.**
 - **Finds a value based on matching criteria.**
-- **Doesn’t require an explicit relationship between tables.**
+- **Doesn�t require an explicit relationship between tables.**
 
 **Use Case:** Retrieve the region of a customer based on their Customer ID.
 
@@ -1736,8 +1736,8 @@ Create a **calculated column** that fetches the **Customer Region** from the rel
 Customer_Region = RELATED(Customers[Region])
 ```
 
-✅ **RELATED** fetches a value from a related table based on an existing relationship.  
-✅ This helps in bringing in additional context without duplicating data.
+? **RELATED** fetches a value from a related table based on an existing relationship.  
+? This helps in bringing in additional context without duplicating data.
 
 ---
 ## Day 15: Must-Know DAX
@@ -1842,13 +1842,13 @@ RETURN
     DiscountedSales
 ```
 
-✅ **VAR** stores the intermediate calculation for better readability and performance.  
-✅ **SUMX** iterates over the table to apply conditional logic for each row.  
-✅ **RETURN** ensures the final discounted total revenue is displayed.
+? **VAR** stores the intermediate calculation for better readability and performance.  
+? **SUMX** iterates over the table to apply conditional logic for each row.  
+? **RETURN** ensures the final discounted total revenue is displayed.
 
 ---
 
-That’s the end of our **15-Day DAX Series!** 🚀 
+That�s the end of our **15-Day DAX Series!** ?? 
 
 Let me know which function you found most interesting and useful!
 

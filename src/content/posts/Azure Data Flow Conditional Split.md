@@ -57,7 +57,7 @@ age int not null
 )
 ```
 
-![alt text](/assets/img/posts/dataflowcondsplit/image.png)
+![alt text](/images/posts_dataflowcondsplit_image.png)
 
 ---
 
@@ -70,7 +70,7 @@ we need to create datasets that points to those 3 tables
 
 ### 3. Create data flows
 
-![alt text](/assets/img/posts/dataflowcondsplit/img1.png)
+![alt text](/images/posts_dataflowcondsplit_img1.png)
 
 ### 4. Create pipeline
 

@@ -5,7 +5,7 @@ date: 2025-03-06
 permalink: /posts/2025/03/ai-900-preparation-notes/
 excerpt_separator: <!--more-->
 tags: ['AI-900', 'Certification', 'Azure AI', 'Machine Learning', 'Computer Vision', 'NLP']
-image: /assets/img/posts/AI900-Prep.png
+image: /images/posts_AI900-Prep.png
 toc: true
 categories: ['Generative AI & LLMs']
 description: "Comprehensive preparation notes and key concept summaries for passing the Microsoft AI-900 certification exam."
@@ -69,48 +69,48 @@ I have created this notes while I was preparing for AI-900 exam. It includes som
 
 ---
 
-**Computer Vision** â€“ Analyzes the world visually through cameras, images, and videos.  
-**Conversational AI** â€“ An automated chatbot that answers questions using a knowledge base.  
-**Knowledge Mining** â€“ Extracts insights from unstructured data to provide relevant answers, such as those about refunds and exchanges.  
-**Natural Language Processing (NLP)** â€“ Enables machines to understand, interpret, and generate human language.
-**Image Classification** â€“ Categorizes images based on their contents.
-**Text Classification** â€“ Categorizes documents into predefined topics.
+**Computer Vision** – Analyzes the world visually through cameras, images, and videos.  
+**Conversational AI** – An automated chatbot that answers questions using a knowledge base.  
+**Knowledge Mining** – Extracts insights from unstructured data to provide relevant answers, such as those about refunds and exchanges.  
+**Natural Language Processing (NLP)** – Enables machines to understand, interpret, and generate human language.
+**Image Classification** – Categorizes images based on their contents.
+**Text Classification** – Categorizes documents into predefined topics.
 
 ---
 ## Azure AI Language Services
 
 ### 1. Text Analytics
 
-- **Sentiment Analysis** â€“ Determines the sentiment of text (positive, negative, neutral, or mixed).
-- **Key Phrase Extraction** â€“ Identifies important phrases within a text.
-- **Language Detection** â€“ Detects the language of a given text.
-- **Named Entity Recognition (NER)** â€“ Identifies entities like names, organizations, locations, and dates.
-- **Personally Identifiable Information (PII) Detection** â€“ Redacts sensitive data like phone numbers and credit card details.
-- **Text Summarization** â€“ Generates concise summaries from large text content.
+- **Sentiment Analysis** – Determines the sentiment of text (positive, negative, neutral, or mixed).
+- **Key Phrase Extraction** – Identifies important phrases within a text.
+- **Language Detection** – Detects the language of a given text.
+- **Named Entity Recognition (NER)** – Identifies entities like names, organizations, locations, and dates.
+- **Personally Identifiable Information (PII) Detection** – Redacts sensitive data like phone numbers and credit card details.
+- **Text Summarization** – Generates concise summaries from large text content.
 
 ### 2. Conversational Language Understanding (CLU) (Previously LUIS)
 
-- **Intent Recognition** â€“ Identifies user intent from natural language input.
-- **Entity Extraction** â€“ Extracts key pieces of information from user input.
-- **Custom Model Training** â€“ Allows training custom language models for domain-specific applications.
+- **Intent Recognition** – Identifies user intent from natural language input.
+- **Entity Extraction** – Extracts key pieces of information from user input.
+- **Custom Model Training** – Allows training custom language models for domain-specific applications.
 
 ### 3. Question Answering (Previously QnA Maker)
 
-- **Custom Knowledge Base** â€“ Builds a chatbot that answers questions from a predefined knowledge base.
-- **Unstructured Text Answering** â€“ Extracts answers from unstructured documents.
-- **Multi-turn Conversations** â€“ Handles follow-up questions dynamically.
+- **Custom Knowledge Base** – Builds a chatbot that answers questions from a predefined knowledge base.
+- **Unstructured Text Answering** – Extracts answers from unstructured documents.
+- **Multi-turn Conversations** – Handles follow-up questions dynamically.
 
 ### 4. Custom Text Classification
 
-- **Automated Text Categorization** â€“ Assigns text to predefined categories based on content.
-- **Custom Model Training** â€“ Allows users to create and train models specific to their industry.
+- **Automated Text Categorization** – Assigns text to predefined categories based on content.
+- **Custom Model Training** – Allows users to create and train models specific to their industry.
 
 ### 5. Custom Named Entity Recognition (NER)
 
-- **Domain-Specific Entity Extraction** â€“ Identifies and labels custom entities relevant to a specific business or industry.
-- **Custom Model Training** â€“ Allows users to define and train models to extract specific information.
+- **Domain-Specific Entity Extraction** – Identifies and labels custom entities relevant to a specific business or industry.
+- **Custom Model Training** – Allows users to define and train models to extract specific information.
 
-Read more - [Azure AI Language](https://learn.microsoft.com/en-us/azure/ai-services/language-service/overview)
+Read more - [Azure AI Language](https:_/learn.microsoft.com/en-us/azure/ai-services/language-service/overview)
 
 ---
 
@@ -127,16 +127,16 @@ Understand voice or text command - Language Understanding Intelligent System (LU
 ---
 ## 3 Key Elements for Language Model Training
 
-- **Utterances** â€“ User's input or phrase given to the model.
-- **Entities** â€“ Key words or phrases that provide specific details. _Example:_ "light" in _"Turn on the light."_
-- **Intents** â€“ The purpose or action the user wants to perform. _Example:_ "Turn on" in _"Turn on the light."_
+- **Utterances** – User's input or phrase given to the model.
+- **Entities** – Key words or phrases that provide specific details. _Example:_ "light" in _"Turn on the light."_
+- **Intents** – The purpose or action the user wants to perform. _Example:_ "Turn on" in _"Turn on the light."_
 
 ---
 
-- **Speech synthesis â†’** Converts text to speech.
-- **Spatial analysis (part of Azure AI Vision Service) â†’** Analyzes video streams from camera devices in real time.
-- **Copilots â†’** Provide plugins that allow end users to get assistance with common tasks using a generative AI model.
-- **Azure Kubernetes Service (AKS) â†’** A compute target environment in Azure ML for real-time inferencing.
+- **Speech synthesis ?** Converts text to speech.
+- **Spatial analysis (part of Azure AI Vision Service) ?** Analyzes video streams from camera devices in real time.
+- **Copilots ?** Provide plugins that allow end users to get assistance with common tasks using a generative AI model.
+- **Azure Kubernetes Service (AKS) ?** A compute target environment in Azure ML for real-time inferencing.
 
 ## AutoML (Limitations)
 
@@ -158,7 +158,7 @@ FN - actual label is true, model predicts false (Type II error)
 - **Accuracy** = (TP + TN) / (TP + TN + FP + FN)
 - **Precision** = TP / (TP + FP) _(How many predicted positives are actually correct?)_
 - **Recall (Sensitivity)** = TP / (TP + FN) _(How many actual positives were correctly predicted?)_
-- **F1-score** = 2 Ã— (Precision Ã— Recall) / (Precision + Recall) _(Balance between precision & recall)_
+- **F1-score** = 2 × (Precision × Recall) / (Precision + Recall) _(Balance between precision & recall)_
 - **Specificity** = TN / (TN + FP) _(How well negatives are identified?)_
 
 ---
@@ -181,7 +181,7 @@ The Azure Speech Translation service is accessible through the Speech SDK and th
 
 ---
 
-Ensuring that numeric variables in training data are on a similar scale refers to techniques like **normalization or standardization**, which are part of **feature engineering**â€”the process of transforming raw data into a format that improves model performance.
+Ensuring that numeric variables in training data are on a similar scale refers to techniques like **normalization or standardization**, which are part of **feature engineering**—the process of transforming raw data into a format that improves model performance.
 
 **Feature selection**, on the other hand, involves choosing the most relevant features for a model and removing irrelevant or redundant ones.
 

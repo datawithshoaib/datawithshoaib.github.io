@@ -9,26 +9,26 @@ excerpt_separator: <!--more-->
 tags: ['Power BI', 'Interview Prep', 'DAX', 'Power Query', 'Data Modeling']
 ---
 
-If youâ€™re preparing for your first data analyst role, these 50 interview questions and answers will help you get ready.
+If you’re preparing for your first data analyst role, these 50 interview questions and answers will help you get ready.
 
 <!--more-->
 
-![img](/assets/img/posts/top50pbi.png)
+![img](/images/posts_top50pbi.png)
 
 **1. What is Power BI?**
 Power BI is a business analytics tool by Microsoft that lets you visualize data, share insights, and make data-driven decisions using interactive dashboards and reports.
 
 **2. Main components of Power BI?**
 
-- Power BI Desktop â€“ Create reports
+- Power BI Desktop – Create reports
     
-- Power BI Service â€“ Share reports online
+- Power BI Service – Share reports online
     
-- Power BI Mobile â€“ View on phones/tablets
+- Power BI Mobile – View on phones_tablets
     
-- Power BI Gateway â€“ Refresh data from on-premises
+- Power BI Gateway – Refresh data from on-premises
     
-- Power BI Report Server â€“ Host reports on-premises
+- Power BI Report Server – Host reports on-premises
     
 
 **3. Power BI Desktop vs Power BI Service?**  
@@ -69,10 +69,10 @@ Relationships link tables, allowing you to create visuals using fields from mult
 A relationship that is not used by default in visuals. You can activate it using DAX (`USERELATIONSHIP()`)
 
 **11. What is CALCULATE() in DAX?**  
-Changes the context in which a calculation is performed. Itâ€™s key for complex measures.
+Changes the context in which a calculation is performed. It’s key for complex measures.
 
 **12. How does FILTER() work in DAX?**  
-Returns a table that meets a condition. Used to modify context insideÂ `CALCULATE()`.
+Returns a table that meets a condition. Used to modify context inside `CALCULATE()`.
 
 **13. ALL vs ALLEXCEPT vs ALLSELECTED?**
 
@@ -87,7 +87,7 @@ Returns a table that meets a condition. Used to modify context insideÂ `CALCULAT
 Used in row context to refer to outer row values in nested calculations.
 
 **15. What is context transition?**  
-When row context turns into filter context â€“ happens in measures usingÂ `CALCULATE()`.
+When row context turns into filter context – happens in measures using `CALCULATE()`.
 
 **16. How to create custom visuals?**
 
@@ -107,7 +107,7 @@ When row context turns into filter context â€“ happens in measures usingÂ `CALCU
 A feature to jump to a detailed report page with filters based on a selected value.
 
 **19. What are Bookmarks used for?**  
-Capture report view states â€“ used for storytelling, navigation, and toggling visuals.
+Capture report view states – used for storytelling, navigation, and toggling visuals.
 
 **20. How to optimize performance in Power BI?**
 
@@ -146,7 +146,7 @@ When transformations in Power Query are pushed to the data source, improving per
 Use "Replace Values", "Remove Rows", or custom logic to fill/replace nulls.
 
 **26. What is Row-Level Security (RLS)?**  
-A way to restrict data access for users based on roles â€“ implemented via DAX filters.
+A way to restrict data access for users based on roles – implemented via DAX filters.
 
 **27. Dashboard vs Report?**
 
@@ -156,7 +156,7 @@ A way to restrict data access for users based on roles â€“ implemented via DAX f
     
 
 **28. How to schedule data refresh?**  
-In Power BI Service: Go to Dataset â†’ Settings â†’ Configure refresh schedule.
+In Power BI Service: Go to Dataset ? Settings ? Configure refresh schedule.
 
 **29. Can Power BI be embedded in apps?**  
 Yes, using Power BI Embedded (Azure service) with REST APIs or iframe.
@@ -171,10 +171,10 @@ Yes, using Power BI Embedded (Azure service) with REST APIs or iframe.
     
 
 **31. How do you implement row-level security (RLS) in Power BI?**  
-Go to Modeling â†’ Manage Roles â†’ Create Role, define DAX filters (e.g.,Â `[Region] = "East"`), and publish to Power BI Service to assign users.
+Go to Modeling ? Manage Roles ? Create Role, define DAX filters (e.g., `[Region] = "East"`), and publish to Power BI Service to assign users.
 
 **32. What are KPIs in Power BI?**  
-KPIs (Key Performance Indicators) are visual cues that show progress toward a measurable goal â€“ created using indicator, target, and status fields.
+KPIs (Key Performance Indicators) are visual cues that show progress toward a measurable goal – created using indicator, target, and status fields.
 
 **33. Difference between filter context and row context?**
 
@@ -196,7 +196,7 @@ LOOKUPVALUE retrieves a single value from another table based on a search condit
 Pre-built DAX templates for common calculations like YTD, running totals, etc., created using drag-and-drop interface.
 
 **38. How to create a hierarchy in Power BI?**  
-Drag and drop related fields (e.g., Year â†’ Month â†’ Day) in the Fields pane to form a drill-down hierarchy.
+Drag and drop related fields (e.g., Year ? Month ? Day) in the Fields pane to form a drill-down hierarchy.
 
 **39. What is the role of the Power BI Gateway?**  
 It bridges cloud-based Power BI Service and on-premises data sources for scheduled refreshes and live connections.
@@ -208,10 +208,10 @@ Loads only new or updated data instead of full dataset every time. Improves perf
 Use a bridge table or composite models, and enable "Both" direction in relationships cautiously.
 
 **42. What are role-playing dimensions?**  
-A single dimension (e.g., Date) used in multiple contexts (Order Date, Ship Date) â€“ handled via multiple relationships.
+A single dimension (e.g., Date) used in multiple contexts (Order Date, Ship Date) – handled via multiple relationships.
 
 **43. How to create dynamic titles in Power BI visuals?**  
-Use a DAX measure likeÂ `SelectedValue()`Â and bind it to the title via "fx" (expression) option in the visualâ€™s format pane.
+Use a DAX measure like `SelectedValue()` and bind it to the title via "fx" (expression) option in the visual’s format pane.
 
 **44. What are parameters in Power BI?**  
 Used in Power Query to define values that can dynamically change (e.g., file paths, filters, limits).
@@ -256,6 +256,6 @@ Yes, using Web connector or Power Query (M language) to call REST APIs and retri
 **50. How do bookmarks enhance storytelling in Power BI?**  
 Bookmarks capture report state (filters, visuals) and allow interactive navigation or guided walkthroughs when combined with buttons.
 
-Share this with a friend whoâ€™s preparing for Power BI interviews. Subscribe for more Data Analytics insights.
+Share this with a friend who’s preparing for Power BI interviews. Subscribe for more Data Analytics insights.
 
 

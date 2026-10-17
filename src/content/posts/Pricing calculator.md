@@ -7,7 +7,7 @@ tags: ['Azure Pricing', 'Cost Optimization', 'FinOps', 'Architecture Planning']
 toc: true
 categories: ['Azure & Cloud']
 description: "How to accurately estimate, plan, and forecast cloud infrastructure expenditures using the Azure Pricing Calculator."
-image: /assets/img/posts/pricing_calc/image.png
+image: /images/posts_pricing_calc_image.png
 ---
 
 In this exercise, you use the Pricing calculator to estimate the cost of running a basic web application on Azure.
@@ -31,7 +31,7 @@ Use Azure Application Gateway for load balancing.
 
 Use Azure SQL Database to hold inventory and pricing information.
 
-![alt text](/assets/img/posts/pricing_calc/image.png)
+![alt text](/images/posts_pricing_calc_image.png)
 
 In practice, you would define your requirements in greater detail. But here are some basic facts and requirements to get you started:
 
@@ -47,7 +47,7 @@ Go to the [Pricing calculator](https://azure.microsoft.com/pricing/calculator/)
 
 Notice the following tabs:
 
-![alt text](/assets/img/posts/pricing_calc/image-1.png)
+![alt text](/images/posts_pricing_calc_image-1.png)
 
 Products: This is where you choose the Azure services that you want to include in your estimate. You'll likely spend most of your time here.
 
@@ -65,20 +65,20 @@ FAQs: Here you'll discover answers to frequently asked questions about the Prici
 
 On the Products tab, select the service from each of the categories
 
-![alt text](/assets/img/posts/pricing_calc/image-2.png)
+![alt text](/images/posts_pricing_calc_image-2.png)
 
 I have selected these services
 
-![alt text](/assets/img/posts/pricing_calc/image-3.png)
+![alt text](/images/posts_pricing_calc_image-3.png)
 
 #### Virtual Machines config
-![alt text](/assets/img/posts/pricing_calc/image-4.png)
+![alt text](/images/posts_pricing_calc_image-4.png)
 
 #### Azure SQL database config
-![alt text](/assets/img/posts/pricing_calc/image-5.png)
+![alt text](/images/posts_pricing_calc_image-5.png)
 
 #### Application Gateway config
-![alt text](/assets/img/posts/pricing_calc/image-6.png)
+![alt text](/images/posts_pricing_calc_image-6.png)
 
 ---
 

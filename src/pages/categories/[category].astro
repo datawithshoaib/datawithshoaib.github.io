@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAllSortedPosts, getAllSortedPortfolio, getPostUrl, getPortfolioUrl } from '../../utils/content';
+import { getAllSortedPosts, getPostUrl } from '../../utils/content';
 
 export async function getStaticPaths() {
   const posts = await getAllSortedPosts();
-  const portfolio = await getAllSortedPortfolio();
 
   interface Item {
     title: string;
@@ -25,22 +24,6 @@ export async function getStaticPaths() {
       map[key].items.push({
         title: p.data.title,
         url: getPostUrl(p),
-        date: p.data.date || null,
-      });
-    }
-  }
-
-  for (const p of portfolio) {
-    for (const cat of p.data.categories || []) {
-      const trimmed = cat.trim();
-      if (!trimmed) continue;
-      const key = trimmed.toLowerCase();
-      if (!map[key]) {
-        map[key] = { originalName: trimmed, items: [] };
-      }
-      map[key].items.push({
-        title: p.data.title,
-        url: getPortfolioUrl(p),
         date: p.data.date || null,
       });
     }

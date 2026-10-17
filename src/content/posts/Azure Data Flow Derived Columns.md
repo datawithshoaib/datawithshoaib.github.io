@@ -14,7 +14,7 @@ In this task, we are going to use derived columns transformation in Azure Data F
 
 We have a container demo-data with a csv file 
 
-!(/assets/img/posts/dataflowdercol/image.png)
+!(/images/posts_dataflowdercol_image.png)
 
 We are going to split the name column into 2 columns - First name and Last name
 
@@ -42,17 +42,17 @@ Now, we select a transformation by clicking on the + icon
 
 Surrogate Key creates a new column with unique identifier for each record. It creates incremental values so that the values are unique starting from a start value.
 
-![alt text](/assets/img/posts/dataflowdercol/image-1.png)
+![alt text](/images/posts_dataflowdercol_image-1.png)
 
 Next, we're going to split our name column, for this we use a transformation called derived column.
 
-![alt text](/assets/img/posts/dataflowdercol/image-2.png)
+![alt text](/images/posts_dataflowdercol_image-2.png)
 
 Now, we use "select" transformation to select the columns we want in the next step.
 
 Using this, we can remove the columns we don't want in the next step
 
-![alt text](/assets/img/posts/dataflowdercol/image-3.png)
+![alt text](/images/posts_dataflowdercol_image-3.png)
 
 
 At the end, we select the sink for our output.
@@ -64,7 +64,7 @@ In settings, set output to single file and give name to the output file..
 
 Create a pipeline by dragging the data flow created and publish all. Then, trigger now..
 
-![alt text](/assets/img/posts/dataflowdercol/image-4.png)
+![alt text](/images/posts_dataflowdercol_image-4.png)
 
 We now have the new file with applied transformations.
 

@@ -8,7 +8,7 @@ tags: ['PL-300', 'Power BI', 'Certification', 'Data Analytics', 'Career Journey'
 toc: true
 categories: ['Power BI & Power Platform']
 description: "Reflections and study roadmap on achieving the Microsoft Certified: Power BI Data Analyst Associate (PL-300) credential."
-image: /assets/img/posts/pbi-cert.png
+image: /images/posts_pbi-cert.png
 
 ---
 
@@ -39,16 +39,16 @@ PL-300 is probably the best certification out there right now for Data Analysts.
 ## Exam Details
 
 - Duration: 100 minutes
-- Number of Questions: 40 â€“ 60
-- Passing Score: 700/1000
+- Number of Questions: 40 – 60
+- Passing Score: 700_1000
 - Types of Questions: MCQs, MSQs, True/False, Drag and Drop, List Rearrange, Case Studies
 
 ### Topics Covered
 
-- Preparing Data (25â€“30%)
-- Modeling Data (25â€“30%)
-- Visualizing & Analyzing Data (25â€“30%)
-- Deploying & Maintaining Assets (15â€“20%)
+- Preparing Data (25–30%)
+- Modeling Data (25–30%)
+- Visualizing & Analyzing Data (25–30%)
+- Deploying & Maintaining Assets (15–20%)
 
 ## Resources
 

@@ -7,7 +7,7 @@ export function getPostUrl(post: CollectionEntry<'posts'>): string {
   return `/posts/${post.id}/`;
 }
 
-export function getPortfolioUrl(item: CollectionEntry<'portfolio'>): string {
+export function getPortfolioUrl(item: CollectionEntry<'projects'>): string {
   if (item.data.permalink) {
     return item.data.permalink.endsWith('/') ? item.data.permalink : `${item.data.permalink}/`;
   }
@@ -36,8 +36,8 @@ export async function getAllSortedPosts() {
 }
 
 export async function getAllSortedPortfolio() {
-  const portfolio = await getCollection('portfolio');
-  return portfolio.sort((a, b) => {
+  const projects = await getCollection('projects');
+  return projects.sort((a, b) => {
     const aDate = a.data.date ? new Date(a.data.date).getTime() : 0;
     const bDate = b.data.date ? new Date(b.data.date).getTime() : 0;
     return bDate - aDate;
@@ -55,10 +55,10 @@ export async function getAllSortedExperiments() {
 
 export async function getTrendingTags(limit = 10) {
   const posts = await getCollection('posts');
-  const portfolio = await getCollection('portfolio');
+  const projects = await getCollection('projects');
   const tagCounts: Record<string, number> = {};
 
-  for (const p of [...posts, ...portfolio]) {
+  for (const p of [...posts, ...projects]) {
     for (const tag of p.data.tags || []) {
       const normalized = tag.trim();
       if (normalized) {

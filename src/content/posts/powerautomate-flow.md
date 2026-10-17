@@ -7,13 +7,13 @@ tags: ['Power Automate', 'SharePoint', 'Excel', 'Workflow Automation', 'Power Pl
 toc: true
 categories: ['Power BI & Power Platform']
 description: "Step-by-step automated workflow to parse Excel rows and synchronize them into a SharePoint Online list."
-image: /assets/img/posts/power-automate-flow-bnr.png
+image: /images/posts_power-automate-flow-bnr.png
 
 ---
 
 Automate importing data from Excel to SharePoint list using Power Automate.
 
-> Check out this post on [Medium](https://medium.com/@datawithshoaib/importing-excel-data-into-sharepoint-list-using-power-automate-a58eedcfd7cd)
+> Check out this post on [Medium](https:_/medium.com/@datawithshoaib/importing-excel-data-into-sharepoint-list-using-power-automate-a58eedcfd7cd)
 {: .prompt-info }
 
 Have you ever tried copying data from Excel to SharePoint List directly?
@@ -24,24 +24,24 @@ I will explain how you can automate the process of copying data from an Excel sh
 
 - SharePoint list columns may have validation rules (e.g., required fields, data types) that can reject pasted data.
 - Mismatched data types (e.g., pasting text into a number column) can result in errors. Different date format may cause errors.
-- Large datasets may exceed SharePoint‚Äôs list size limits or timeout during the paste operation. Copy-pasting does not support datasets exceeding the 5000-item threshold limit.
+- Large datasets may exceed SharePointís list size limits or timeout during the paste operation. Copy-pasting does not support datasets exceeding the 5000-item threshold limit.
 - Data must align perfectly with the column order in the SharePoint list. Any mismatch can cause incorrect data mapping or errors.
 - Hidden or extra columns in Excel may lead to misaligned data.
 - There is no built-in error feedback or detailed logs during the copy-paste operation, making it harder to troubleshoot issues.
 
-Now, you may be wondering that we can use SharePoint List‚Äôs import options to import data from Excel file. Consider below points about the import options.
+Now, you may be wondering that we can use SharePoint Listís import options to import data from Excel file. Consider below points about the import options.
 
-### When to use SharePoint list‚Äôs import options
+### When to use SharePoint listís import options
 
 - For one-time imports or if the Excel data is unlikely to change frequently.
-- When dealing with small datasets that don‚Äôt require complex logic or automation.
+- When dealing with small datasets that donít require complex logic or automation.
 
 ### Limitations of SharePoint list import options
 
 1. Manual Effort Required: Importing data from Excel to SharePoint using built-in options requires manual effort every time you need to transfer or update data.
 2. No Automation: You must repeat the import process manually whenever the Excel data changes, which can be time-consuming and error-prone.
-3. Static Data Handling: The import is a one-time action. Changes made in the Excel file after the import won‚Äôt automatically reflect in the SharePoint list.
-4. No Conditional Logic: SharePoint‚Äôs import options don‚Äôt allow conditional updates (e.g., skip duplicates, update only certain rows).
+3. Static Data Handling: The import is a one-time action. Changes made in the Excel file after the import wonít automatically reflect in the SharePoint list.
+4. No Conditional Logic: SharePointís import options donít allow conditional updates (e.g., skip duplicates, update only certain rows).
 
 ### When to use Power Automate flow
 
@@ -57,7 +57,7 @@ Now, you may be wondering that we can use SharePoint List‚Äôs import options to 
 4. Data Transformation: Power Automate can validate, filter, and transform the data before writing it to the SharePoint list.
 5. Integration with Workflows: You can include notifications, logging, or additional steps like sending emails or integrating with other systems as part of the data transfer process.
 6. Flexibility: Power Automate handles complex scenarios, such as: mapping columns differently, adding or updating data conditionally, handling large datasets incrementally.
-7. Scalability: It‚Äôs suitable for workflows that grow in complexity over time, like syncing multiple lists or integrating with external services.
+7. Scalability: Itís suitable for workflows that grow in complexity over time, like syncing multiple lists or integrating with external services.
 
 ### Creating Power Automate Flow
 
@@ -71,8 +71,8 @@ For our understanding, I will take a simple example to demonstrate how to create
 
 Imagine you have an Excel file in your OneDrive with this table:
 
-![img](/assets/img/posts/pwr-atmt-ex-table.png)
-_Table in Excel with name ‚Äúemployees‚Äù_
+![img](/images/posts_pwr-atmt-ex-table.png)
+_Table in Excel with name ìemployeesî_
 
 1. Ensure your SharePoint list is created with the following columns:
 	- ID (Number)
@@ -86,27 +86,27 @@ _Table in Excel with name ‚Äúemployees‚Äù_
 1. Go to Power Automate
 2. Click on Create from the left sidebar.
 3. Select Instant flow.
-4. Choose Manually trigger a flow (for testing) or Scheduled flow (if you want the flow to run periodically). For this example, we‚Äôll use Instant Flow.
-5. Give your flow a name (e.g., ‚ÄúCopy Excel Data to SharePoint List‚Äù).
+4. Choose Manually trigger a flow (for testing) or Scheduled flow (if you want the flow to run periodically). For this example, weíll use Instant Flow.
+5. Give your flow a name (e.g., ìCopy Excel Data to SharePoint Listî).
 
 #### Step 2: Set up the Excel Trigger
 
 1. Click on New Step.
-2. Search for Excel and select ‚ÄúList rows present in a table‚Äù.
+2. Search for Excel and select ìList rows present in a tableî.
 3. Choose the location of the Excel file (OneDrive or SharePoint).
-4. Browse to the file and select the Excel file that contains the ‚Äúemployees‚Äù table.
+4. Browse to the file and select the Excel file that contains the ìemployeesî table.
 5. Select the Table within the Excel file. Ensure your Excel table has column names like ID, Name, Email, Department, and Joining Date
 
-#### Step 3: Add ‚ÄúApply to Each‚Äù Loop
+#### Step 3: Add ìApply to Eachî Loop
 
-1. After the ‚ÄúList rows present in a table‚Äù action, click on Add an action.
-2. Search for ‚ÄúApply to each‚Äù and select it.
-3. In the ‚ÄúApply to each‚Äù action, select value from the ‚ÄúList rows present in a table‚Äù action. This tells the flow to loop through each row of the Excel table.
+1. After the ìList rows present in a tableî action, click on Add an action.
+2. Search for ìApply to eachî and select it.
+3. In the ìApply to eachî action, select value from the ìList rows present in a tableî action. This tells the flow to loop through each row of the Excel table.
 
 #### Step 4: Set up SharePoint Action Inside the Loop
 
-1. Inside the ‚ÄúApply to each‚Äù loop, click on Add an action.
-2. Search for SharePoint and select ‚ÄúCreate item‚Äù.
+1. Inside the ìApply to eachî loop, click on Add an action.
+2. Search for SharePoint and select ìCreate itemî.
 3. Choose your SharePoint Site Address and select your List Name.
 4. Map the Excel table columns to the SharePoint list columns:
 	- ID: Map the ID column from the Excel file.
@@ -127,22 +127,22 @@ After running the flow, go to your SharePoint list and verify that the data from
 #### Key Steps
 
 1. Trigger: Manually or Scheduled trigger (depending on how you want the flow to be initiated).
-2. Action: ‚ÄúList rows present in a table‚Äù (retrieves all rows from the Excel table).
-3. Loop: ‚ÄúApply to each‚Äù (loops through each row of the Excel table).
-4. Action Inside Loop: ‚ÄúCreate item‚Äù (creates a new item in SharePoint for each row in the Excel table).
+2. Action: ìList rows present in a tableî (retrieves all rows from the Excel table).
+3. Loop: ìApply to eachî (loops through each row of the Excel table).
+4. Action Inside Loop: ìCreate itemî (creates a new item in SharePoint for each row in the Excel table).
 5. Map Fields: map the fields from Excel to SharePoint columns.
 
 ##### Optional Steps
 
-- Error Handling: Add ‚ÄúConfigure Run After‚Äù to handle any failures (e.g., to log errors if the SharePoint list is not accessible).
+- Error Handling: Add ìConfigure Run Afterî to handle any failures (e.g., to log errors if the SharePoint list is not accessible).
 - Notifications: Add actions like Send an email or Post a message in Teams to notify users when the flow completes or fails.
 
-![flow|400](/assets/img/posts/pat-flow.png)
+![flow|400](/images/posts_pat-flow.png)
 _Power Automate Flow to import data from Excel to SharePoint List_
 
 ### Conclusion
 
-We‚Äôve walked through the process of creating a Power Automate flow to transfer multiple rows of data from an Excel file to a SharePoint list.
+Weíve walked through the process of creating a Power Automate flow to transfer multiple rows of data from an Excel file to a SharePoint list.
 
 By using Power Automate, we can:
 
@@ -150,6 +150,6 @@ By using Power Automate, we can:
 - Handle multiple rows efficiently with a loop, ensuring that each row gets copied as a separate item in SharePoint.
 - Customize the flow to meet specific needs, like adding error handling, adding notification actions.
 
-This automation eliminates the need for manual imports, saving time and reducing the risk of errors. Whether you‚Äôre dealing with periodic updates or ongoing data synchronization, Power Automate is a powerful tool that streamlines the process and integrates seamlessly with both Excel and SharePoint.
+This automation eliminates the need for manual imports, saving time and reducing the risk of errors. Whether youíre dealing with periodic updates or ongoing data synchronization, Power Automate is a powerful tool that streamlines the process and integrates seamlessly with both Excel and SharePoint.
 
 Feel free to share your thoughts in the comments!

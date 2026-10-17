@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAllSortedPosts, getAllSortedPortfolio, getPostUrl, getPortfolioUrl } from '../../utils/content';
+import { getAllSortedPosts, getPostUrl } from '../../utils/content';
 
 const posts = await getAllSortedPosts();
-const portfolio = await getAllSortedPortfolio();
 
 interface CategoryGroup {
   name: string;
@@ -29,26 +28,10 @@ for (const p of posts) {
   }
 }
 
-for (const p of portfolio) {
-  for (const cat of p.data.categories || []) {
-    const name = cat.trim();
-    if (!name) continue;
-    if (!categoriesMap[name]) {
-      categoriesMap[name] = { name, count: 0, items: [] };
-    }
-    categoriesMap[name].count++;
-    categoriesMap[name].items.push({
-      title: p.data.title,
-      url: getPortfolioUrl(p),
-      date: p.data.date || null,
-    });
-  }
-}
-
 const sortedCategories = Object.values(categoriesMap).sort((a, b) => a.name.localeCompare(b.name));
 ---
 
-<BaseLayout title="Categories" description="All article and project categories.">
+<BaseLayout title="Categories" description="All article categories.">
   <div class="px-1">
     <h1 class="dynamic-title mb-4">Categories</h1>
 

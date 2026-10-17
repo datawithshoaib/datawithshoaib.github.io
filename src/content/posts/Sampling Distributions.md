@@ -12,7 +12,7 @@ description: "Foundational concepts in statistical inference, sampling distribut
 
 Revising sampling distribution concept in statistics.
 
-![alt text](/assets/img/posts/smpl.png)
+![alt text](/images/posts_smpl.png)
 
 ## What is Sampling Distribution?
 
@@ -24,17 +24,17 @@ The distribution of these samples based on a statistic which is used to infer th
 
 ### Imagine This Scenario:
 
-You want to know the proportion of people in a city who like chocolate ice cream. But instead of asking everyone in the city (the **population**), you randomly survey a smaller group of people (a **sample**). Letâ€™s say in your sample, 60% of people like chocolate ice cream.
+You want to know the proportion of people in a city who like chocolate ice cream. But instead of asking everyone in the city (the **population**), you randomly survey a smaller group of people (a **sample**). Let’s say in your sample, 60% of people like chocolate ice cream.
 
 - The sample proportion is the percentage or fraction of people in your sample who like chocolate ice cream.
 - In this case, the sample proportion is **60% (or 0.6)**.
 
-If you repeat this process - taking multiple random samples of the same size from the population - the sample proportion wonâ€™t always be 60%. It might vary a little from sample to sample. For example:
+If you repeat this process - taking multiple random samples of the same size from the population - the sample proportion won’t always be 60%. It might vary a little from sample to sample. For example:
 - In one sample, 58% like chocolate ice cream
 - In another sample, 62%
 - In another, 59%
 
-The **sampling distribution** of the sample proportion is the pattern you get if you plot all the sample proportions from all the samples youâ€™ve taken.
+The **sampling distribution** of the sample proportion is the pattern you get if you plot all the sample proportions from all the samples you’ve taken.
 
 ### Key Features of the Sampling Distribution:
 
@@ -57,7 +57,7 @@ np >= 10
 
 n(1-p) >= 10
 
->We need at leastÂ 10 expected "successes" and at leastÂ 10 expected "failures" for the sampling distribution of the sample proportion to be approximately normal
+>We need at least 10 expected "successes" and at least 10 expected "failures" for the sampling distribution of the sample proportion to be approximately normal
 
 If above conditions are satisfied, the shape of sampling distribution of the sample proportions is normal.
 
@@ -65,5 +65,5 @@ If any of the conditions is not satisfied, then the distribution is skewed to th
 
 ## Central Limit Theorem
 
-Best [video](https://www.youtube.com/watch?v=zeJD6dqJ5lo) on Central Limit Theorem
+Best [video](https:_/www.youtube.com/watch?v=zeJD6dqJ5lo) on Central Limit Theorem
 

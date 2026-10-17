@@ -4,7 +4,7 @@ title: Enable Security for Azure Data Lake
 date: 2024-12-19
 permalink: /posts/2024/12/enable-security-for-azure-data-lake/
 tags: ['Azure Data Lake', 'Security', 'RBAC', 'ACLs', 'Data Governance', 'Encryption']
-image: /assets/img/posts/datalake/security/image.png
+image: /images/posts_datalake_security_image.png
 toc: true
 categories: ['Azure & Cloud']
 description: "Configuring enterprise security for Azure Data Lake Storage Gen2 with Role-Based Access Control and ACLs."
@@ -37,7 +37,7 @@ When evaluating RBAC and ACL assignments, both RBAC and ACL are not always evalu
 
 ## 2. Create container and directories
 
-![alt text](/assets/img/posts/datalake/security/image.png)
+![alt text](/images/posts_datalake_security_image.png)
 
 Inside the data container, create 2 directories: logs and output
 
@@ -45,29 +45,29 @@ Inside logs, create a child directory called "json"
 
 ## 3. Enable and verify ACL and RBAC security
 
-![alt text](/assets/img/posts/datalake/security/image-1.png)
+![alt text](/images/posts_datalake_security_image-1.png)
 
 Right click directory and click manage acl
 
 click add principal and search for a user to manage the access.
 
-![alt text](/assets/img/posts/datalake/security/image-2.png)
+![alt text](/images/posts_datalake_security_image-2.png)
 
-![alt text](/assets/img/posts/datalake/security/image-3.png)
+![alt text](/images/posts_datalake_security_image-3.png)
 
 click save
 
 Note:
 
-ACL permissions do not support inheritance, so you will have to set execute permissions on all parent directories, including the containerâ€”the root directory. You will also need to set read permissions so that the user can display the directory structure of the container in the Azure portal for testing.
+ACL permissions do not support inheritance, so you will have to set execute permissions on all parent directories, including the container—the root directory. You will also need to set read permissions so that the user can display the directory structure of the container in the Azure portal for testing.
 
 Now, manage the ACL for parent directory "logs"
 
-![alt text](/assets/img/posts/datalake/security/image-4.png)
+![alt text](/images/posts_datalake_security_image-4.png)
 
 Now, assign the ACL permissions to the container "data" by clicking on manage ACL on the left settings
 
-![alt text](/assets/img/posts/datalake/security/image-5.png)
+![alt text](/images/posts_datalake_security_image-5.png)
 
 Open the Azure Portal in new incognito window and sign in with the user and try uploading any file to the logs directors. we get an error that we don't have access to do this as we don't have write permissions.
 
@@ -79,11 +79,11 @@ Now, the user is assigned the owner role, which overrides the ACLs for the direc
 
 Now, try uploading a file to the logs directory and it should work now.
 
-![alt text](/assets/img/posts/datalake/security/image-6.png)
+![alt text](/images/posts_datalake_security_image-6.png)
 
-![alt text](/assets/img/posts/datalake/security/image-7.png)
+![alt text](/images/posts_datalake_security_image-7.png)
 
-![alt text](/assets/img/posts/datalake/security/image-8.png)
+![alt text](/images/posts_datalake_security_image-8.png)
 
 ---
 

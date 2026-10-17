@@ -4,7 +4,7 @@ title: Choose and deploy a language model
 date: 2025-05-01
 permalink: /posts/2025/05/choose-and-deploy-a-language-model/
 tags: ['LLM Deployment', 'Model Catalog', 'Azure OpenAI', 'Llama', 'API Endpoints']
-image: /assets/img/posts/llm-deploy.png
+image: /images/posts_llm-deploy.png
 toc: true
 categories: ['Generative AI & LLMs']
 description: "How to browse, evaluate, select, and deploy large language models in Azure AI Studio for production endpoints."
@@ -19,7 +19,7 @@ Create a new project.
 
 Enable this option under preview features.
 
-![img](/assets/img/posts/enable-azureai-model-inference-service.png)
+![img](/images/posts_enable-azureai-model-inference-service.png)
 
 ## Model catalog
 
@@ -45,7 +45,7 @@ We can deploy the model of our interest in 2 ways, the first way is to directly 
 
 Other option to deploy is by going to **models + endpoints** option under my assets on the left navigation bar and from there we can deploy base model by selecting the model and deploy it.
 
-Once we deploy the models,Â  we can test these models by going to the chat playground. 
+Once we deploy the models,  we can test these models by going to the chat playground. 
 We can navigate to playgrounds on the left navigation bar and select chat playground there. 
 
-We can start by giving the model instructions and context and start chatting with the model on the right side.Â  So this is how we compare different models and we have a good starting point to choose our model based on the outputs that we get. Here, basically we get the output the model generates based on its abilities, so we can compare the models which we want to use and we can decide whether we need to move forward with the models that we have selected.
+We can start by giving the model instructions and context and start chatting with the model on the right side.  So this is how we compare different models and we have a good starting point to choose our model based on the outputs that we get. Here, basically we get the output the model generates based on its abilities, so we can compare the models which we want to use and we can decide whether we need to move forward with the models that we have selected.

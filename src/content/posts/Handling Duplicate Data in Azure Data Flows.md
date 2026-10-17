@@ -12,7 +12,7 @@ description: "Eliminating duplicate rows and retaining latest records using Aggr
 
 In this task, we are going to remove duplicates from a csv file present in a container.
 
-![alt text](/assets/img/posts/dataflowduprem/image.png)
+![alt text](/images/posts_dataflowduprem_image.png)
 
 ## Open data factory
 
@@ -26,13 +26,13 @@ We can modify the data flow using a script as well. Click on script icon at the 
 
 We use distinct Rows transformation to remove the duplicates.
 
-![alt text](/assets/img/posts/dataflowduprem/image-1.png)
+![alt text](/images/posts_dataflowduprem_image-1.png)
 
 ### 4. Create new pipeline and run it
 
 Now, if we check the container, we have a new file.
 
-![alt text](/assets/img/posts/dataflowduprem/image-2.png)
+![alt text](/images/posts_dataflowduprem_image-2.png)
 
 ---
 

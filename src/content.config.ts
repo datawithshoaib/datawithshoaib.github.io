@@ -58,8 +58,8 @@ const posts = defineCollection({
   schema: basePostSchema,
 });
 
-const portfolio = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/portfolio' }),
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: basePostSchema,
 });
 
@@ -70,6 +70,6 @@ const experiments = defineCollection({
 
 export const collections = {
   posts,
-  portfolio,
+  projects,
   experiments,
 };

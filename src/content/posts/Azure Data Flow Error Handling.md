@@ -75,7 +75,7 @@ Choose sink for bad records -> bad-records container
 
 - choose output as single file and give the file name
 
-![alt text](/assets/img/posts/dataflowerrhd/image.png)
+![alt text](/images/posts_dataflowerrhd_image.png)
 
 ## 4. Create pipeline and run
 Create a pipeline, and publish all
