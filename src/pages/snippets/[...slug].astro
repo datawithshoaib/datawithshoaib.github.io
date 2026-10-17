@@ -1,0 +1,89 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllSortedSnippets, getSnippetTitle, getSnippetExcerpt } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const snippets = await getAllSortedSnippets();
+
+  return snippets.map((snippet, index) => {
+    const prev = index > 0 ? snippets[index - 1] : null;
+    const next = index < snippets.length - 1 ? snippets[index + 1] : null;
+
+    return {
+      params: { slug: snippet.id },
+      props: { snippet, prev, next },
+    };
+  });
+}
+
+interface Props {
+  snippet: CollectionEntry<'snippets'>;
+  prev: CollectionEntry<'snippets'> | null;
+  next: CollectionEntry<'snippets'> | null;
+}
+
+const { snippet, prev, next } = Astro.props;
+const { Content, headings } = await render(snippet);
+
+const title = getSnippetTitle(snippet);
+const description = getSnippetExcerpt(snippet);
+const href = (entry: CollectionEntry<'snippets'>) => `/snippets/${entry.id}/`;
+---
+
+<BaseLayout title={title} description={description} headings={headings} enableToc={headings.length > 0}>
+  <div class="snippet-detail px-1">
+    <a href="/snippets/" class="snippet-back d-inline-flex align-items-center gap-2 mb-3">
+      <i class="fas fa-arrow-left"></i> All Snippets
+    </a>
+
+    <article class="content">
+      <Content />
+    </article>
+
+    <nav class="snippet-pager d-flex justify-content-between gap-3 mt-4 pt-3" aria-label="Snippet navigation">
+      <div>
+        {prev && (
+          <a href={href(prev)} class="snippet-pager-link">
+            <i class="fas fa-arrow-left me-1"></i> {getSnippetTitle(prev)}
+          </a>
+        )}
+      </div>
+      <div class="text-end ms-auto">
+        {next && (
+          <a href={href(next)} class="snippet-pager-link">
+            {getSnippetTitle(next)} <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        )}
+      </div>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+.snippet-back {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted-color, #6c757d);
+  text-decoration: none;
+}
+
+.snippet-back:hover {
+  color: var(--link-color, #007bff);
+}
+
+.snippet-pager {
+  border-top: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.snippet-pager-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--link-color, #007bff);
+  text-decoration: none;
+}
+
+.snippet-pager-link:hover {
+  text-decoration: underline;
+}
+</style>

@@ -1,10 +1,11 @@
 import type { APIRoute } from 'astro';
-import { getAllSortedPosts, getAllSortedPortfolio, getAllSortedExperiments, getPostUrl, getPortfolioUrl, getExperimentUrl } from '../utils/content';
+import { getAllSortedPosts, getAllSortedPortfolio, getAllSortedExperiments, getAllSortedSnippets, getPostUrl, getPortfolioUrl, getExperimentUrl, getSnippetUrl, getSnippetTitle, getSnippetExcerpt } from '../utils/content';
 
 export const GET: APIRoute = async () => {
   const posts = await getAllSortedPosts();
   const portfolio = await getAllSortedPortfolio();
   const experiments = await getAllSortedExperiments();
+  const snippets = await getAllSortedSnippets();
 
   const searchData = [
     ...posts.map((p) => ({
@@ -33,6 +34,15 @@ export const GET: APIRoute = async () => {
       tags: e.data.tags || [],
       categories: e.data.categories || [],
       type: 'experiment',
+    })),
+    ...snippets.map((s) => ({
+      title: getSnippetTitle(s),
+      url: getSnippetUrl(s),
+      excerpt: getSnippetExcerpt(s),
+      date: '',
+      tags: [],
+      categories: [],
+      type: 'snippet',
     })),
   ];
 

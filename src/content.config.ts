@@ -68,8 +68,31 @@ const experiments = defineCollection({
   schema: basePostSchema,
 });
 
+const snippets = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/snippets' }),
+  schema: z
+    .object({
+      title: z.string().optional().nullable(),
+      description: z.string().optional().nullable(),
+    })
+    .passthrough(),
+});
+
+const thoughts = defineCollection({
+  loader: glob({ pattern: 'thoughts.md', base: './src/content' }),
+  schema: z
+    .object({
+      title: z.string().optional().nullable(),
+      date: z.coerce.date().optional().nullable(),
+      description: z.string().optional().nullable(),
+    })
+    .passthrough(),
+});
+
 export const collections = {
   posts,
   projects,
   experiments,
+  snippets,
+  thoughts,
 };

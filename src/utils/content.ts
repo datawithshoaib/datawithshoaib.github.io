@@ -53,6 +53,47 @@ export async function getAllSortedExperiments() {
   });
 }
 
+function snippetBody(entry: CollectionEntry<'snippets'>): string {
+  return (entry as unknown as { body?: string }).body ?? '';
+}
+
+export function getSnippetUrl(entry: CollectionEntry<'snippets'>): string {
+  return `/snippets/${entry.id}/`;
+}
+
+export function getSnippetTitle(entry: CollectionEntry<'snippets'>): string {
+  if (entry.data.title) return entry.data.title;
+  const heading = snippetBody(entry).match(/^#\s+(.+)$/m);
+  if (heading) return heading[1].trim();
+  const name = entry.id.replace(/\.mdx?$/, '').split('/').pop() || entry.id;
+  return name
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export function getSnippetExcerpt(entry: CollectionEntry<'snippets'>, limit = 180): string {
+  if (entry.data.description) return entry.data.description;
+  const text = snippetBody(entry)
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ');
+  const paragraphs = text.split(/\n\s*\n/);
+  for (const block of paragraphs) {
+    const line = block.trim();
+    if (!line) continue;
+    if (/^(#{1,6}\s|>|[-*+]\s|\d+\.\s|\||!\[|<)/.test(line)) continue;
+    const clean = line.replace(/\s+/g, ' ');
+    return clean.length > limit ? `${clean.slice(0, limit).trimEnd()}…` : clean;
+  }
+  return '';
+}
+
+export async function getAllSortedSnippets() {
+  const snippets = await getCollection('snippets');
+  return snippets.sort((a, b) =>
+    getSnippetTitle(a).localeCompare(getSnippetTitle(b), undefined, { sensitivity: 'base' })
+  );
+}
+
 export async function getTrendingTags(limit = 10) {
   const posts = await getCollection('posts');
   const projects = await getCollection('projects');

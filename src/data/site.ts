@@ -27,6 +27,8 @@ export const siteConfig = {
     { title: 'HOME', url: '/', icon: 'fas fa-home' },
     { title: 'PROJECTS', url: '/projects/', icon: 'fas fa-laptop-code' },
     { title: 'EXPERIMENTS', url: '/experiments/', icon: 'fas fa-flask' },
+    { title: 'SNIPPETS', url: '/snippets/', icon: 'fas fa-code' },
+    { title: 'THOUGHTS', url: '/thoughts/', icon: 'fas fa-note-sticky' },
     { title: 'CERTIFICATES', url: '/certificates/', icon: 'fas fa-award' },
     { title: 'CV', url: '/cv/', icon: 'fas fa-file-alt' },
     { title: 'RESOURCES', url: '/resources/', icon: 'fas fa-layer-group' },

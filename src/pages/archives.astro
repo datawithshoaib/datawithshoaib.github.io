@@ -4,46 +4,315 @@ import { getAllSortedPosts, getPostUrl } from '../utils/content';
 
 const posts = await getAllSortedPosts();
 
-// Group posts by year
-const postsByYear: Record<string, typeof posts> = {};
-
-for (const post of posts) {
-  const d = post.data.date ? new Date(post.data.date) : new Date();
-  const year = String(d.getFullYear());
-  if (!postsByYear[year]) {
-    postsByYear[year] = [];
-  }
-  postsByYear[year].push(post);
+interface ArchiveEntry {
+  title: string;
+  url: string;
+  day: string;
+  month: string;
+  iso: string;
+  categories: string[];
+  pin: boolean;
 }
 
-const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+const postsByYear = new Map<number, ArchiveEntry[]>();
+
+for (const post of posts) {
+  const date = post.data.date ? new Date(post.data.date) : new Date();
+  const year = date.getFullYear();
+
+  const entry: ArchiveEntry = {
+    title: post.data.title,
+    url: getPostUrl(post),
+    day: String(date.getDate()).padStart(2, '0'),
+    month: String(date.getMonth() + 1).padStart(2, '0'),
+    iso: date.toISOString(),
+    categories: post.data.categories ?? [],
+    pin: Boolean(post.data.pin),
+  };
+
+  const group = postsByYear.get(year);
+  if (group) {
+    group.push(entry);
+  } else {
+    postsByYear.set(year, [entry]);
+  }
+}
+
+const years = [...postsByYear.keys()].sort((a, b) => b - a);
+const totalPosts = posts.length;
 ---
 
 <BaseLayout title="Archives" description="Yearly archive of all articles.">
-  <div id="archives" class="px-1 pl-xl-3">
-    <h1 class="dynamic-title mb-4">Archives</h1>
+  <div id="archive-page" class="px-1 pl-xl-3">
+    <header class="archive-header">
+      <h1 class="dynamic-title mb-2">Archives</h1>
+      {totalPosts > 0 ? (
+        <p class="archive-intro mb-0">
+          {`${totalPosts} ${totalPosts === 1 ? 'article' : 'articles'} across ${years.length} ${years.length === 1 ? 'year' : 'years'}.`}
+        </p>
+      ) : (
+        <p class="archive-intro mb-0">No articles published yet.</p>
+      )}
+    </header>
+
+    {years.length > 0 && (
+      <nav class="year-nav" aria-label="Jump to year">
+        {years.map((year) => (
+          <a class="year-chip" href={`#year-${year}`}>
+            <span>{year}</span>
+            <span class="year-chip-count">{postsByYear.get(year)!.length}</span>
+          </a>
+        ))}
+      </nav>
+    )}
 
     {years.map((year) => (
-      <div class="archive-year-group mb-4">
-        <time class="year lead d-block fw-bold text-primary mb-2">{year}</time>
-        <ul class="list-unstyled ps-0">
-          {postsByYear[year].map((post) => {
-            const d = post.data.date ? new Date(post.data.date) : new Date();
-            const day = String(d.getDate()).padStart(2, '0');
-            const month = String(d.getMonth() + 1).padStart(2, '0');
+      <section class="archive-year" id={`year-${year}`} aria-label={`Articles from ${year}`}>
+        <div class="archive-year-heading">
+          <a class="year" href={`#year-${year}`}>{year}</a>
+          <span class="year-count">
+            {postsByYear.get(year)!.length} {postsByYear.get(year)!.length === 1 ? 'post' : 'posts'}
+          </span>
+        </div>
 
-            return (
-              <li class="d-flex align-items-center py-2 px-2 border-bottom">
-                <span class="date day fw-bold me-1">{day}</span>
-                <span class="date month small text-muted me-3">/ {month}</span>
-                <a href={getPostUrl(post)} class="text-decoration-none">
-                  {post.data.title}
-                </a>
-              </li>
-            );
-          })}
+        <ul class="archive-list">
+          {postsByYear.get(year)!.map((post) => (
+            <li class="archive-item">
+              <a class="archive-link" href={post.url}>
+                <time class="archive-date" datetime={post.iso}>
+                  <span class="day">{post.day}</span>
+                  <span class="sep">/</span>
+                  <span class="month">{post.month}</span>
+                </time>
+
+                <span class="archive-title">
+                  {post.pin && <i class="fas fa-thumbtack archive-pin" aria-label="Pinned"></i>}
+                  {post.title}
+                </span>
+
+                {post.categories.length > 0 && (
+                  <span class="archive-cats">
+                    {post.categories.slice(0, 2).map((cat) => (
+                      <span class="archive-cat">{cat}</span>
+                    ))}
+                  </span>
+                )}
+              </a>
+            </li>
+          ))}
         </ul>
-      </div>
+      </section>
     ))}
   </div>
 </BaseLayout>
+
+<style>
+  #archive-page {
+    letter-spacing: 0.02rem;
+  }
+
+  .archive-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .archive-intro {
+    color: var(--text-muted-color, #757575);
+    font-size: 0.95rem;
+  }
+
+  /* --- Year jump navigation --- */
+  .year-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--main-border-color, #eee);
+  }
+
+  .year-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color, #34343c);
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--btn-border-color, #e9ecef);
+    text-decoration: none;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .year-chip:hover {
+    color: var(--link-color, #0056b2);
+    border-color: var(--link-color, #0056b2);
+    background: var(--sidebar-hover-bg, rgba(223, 233, 241, 0.64));
+    transform: translateY(-1px);
+  }
+
+  .year-chip-count {
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.2rem 0.4rem;
+    border-radius: 9999px;
+    background: var(--tag-hover, #e9ecef);
+    color: var(--text-muted-color, #757575);
+  }
+
+  /* --- Year groups --- */
+  .archive-year {
+    margin-bottom: 2.5rem;
+    scroll-margin-top: 4.5rem;
+  }
+
+  .archive-year-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+
+  .archive-year-heading .year {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--heading-color, #2a2a2a);
+    text-decoration: none;
+  }
+
+  .archive-year-heading .year:hover {
+    color: var(--link-color, #0056b2);
+  }
+
+  .year-count {
+    font-size: 0.8rem;
+    color: var(--text-muted-color, #757575);
+  }
+
+  /* --- Timeline list --- */
+  .archive-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    border-left: 2px solid var(--timeline-color, rgba(0, 0, 0, 0.075));
+  }
+
+  .archive-item {
+    position: relative;
+  }
+
+  .archive-item::before {
+    content: '';
+    position: absolute;
+    top: 0.95rem;
+    left: -1.5rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--timeline-node-bg, #c2c6cc);
+    border: 2px solid var(--main-bg, #fff);
+    box-shadow: 0 0 0 3px transparent;
+    transform: translateX(-50%);
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .archive-item:hover::before {
+    background: var(--link-color, #0056b2);
+    box-shadow: 0 0 0 3px var(--sidebar-hover-bg, rgba(223, 233, 241, 0.64));
+  }
+
+  .archive-link {
+    display: grid;
+    grid-template-columns: 3.75rem 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .archive-link:hover {
+    background: var(--sidebar-hover-bg, rgba(223, 233, 241, 0.64));
+    text-decoration: none;
+  }
+
+  .archive-date {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .archive-date .day {
+    font-weight: 700;
+    color: var(--heading-color, #2a2a2a);
+  }
+
+  .archive-date .sep,
+  .archive-date .month {
+    color: var(--text-muted-color, #757575);
+  }
+
+  .archive-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-color, #34343c);
+    transition: color 0.2s ease;
+  }
+
+  .archive-link:hover .archive-title {
+    color: var(--link-color, #0056b2);
+  }
+
+  .archive-pin {
+    font-size: 0.7rem;
+    color: var(--link-color, #0056b2);
+    margin-right: 0.35rem;
+    vertical-align: 0.05em;
+  }
+
+  .archive-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: flex-end;
+  }
+
+  .archive-cat {
+    font-size: 0.72rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+    background: var(--tag-hover, #e9ecef);
+    color: var(--text-muted-color, #757575);
+  }
+
+  @media (max-width: 575.98px) {
+    .archive-link {
+      grid-template-columns: 3.25rem 1fr;
+      gap: 0.6rem;
+      padding-left: 0.5rem;
+    }
+
+    .archive-cats {
+      display: none;
+    }
+
+    .archive-year-heading .year {
+      font-size: 1.35rem;
+    }
+  }
+</style>

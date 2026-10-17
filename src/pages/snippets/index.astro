@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllSortedSnippets, getSnippetUrl, getSnippetTitle, getSnippetExcerpt } from '../../utils/content';
+
+const snippets = await getAllSortedSnippets();
+---
+
+<BaseLayout
+  title="Snippets"
+  description="Short, reusable code snippets with quick explanations."
+>
+  <div class="snippets-container px-1">
+    <div class="snippet-header mb-4">
+      <span class="badge snippet-eyebrow">
+        <i class="fas fa-code me-1"></i> Code Notes
+      </span>
+
+      <h1 class="dynamic-title mb-2">Snippets</h1>
+      <p class="lead text-muted mb-3">
+        Small, reusable code snippets with short explanations — quick reference for the tricks I reach for often.
+      </p>
+
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="snippet-stat-badge">
+          <i class="fas fa-code me-1 text-primary"></i>
+          <strong>{snippets.length}</strong>&nbsp;Snippets
+        </span>
+      </div>
+
+      <div class="input-group snippet-search">
+        <span class="input-group-text bg-transparent border-end-0">
+          <i class="fas fa-search text-muted"></i>
+        </span>
+        <input
+          type="text"
+          id="snippet-search-input"
+          class="form-control border-start-0 ps-0"
+          placeholder="Search snippets..."
+          aria-label="Search snippets"
+        />
+      </div>
+    </div>
+
+    <ul class="list-unstyled snippet-list mb-4" id="snippet-list">
+      {snippets.map((snippet) => {
+        const url = getSnippetUrl(snippet);
+        const title = getSnippetTitle(snippet);
+        const excerpt = getSnippetExcerpt(snippet);
+
+        return (
+          <li
+            class="snippet-item"
+            data-search={`${title} ${excerpt}`.toLowerCase()}
+          >
+            <a href={url} class="snippet-link">
+              <span class="snippet-icon"><i class="fas fa-terminal"></i></span>
+              <span class="snippet-body">
+                <span class="snippet-title">{title}</span>
+                {excerpt && <span class="snippet-excerpt text-muted">{excerpt}</span>}
+              </span>
+              <i class="fas fa-arrow-right snippet-arrow"></i>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    {snippets.length === 0 && (
+      <div class="text-center py-5">
+        <i class="fas fa-code text-muted mb-3" style="font-size: 2.5rem;"></i>
+        <h5 class="text-muted fw-bold">No snippets yet</h5>
+        <p class="text-muted small">Add a markdown file to <code>src/content/snippets/</code>.</p>
+      </div>
+    )}
+
+    <div id="snippet-no-results" class="text-center py-5 d-none">
+      <i class="fas fa-search text-muted mb-3" style="font-size: 2.5rem;"></i>
+      <h5 class="text-muted fw-bold">No matching snippets</h5>
+      <p class="text-muted small">Try a different keyword.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.snippet-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.snippet-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--text-color, #212529);
+}
+
+.snippet-search {
+  max-width: 480px;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+}
+
+#snippet-search-input {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: transparent;
+}
+
+.snippet-item {
+  border: 1px solid var(--card-border-color, #e9ecef);
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.snippet-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: var(--link-color, #007bff);
+}
+
+.snippet-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.snippet-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+  border-radius: 0.6rem;
+  background-color: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  font-size: 0.95rem;
+}
+
+.snippet-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.snippet-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--heading-color, #212529);
+  line-height: 1.35;
+}
+
+.snippet-item:hover .snippet-title {
+  color: var(--link-color, #007bff);
+}
+
+.snippet-excerpt {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin-top: 0.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.snippet-arrow {
+  color: var(--text-muted-color, #6c757d);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.snippet-item:hover .snippet-arrow {
+  color: var(--link-color, #007bff);
+}
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('snippet-search-input');
+    const items = document.querySelectorAll('.snippet-item');
+    const noResults = document.getElementById('snippet-no-results');
+
+    input?.addEventListener('input', function (e) {
+      const query = e.target.value.trim().toLowerCase();
+      let visible = 0;
+
+      items.forEach((item) => {
+        const haystack = item.getAttribute('data-search') || '';
+        const match = !query || haystack.includes(query);
+        item.classList.toggle('d-none', !match);
+        if (match) visible++;
+      });
+
+      if (noResults) {
+        noResults.classList.toggle('d-none', !(query && visible === 0));
+      }
+    });
+  });
+</script>
