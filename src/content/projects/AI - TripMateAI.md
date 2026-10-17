@@ -40,48 +40,11 @@ In short: a user describes a trip, and the system returns a reviewed itinerary.
 
 Here is the whole flow:
 
-```mermaid
-flowchart TD
-    User([User Prompt]) --> API[FastAPI /api/travel]
-    API --> Graph[LangGraph StateGraph]
-
-    subgraph Core Graph Execution
-        START([START]) --> Supervisor[Supervisor + Input Guardrail]
-
-        Supervisor -->|Off-topic / harmful| Blocked[Guardrail Blocked]
-        Blocked --> END_NODE([END])
-
-        Supervisor -->|Valid travel request| Router{Dynamic Router}
-
-        Router -->|if selected| Flight[Flight Agent]
-        Router -->|if selected| Hotel[Hotel Agent]
-        Router -->|if selected| Weather[Weather Agent]
-        Router -->|if selected| Budget[Budget Agent]
-
-        Flight -.->|stdio| AviationMCP[AviationStack MCP]
-        Hotel -.->|streamable HTTP| TavilyMCP[Tavily MCP]
-        Weather -.->|stdio| WeatherMCP[Custom Weather MCP]
-
-        Flight --> Itinerary[Itinerary Agent]
-        Hotel --> Itinerary
-        Weather --> Itinerary
-        Budget --> Itinerary
-
-        Itinerary --> HITL[Human Approval - interrupt]
-    end
-
-    HITL -->|Pause + persist state| DB[(PostgreSQL Checkpointer)]
-    DB -.->|Draft shown| WebUI[Web UI Review]
-
-    WebUI -->|Approve / revise| ResumeAPI[FastAPI /api/travel/approve]
-    ResumeAPI -->|Command resume| Final[Final Response Agent]
-    Final --> END_NODE
-```
+![](/images/Pasted%20image%2020261017154926.png)
 
 One note on the diagram: the selected specialists run sequentially in a fixed order, skipping any that weren't chosen. I'll come back to parallel execution near the end.
 
 ---
-
 ## Design principle: let the graph own the control flow
 
 The most important decision was to use LangGraph's `StateGraph` rather than a free-running ReAct loop or a linear chain.
