@@ -1,12 +1,15 @@
 ---
 layout: post
-title: "Prompt Engineering Playground"
+title: Prompt Engineering Playground
 author: Shoaib
 date: 2026-09-17
 permalink: /experiments/prompt-engineering-playground/
-tags: ['Prompt Engineering', 'Structured Output', 'Few-Shot Learning', 'Context Steering', 'System Prompts']
-categories: ['Prompt Engineering']
-description: "Practical experimentation with prompt steering, system instructions, few-shot prompting, and strict structured outputs."
+tags:
+  - LLMs
+  - Prompt
+categories:
+  - Prompt Engineering
+description: Practical experimentation with prompt steering, system instructions, few-shot prompting, and strict structured outputs.
 ---
 
 Prompt engineering is the process of shaping instructions so a model follows the intended task more reliably. In practice, small changes in wording, context, and constraints can produce noticeably different outputs.
