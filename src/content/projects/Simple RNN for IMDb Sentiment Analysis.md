@@ -2,9 +2,13 @@
 title: Simple RNN for IMDb Sentiment Analysis
 date: 2025-12-20
 permalink: /projects/Simple-RNN-IMDb-Sentiment-Analysis/
-categories: ['Machine Learning & AI']
-github: 'https://github.com/theshoaibakthar/Deep-Learning-Projects/tree/main/Simple-RNN-IMDb'
-tags: ['Deep Learning', 'TensorFlow', 'Keras', 'RNN', 'Sentiment Analysis']
+categories:
+  - Machine Learning & AI
+github: https://github.com/datawithshoaib/Deep-Learning-Projects/tree/main/Simple-RNN-IMDb
+tags:
+  - TensorFlow
+  - Keras
+  - RNN
 excerpt: Developed an end-to-end deep learning project using a simple RNN on the IMDb movie reviews dataset.
 ---
 
@@ -235,6 +239,7 @@ The main script,�`main.py`, will contain the code for the Streamlit app. The s
 A text area is created for the user to input a movie review. When the classify button is clicked, the input is preprocessed and passed to the model for prediction. The result is displayed in the app as shown below.
 
 ![](/images/Simple-RNN-IMDb_Pasted image 20251220171040.png)
+
 
 ## Conclusion
 

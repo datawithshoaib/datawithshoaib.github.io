@@ -2,14 +2,19 @@
 title: Kindle Review Sentiment Analysis
 date: 2025-11-01
 permalink: /projects/NLP/Kindle-Review-Sentiment-Analysis/
-categories: ['Machine Learning & AI']
-github: 'https://github.com/theshoaibakthar/NLP-Projects/tree/main/Kindle-Review-Sentiment-Analysis'
-tags: ['Python', 'NLP', 'Sentiment Analysis', 'TF-IDF', 'Word2Vec', 'Scikit-learn']
+categories:
+  - Machine Learning & AI
+github: https://github.com/theshoaibakthar/NLP-Projects/tree/main/Kindle-Review-Sentiment-Analysis
+tags:
+  - Python
+  - NLP
+  - TF-IDF
+  - Word2Vec
+  - Scikit-learn
 excerpt: "Sentiment analysis on Amazon Kindle reviews using various NLP techniques: Implemented multiple text vectorization methods (BOW, TF-IDF, Word2Vec), \rbuilt and compared different classification models, processed and analyzed the Kindle Reviews dataset."
 ---
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)](https://github.com/theshoaibakthar/NLP-Projects/tree/main/Kindle-Review-Sentiment-Analysis)
-<!-- [![LinkedIn](https://img.shields.io/badge/LinkedIn-Post-blue?logo=linkedin)]() -->
 
 This project performs sentiment analysis on Amazon Kindle Store reviews using various Natural Language Processing (NLP) techniques. The analysis compares three different text vectorization approaches: Bag of Words (BOW), TF-IDF, and Word2Vec, combined with machine learning models to classify review sentiments.
 

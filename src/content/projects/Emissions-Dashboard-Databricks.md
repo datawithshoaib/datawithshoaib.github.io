@@ -8,7 +8,6 @@ tags: ['Databricks', 'PySpark', 'SQL', 'Lakehouse', 'Power BI']
 excerpt: Implemented SQL queries to create the US Emissions Analysis dashboard in Databricks
 toc: true
 ---
-
 ## Overview
 
 In this project, I built an **interactive United States emissions analysis dashboard** using **Databricks Free Edition**.
