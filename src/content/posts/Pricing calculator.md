@@ -2,7 +2,7 @@
 layout: post
 title: Pricing Calculator in Azure
 date: 2024-12-18
-permalink: /posts/2024/12/pricing-calculator-in-azure/
+permalink: /blog/pricing-calculator-in-azure/
 tags: ['Azure Pricing', 'Cost Optimization', 'FinOps', 'Architecture Planning']
 toc: true
 categories: ['Azure & Cloud']

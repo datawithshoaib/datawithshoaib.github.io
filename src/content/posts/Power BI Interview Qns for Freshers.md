@@ -4,7 +4,7 @@ description: "Curated compilation of top 50 Power BI interview questions, core c
 layout: post
 title: Top 50 Power BI Interview Questions & Answers (for Freshers)
 date: 2025-09-04
-permalink: /posts/2025/09/top50-pbi-qns/
+permalink: /blog/top50-pbi-qns/
 excerpt_separator: <!--more-->
 tags: ['Power BI', 'Interview Prep', 'DAX', 'Power Query', 'Data Modeling']
 ---

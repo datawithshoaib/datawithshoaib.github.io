@@ -2,7 +2,7 @@
 layout: post
 title: Azure Virtual Machine
 date: 2024-12-15
-permalink: /posts/2024/12/azure-virtual-machine/
+permalink: /blog/azure-virtual-machine/
 tags: ['Azure VMs', 'IaaS', 'Virtual Machines', 'Compute', 'Networking']
 image: /images/posts_azvm.png
 toc: true

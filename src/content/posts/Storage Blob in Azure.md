@@ -2,7 +2,7 @@
 layout: post
 title: Storage Blob in Azure
 date: 2024-12-20
-permalink: /posts/2024/12/storage-blob-in-azure/
+permalink: /blog/storage-blob-in-azure/
 tags: ['Azure Blob Storage', 'Object Storage', 'Hot Cold Archive', 'Cloud Storage']
 image: /images/posts_az-strblb.png
 toc: true

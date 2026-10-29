@@ -3,7 +3,7 @@ layout: post
 title: Building a FastAPI Backend with Supabase
 description: "Building a FastAPI Backend with Supabase: Connections, GET vs POST, and JWT Security"
 date: 2026-10-12
-permalink: /posts/2026/10/building-fastapi-backend-with-supabase/
+permalink: /blog/building-fastapi-backend-with-supabase/
 excerpt_separator: <!--more-->
 tags:
   - FastAPI

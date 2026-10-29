@@ -3,7 +3,7 @@ layout: post
 title: What Is Jev? The AI That Never Writes a Word
 description: "What it is and what's the hype is all about."
 date: 2026-09-23
-permalink: /posts/2026/09/what-is-jev/
+permalink: /blog/what-is-jev/
 excerpt_separator: <!--more-->
 tags:
   - AI

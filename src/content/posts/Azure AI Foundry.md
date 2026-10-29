@@ -2,7 +2,7 @@
 layout: post
 title: What is Azure AI Foundry?
 date: 2025-04-29
-permalink: /posts/2025/04/what-is-azure-ai-foundry/
+permalink: /blog/what-is-azure-ai-foundry/
 excerpt_separator: <!--more-->
 tags: ['Azure AI Foundry', 'Generative AI', 'LLMs', 'Model Catalog', 'Cloud AI']
 image: /images/posts_aaifnd.png

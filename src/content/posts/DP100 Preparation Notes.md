@@ -2,7 +2,7 @@
 layout: post
 title: DP-100 Preparation Notes
 date: 2025-04-05
-permalink: /posts/2025/04/dp-100-preparation-notes/
+permalink: /blog/dp-100-preparation-notes/
 excerpt_separator: <!--more-->
 tags: ['DP-100', 'Azure Machine Learning', 'MLOps', 'Model Training', 'Certification']
 image: /images/posts_dp100-prep.png

@@ -2,7 +2,7 @@
 layout: post
 title: Sampling Distributions
 date: 2024-10-19
-permalink: /posts/2024/10/sampling-distributions/
+permalink: /blog/sampling-distributions/
 tags: ['Statistics', 'Sampling Distributions', 'Central Limit Theorem', 'Data Science', 'Inference']
 toc: true
 categories: ['Python & Machine Learning']

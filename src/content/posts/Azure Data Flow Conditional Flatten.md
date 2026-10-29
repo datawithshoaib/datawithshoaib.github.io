@@ -2,7 +2,7 @@
 layout: post
 title: Azure Data Flow Conditional Flatten
 date: 2024-12-20
-permalink: /posts/2024/12/azure-data-flow-conditional-flatten/
+permalink: /blog/azure-data-flow-conditional-flatten/
 tags: ['Azure Data Flow', 'Azure Data Factory', 'ETL', 'JSON Flattening', 'Data Engineering']
 toc: true
 categories: ['Azure & Cloud']

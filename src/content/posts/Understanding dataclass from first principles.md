@@ -4,7 +4,7 @@ description: "Understanding how Python dataclasses work under the hood, why they
 layout: post
 title: Understanding dataclass from first principles
 date: 2026-09-17
-permalink: /posts/2026/09/understanding-dataclass-from-first-principles/
+permalink: /blog/understanding-dataclass-from-first-principles/
 excerpt_separator: <!--more-->
 tags: ['Python', 'Dataclasses', 'OOP', 'Code Quality', 'Python Fundamentals']
 toc: true

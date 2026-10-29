@@ -2,7 +2,7 @@
 layout: post
 title: Prepare for an AI development project
 date: 2025-04-30
-permalink: /posts/2025/04/prepare-for-an-ai-development-project/
+permalink: /blog/prepare-for-an-ai-development-project/
 tags: ['Azure AI', 'Generative AI', 'AI Projects', 'Azure Studio']
 image: /images/posts_prep-aidev.png
 toc: true

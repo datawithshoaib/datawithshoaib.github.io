@@ -2,7 +2,7 @@
 layout: post
 title: Enable Security for Azure Data Lake
 date: 2024-12-19
-permalink: /posts/2024/12/enable-security-for-azure-data-lake/
+permalink: /blog/enable-security-for-azure-data-lake/
 tags: ['Azure Data Lake', 'Security', 'RBAC', 'ACLs', 'Data Governance', 'Encryption']
 image: /images/posts_datalake_security_image.png
 toc: true

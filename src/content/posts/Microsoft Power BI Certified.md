@@ -2,7 +2,7 @@
 layout: post
 title: Finally, Microsoft Power BI Certified!!!
 date: 2025-02-23
-permalink: /posts/2025/02/powerbi-certified/
+permalink: /blog/powerbi-certified/
 excerpt_separator: <!--more-->
 tags: ['PL-300', 'Power BI', 'Certification', 'Data Analytics', 'Career Journey']
 toc: true

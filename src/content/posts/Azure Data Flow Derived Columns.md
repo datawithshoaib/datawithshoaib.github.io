@@ -2,7 +2,7 @@
 layout: post
 title: Azure Data Flow Derived Columns
 date: 2024-12-20
-permalink: /posts/2024/12/azure-data-flow-derived-columns/
+permalink: /blog/azure-data-flow-derived-columns/
 tags: ['Azure Data Flow', 'Expression Builder', 'Data Transformation', 'Data Cleansing']
 toc: true
 categories: ['Azure & Cloud']

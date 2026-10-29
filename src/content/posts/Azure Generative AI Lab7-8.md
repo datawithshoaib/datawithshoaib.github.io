@@ -2,7 +2,7 @@
 layout: post
 title: Fine-tune and apply content filters to a language model
 date: 2025-05-03
-permalink: /posts/2025/05/fine-tune-apply-content-filter-lang-model/
+permalink: /blog/fine-tune-apply-content-filter-lang-model/
 excerpt_separator: <!--more-->
 tags: ['Multimodal AI', 'Computer Vision', 'GPT-4V', 'Prompt Design', 'Azure AI']
 image: assets/img/posts/azai-ft-cf.png

@@ -2,7 +2,7 @@
 layout: post
 title: TCO Calculator in Azure
 date: 2024-12-17
-permalink: /posts/2024/12/tco-calculator-in-azure/
+permalink: /blog/tco-calculator-in-azure/
 tags: ['Azure TCO', 'Total Cost of Ownership', 'Cloud Migration', 'Cost Analysis']
 toc: true
 categories: ['Azure & Cloud']

@@ -4,7 +4,7 @@ description: "Deep dive into building robust, type-safe, immutable application c
 layout: post
 title: Understanding a Python Configuration Class From Environment Variables to Frozen Dataclasses
 date: 2026-09-17
-permalink: /posts/2026/09/understanding-a-python-configuration-class-from-environment-variables-to-frozen-dataclasses/
+permalink: /blog/understanding-a-python-configuration-class-from-environment-variables-to-frozen-dataclasses/
 excerpt_separator: <!--more-->
 toc: true
 tags: ['Python', 'Dataclasses', 'Configuration', 'Clean Code', 'Environment Variables']

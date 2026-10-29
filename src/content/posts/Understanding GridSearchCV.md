@@ -4,7 +4,7 @@ description: "A clear explanation of hyperparameter optimization and cross-valid
 layout: post
 title: Understanding GridSearchCV
 date: 2026-06-30
-permalink: /posts/2026/06/understanding-gridsearchcv/
+permalink: /blog/understanding-gridsearchcv/
 excerpt_separator: <!--more-->
 tags: ['Machine Learning', 'Scikit-learn', 'GridSearchCV', 'Hyperparameter Tuning', 'Cross-Validation']
 toc: true

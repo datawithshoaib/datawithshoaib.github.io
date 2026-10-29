@@ -4,7 +4,7 @@ export function getPostUrl(post: CollectionEntry<'posts'>): string {
   if (post.data.permalink) {
     return post.data.permalink.endsWith('/') ? post.data.permalink : `${post.data.permalink}/`;
   }
-  return `/posts/${post.id}/`;
+  return `/blog/${post.id}/`;
 }
 
 export function getPortfolioUrl(item: CollectionEntry<'projects'>): string {

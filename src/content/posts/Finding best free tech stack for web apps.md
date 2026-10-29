@@ -2,7 +2,7 @@
 title: Finding best free tech stack for web apps
 description:
 date: 2026-09-20
-permalink: /posts/2026/09/finding-best-free-tech-stack-for-web-apps/
+permalink: /blog/finding-best-free-tech-stack-for-web-apps/
 excerpt_separator: <!--more-->
 categories:
   - Software

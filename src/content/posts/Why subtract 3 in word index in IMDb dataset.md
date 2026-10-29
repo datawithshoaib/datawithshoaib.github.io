@@ -2,7 +2,7 @@
 layout: post
 title: Why do we need to subtract 3 in word index in IMDb dataset from Tensorflow?
 date: 2025-12-20
-permalink: /posts/2025/12/why-subtract-3-in-word-index-in-IMDb-dataset-tensorflow/
+permalink: /blog/why-subtract-3-in-word-index-in-IMDb-dataset-tensorflow/
 tags: ['TensorFlow', 'Keras', 'Deep Learning', 'IMDb', 'NLP', 'Tokenization']
 excerpt_separator: <!--more-->
 toc: true

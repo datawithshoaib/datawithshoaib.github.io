@@ -2,7 +2,7 @@
 layout: post
 title: How to import data into PostgreSQL?
 date: 2025-07-19
-permalink: /posts/2025/07/import-to-postgresql/
+permalink: /blog/import-to-postgresql/
 excerpt_separator: <!--more-->
 tags: ['PostgreSQL', 'SQL', 'Data Import', 'CSV', 'Database Administration']
 toc: true

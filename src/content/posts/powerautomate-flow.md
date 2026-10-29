@@ -2,7 +2,7 @@
 layout: post
 title: "Importing Excel Data into SharePoint List using Power Automate"
 date: 2025-01-15
-permalink: /posts/2025/01/importing-excel-data-into-sharepoint-list-using-power-automate/
+permalink: /blog/importing-excel-data-into-sharepoint-list-using-power-automate/
 tags: ['Power Automate', 'SharePoint', 'Excel', 'Workflow Automation', 'Power Platform']
 toc: true
 categories: ['Power BI & Power Platform']

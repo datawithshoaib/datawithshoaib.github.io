@@ -2,7 +2,7 @@
 layout: post
 title: Choose and deploy a language model
 date: 2025-05-01
-permalink: /posts/2025/05/choose-and-deploy-a-language-model/
+permalink: /blog/choose-and-deploy-a-language-model/
 tags: ['LLM Deployment', 'Model Catalog', 'Azure OpenAI', 'Llama', 'API Endpoints']
 image: /images/posts_llm-deploy.png
 toc: true

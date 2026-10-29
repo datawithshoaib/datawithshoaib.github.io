@@ -2,7 +2,7 @@
 layout: post
 title: AI-900 Preparation Notes
 date: 2025-03-06
-permalink: /posts/2025/03/ai-900-preparation-notes/
+permalink: /blog/ai-900-preparation-notes/
 excerpt_separator: <!--more-->
 tags: ['AI-900', 'Certification', 'Azure AI', 'Machine Learning', 'Computer Vision', 'NLP']
 image: /images/posts_AI900-Prep.png

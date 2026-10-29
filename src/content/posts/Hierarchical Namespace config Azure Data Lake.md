@@ -2,7 +2,7 @@
 layout: post
 title: Configure a Hierarchical Namespace for Azure Data Lake
 date: 2024-12-19
-permalink: /posts/2024/12/configure-hierarchical-namespace-azure-data-lake/
+permalink: /blog/configure-hierarchical-namespace-azure-data-lake/
 tags: ['Azure Data Lake', 'ADLS Gen2', 'Hierarchical Namespace', 'Storage', 'Cloud Architecture']
 image: /images/posts_datalake_conf_image.png
 toc: true

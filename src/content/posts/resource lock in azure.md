@@ -2,7 +2,7 @@
 layout: post
 title: Resource Lock in Azure
 date: 2024-12-18
-permalink: /posts/2024/12/resource-lock-in-azure/
+permalink: /blog/resource-lock-in-azure/
 tags: ['Azure Governance', 'Resource Locks', 'Accidental Deletion', 'Cloud Security']
 toc: true
 categories: ['Azure & Cloud']

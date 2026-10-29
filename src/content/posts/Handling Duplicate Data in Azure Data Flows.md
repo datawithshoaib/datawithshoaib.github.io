@@ -2,7 +2,7 @@
 layout: post
 title: Handling Duplicate Data in Azure Data Flows
 date: 2024-12-20
-permalink: /posts/2024/12/handling-duplicate-data-in-azure-data-flows/
+permalink: /blog/handling-duplicate-data-in-azure-data-flows/
 tags: ['Azure Data Flow', 'Deduplication', 'Window Functions', 'ETL Pipelines', 'Data Quality']
 toc: true
 categories: ['Azure & Cloud']

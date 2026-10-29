@@ -2,7 +2,7 @@
 layout: post
 title: Fabric Key Concepts (first principles explanation)
 date: 2026-06-28
-permalink: /posts/2026/06/fabric-key-concepts/
+permalink: /blog/fabric-key-concepts/
 excerpt_separator: <!--more-->
 tags:
   - Fabric

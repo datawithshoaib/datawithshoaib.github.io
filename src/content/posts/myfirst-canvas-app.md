@@ -2,7 +2,7 @@
 layout: post
 title: My first App in Power Apps
 date: 2024-12-27
-permalink: /posts/2024/12/my-first-app-in-power-apps/
+permalink: /blog/my-first-app-in-power-apps/
 tags: ['Power Apps', 'Power Platform', 'Low-Code', 'App Development']
 image: /images/posts_myfirstpowerapp.png
 toc: true

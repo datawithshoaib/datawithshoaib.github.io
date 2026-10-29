@@ -4,7 +4,7 @@ description: "A 15-day progressive guide to mastering Data Analysis Expressions 
 layout: post
 title: 15 Days of DAX Series
 date: 2025-03-09
-permalink: /posts/2025/03/15-days-of-dax-series/
+permalink: /blog/15-days-of-dax-series/
 excerpt_separator: <!--more-->
 tags: ['Power BI', 'DAX', 'Data Modeling', 'CALCULATE', 'Time Intelligence']
 image: /images/posts_15daysofdax.png

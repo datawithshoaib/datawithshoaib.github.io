@@ -2,7 +2,7 @@
 layout: post
 title: Develop a multimodal generative AI app
 date: 2025-05-01
-permalink: /posts/2025/05/develop-a-multimodal-generative-ai-app/
+permalink: /blog/develop-a-multimodal-generative-ai-app/
 excerpt_separator: <!--more-->
 tags: ['Prompt Flow', 'LLMOps', 'Chat Workflows', 'Conversation State', 'Azure AI']
 image:

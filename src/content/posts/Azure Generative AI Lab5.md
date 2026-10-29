@@ -2,7 +2,7 @@
 layout: post
 title: Use a prompt flow to manage conversation in a chat app
 date: 2025-05-03
-permalink: /posts/2025/05/use-prompt-flow-to-manage-conversation-in-chat-app/
+permalink: /blog/use-prompt-flow-to-manage-conversation-in-chat-app/
 excerpt_separator: <!--more-->
 tags: ['RAG', 'Azure AI Search', 'Enterprise Data', 'Vector Search', 'Context Grounding']
 image: /images/posts_prmpt-flow.png

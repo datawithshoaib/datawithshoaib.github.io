@@ -2,7 +2,7 @@
 layout: post
 title: AZ-900 Practice Questions
 date: 2025-01-18
-permalink: /posts/2025/01/az-900-practice-questions/
+permalink: /blog/az-900-practice-questions/
 excerpt_separator: <!--more-->
 tags: ['AZ-900', 'Azure Fundamentals', 'Cloud Concepts', 'Certification Prep']
 image: /images/posts_az900-qns.png

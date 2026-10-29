@@ -2,7 +2,7 @@
 layout: post
 title: How to create and manage Azure resources?
 date: 2025-04-28
-permalink: /posts/2025/04/create-and-manage-azure-resources/
+permalink: /blog/create-and-manage-azure-resources/
 excerpt_separator: <!--more-->
 tags: ['Azure Management', 'Azure Portal', 'Resource Groups', 'Subscriptions', 'Governance']
 image: /images/posts_az-res.png

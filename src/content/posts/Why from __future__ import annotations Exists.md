@@ -5,7 +5,7 @@ description: Explaining deferred type evaluation in Python, PEP 563, and why fro
 layout: post
 title: Why from __future__ import annotations Exists?
 date: 2026-09-17
-permalink: /posts/2026/09/why-from-__future__-import-annotations-exists/
+permalink: /blog/why-from-__future__-import-annotations-exists/
 excerpt_separator: <!--more-->
 tags:
   - Python

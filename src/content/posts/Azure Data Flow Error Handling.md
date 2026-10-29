@@ -3,7 +3,7 @@ layout: post
 title: "Configuring Azure Data Flow Error Handling"
 author: Shoaib
 date: 2024-12-20
-permalink: /posts/2024/12/configuring-azure-data-flow-error-handling/
+permalink: /blog/configuring-azure-data-flow-error-handling/
 tags: ['Azure Data Flow', 'Error Handling', 'Data Quality', 'Row-Level Errors', 'ETL']
 toc: true
 categories: ['Azure & Cloud']

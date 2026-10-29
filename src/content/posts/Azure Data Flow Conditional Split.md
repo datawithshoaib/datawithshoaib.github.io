@@ -2,7 +2,7 @@
 layout: post
 title: Azure Data Flow Conditional Split
 date: 2024-12-20
-permalink: /posts/2024/12/azure-data-flow-conditional-split/
+permalink: /blog/azure-data-flow-conditional-split/
 tags: ['Azure Data Flow', 'Data Transformation', 'ETL Pipelines', 'Azure Data Factory']
 toc: true
 categories: ['Azure & Cloud']
