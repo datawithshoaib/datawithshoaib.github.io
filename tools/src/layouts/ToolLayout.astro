@@ -1,0 +1,95 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+const { title, description, icon = 'fas fa-wrench' } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="tool-page px-1">
+    <header class="mb-4">
+      <h1 class="dynamic-title mb-2"><i class={`${icon} me-2 tool-icon`}></i>{title}</h1>
+      <p class="lead text-muted mb-1">{description}</p>
+      <p class="small text-muted mb-0"><i class="fas fa-lock me-1"></i>Runs entirely in your browser. Nothing you paste is uploaded.</p>
+    </header>
+    <slot />
+  </div>
+</BaseLayout>
+
+<style is:global>
+.tool-icon { color: var(--link-color, #0284c7); }
+
+.tool-panel {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.tool-panel textarea,
+.tool-panel input,
+.tool-panel select {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef);
+}
+
+.tool-panel select option { color: #212529; }
+
+.tool-panel textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+.tool-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted-color, #6c757d);
+  margin-bottom: 0.35rem;
+}
+
+.tool-stat {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  height: 100%;
+}
+
+.tool-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--heading-color, #212529);
+  font-variant-numeric: tabular-nums;
+}
+
+.tool-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted-color, #6c757d);
+}
+
+.tool-output {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 32rem;
+  overflow: auto;
+  color: var(--text-color, #212529);
+}
+
+.tool-table { font-size: 0.85rem; color: var(--text-color, #212529); }
+.tool-table th, .tool-table td {
+  background: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef) !important;
+  font-variant-numeric: tabular-nums;
+}
+</style>

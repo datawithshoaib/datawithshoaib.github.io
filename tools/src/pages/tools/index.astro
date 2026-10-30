@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { tools, categories } from '../../data/tools';
+
+const description = 'Free, browser-only tools for AI engineering and data science.';
+---
+
+<BaseLayout title="Tools" description={description}>
+  <div class="px-1">
+    <header class="home-hero mb-4">
+      <span class="badge home-eyebrow mb-2"><i class="fas fa-lock me-1"></i> Free &amp; browser-only</span>
+      <h1 class="dynamic-title mb-2">AI Engineering &amp; Data Science Tools</h1>
+      <p class="lead text-muted mb-3">
+        Practical tools for building LLM apps and evaluating models. Paste your data and get an answer. Nothing leaves your browser.
+      </p>
+    </header>
+
+    {categories.map((cat) => (
+      <section class="mb-5">
+        <h2 class="home-section-title mb-1"><i class={`${cat.icon} me-2`}></i>{cat.name}</h2>
+        <p class="small text-muted mb-3">{cat.blurb}</p>
+        <div class="row g-3">
+          {tools.filter((tool) => tool.category === cat.name).map((tool) => (
+            <div class="col-12 col-md-6">
+              <a href={tool.url} class="home-card card h-100 text-decoration-none">
+                <div class="card-body p-3 p-md-4 d-flex flex-column">
+                  <div class="home-card-icon mb-3"><i class={tool.icon}></i></div>
+                  <h3 class="home-card-title mb-2">{tool.title}</h3>
+                  <p class="text-muted small mb-3">{tool.description}</p>
+                  <div class="mt-auto d-flex flex-wrap gap-1">
+                    {tool.tags.map((tag) => <span class="home-tag">{tag}</span>)}
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+.home-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  background-color: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.home-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted-color, #6c757d);
+  margin-bottom: 0.85rem;
+}
+
+.home-card {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.85rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: var(--link-color, #007bff);
+}
+
+.home-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+  font-size: 1.1rem;
+}
+
+.home-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--heading-color, #212529);
+}
+
+.home-tag {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e9ecef);
+}
+</style>

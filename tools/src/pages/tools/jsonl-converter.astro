@@ -1,0 +1,224 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+
+const sample = `{"id": 1, "prompt": "What is RAG?", "label": "concept"}
+{"id": 2, "prompt": "Write a SQL join", "label": "code"}
+{"id": 3, "prompt": "Summarise this PDF", "label": "task"}`;
+---
+
+<ToolLayout
+  title="JSONL Validator & Converter"
+  description="Validate JSONL line by line and convert between JSON arrays, JSONL and CSV."
+  icon="fas fa-file-code"
+>
+  <div class="tool-panel mb-3">
+    <div class="d-flex flex-wrap gap-2 align-items-end">
+      <div>
+        <label for="jl-mode" class="tool-label d-block">Conversion</label>
+        <select id="jl-mode" class="form-select form-select-sm">
+          <option value="validate">Validate JSONL</option>
+          <option value="jsonl-json">JSONL → JSON array</option>
+          <option value="json-jsonl">JSON array → JSONL</option>
+          <option value="jsonl-csv">JSONL → CSV</option>
+          <option value="csv-jsonl">CSV → JSONL</option>
+        </select>
+      </div>
+      <div class="form-check ms-1 mb-1" id="jl-infer-wrap">
+        <input class="form-check-input" type="checkbox" id="jl-infer" checked />
+        <label class="form-check-label small" for="jl-infer">Detect numbers, booleans and null in CSV</label>
+      </div>
+      <div class="ms-auto d-flex gap-2">
+        <button type="button" id="jl-copy" class="btn btn-sm btn-outline-secondary"><i class="far fa-clipboard me-1"></i>Copy</button>
+        <button type="button" id="jl-download" class="btn btn-sm btn-outline-primary"><i class="fas fa-download me-1"></i>Download</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-6">
+      <div class="tool-panel h-100">
+        <label for="jl-input" class="tool-label d-block">Input</label>
+        <textarea id="jl-input" class="form-control" rows="16" spellcheck="false">{sample}</textarea>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="tool-panel h-100">
+        <div class="tool-label">Output</div>
+        <div id="jl-status" class="small mb-2"></div>
+        <ul id="jl-errors" class="small text-danger ps-3 mb-2"></ul>
+        <div id="jl-output" class="tool-output"></div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('jl-input') as HTMLTextAreaElement;
+  const mode = document.getElementById('jl-mode') as HTMLSelectElement;
+  const infer = document.getElementById('jl-infer') as HTMLInputElement;
+  const inferWrap = document.getElementById('jl-infer-wrap') as HTMLDivElement;
+  const output = document.getElementById('jl-output') as HTMLDivElement;
+  const status = document.getElementById('jl-status') as HTMLDivElement;
+  const errors = document.getElementById('jl-errors') as HTMLUListElement;
+
+  let result = '';
+  let extension = 'jsonl';
+
+  function parseJsonl(s: string) {
+    const records: unknown[] = [];
+    const errs: string[] = [];
+    let blank = 0;
+    s.split(/\r?\n/).forEach((line, i) => {
+      if (!line.trim()) {
+        blank++;
+        return;
+      }
+      try {
+        records.push(JSON.parse(line));
+      } catch (e) {
+        errs.push(`Line ${i + 1}: ${(e as Error).message}`);
+      }
+    });
+    return { records, errs, blank };
+  }
+
+  function csvCell(v: unknown) {
+    if (v === null || v === undefined) return '';
+    const s = typeof v === 'object' ? JSON.stringify(v) : String(v);
+    return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  }
+
+  function toCsv(records: unknown[]) {
+    const cols: string[] = [];
+    for (const r of records) {
+      if (r && typeof r === 'object' && !Array.isArray(r)) {
+        for (const k of Object.keys(r)) if (!cols.includes(k)) cols.push(k);
+      }
+    }
+    const lines = [cols.map(csvCell).join(',')];
+    for (const r of records) {
+      const obj = (r && typeof r === 'object' ? r : {}) as Record<string, unknown>;
+      lines.push(cols.map((c) => csvCell(obj[c])).join(','));
+    }
+    return lines.join('\n');
+  }
+
+  // RFC 4180 parser: quoted fields may contain commas, quotes ("") and newlines.
+  function parseCsv(s: string): string[][] {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let field = '';
+    let quoted = false;
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i];
+      if (quoted) {
+        if (ch === '"' && s[i + 1] === '"') {
+          field += '"';
+          i++;
+        } else if (ch === '"') quoted = false;
+        else field += ch;
+      } else if (ch === '"') quoted = true;
+      else if (ch === ',') {
+        row.push(field);
+        field = '';
+      } else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && s[i + 1] === '\n') i++;
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = '';
+      } else field += ch;
+    }
+    if (field || row.length) {
+      row.push(field);
+      rows.push(row);
+    }
+    return rows.filter((r) => r.some((c) => c !== ''));
+  }
+
+  function inferValue(v: string): unknown {
+    if (!infer.checked) return v;
+    if (v === '') return null;
+    if (v === 'true' || v === 'false') return v === 'true';
+    if (v === 'null') return null;
+    if (/^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(v)) return Number(v);
+    return v;
+  }
+
+  function convert() {
+    const s = input.value;
+    const m = mode.value;
+    const errs: string[] = [];
+    let msg = '';
+    result = '';
+    inferWrap.classList.toggle('d-none', m !== 'csv-jsonl');
+
+    if (m === 'validate' || m === 'jsonl-json' || m === 'jsonl-csv') {
+      const parsed = parseJsonl(s);
+      errs.push(...parsed.errs);
+      msg = `${parsed.records.length} valid record${parsed.records.length === 1 ? '' : 's'}`;
+      if (parsed.errs.length) msg += `, ${parsed.errs.length} invalid line${parsed.errs.length === 1 ? '' : 's'}`;
+      if (parsed.blank) msg += `, ${parsed.blank} blank line${parsed.blank === 1 ? '' : 's'} skipped`;
+      if (m === 'validate') {
+        result = parsed.records.map((r) => JSON.stringify(r)).join('\n');
+        extension = 'jsonl';
+      } else if (m === 'jsonl-json') {
+        result = JSON.stringify(parsed.records, null, 2);
+        extension = 'json';
+      } else {
+        result = toCsv(parsed.records);
+        extension = 'csv';
+      }
+    } else if (m === 'json-jsonl') {
+      extension = 'jsonl';
+      try {
+        const data = JSON.parse(s);
+        const arr = Array.isArray(data) ? data : [data];
+        result = arr.map((r) => JSON.stringify(r)).join('\n');
+        msg = `${arr.length} record${arr.length === 1 ? '' : 's'}`;
+      } catch (e) {
+        errs.push((e as Error).message);
+      }
+    } else {
+      extension = 'jsonl';
+      const [header, ...rows] = parseCsv(s);
+      if (header) {
+        result = rows
+          .map((r) => JSON.stringify(Object.fromEntries(header.map((h, i) => [h, inferValue(r[i] ?? '')]))))
+          .join('\n');
+        msg = `${rows.length} record${rows.length === 1 ? '' : 's'}, ${header.length} column${header.length === 1 ? '' : 's'}`;
+      }
+    }
+
+    status.textContent = s.trim() ? msg : 'Paste some data to begin.';
+    status.className = `small mb-2 ${errs.length ? 'text-warning' : 'text-success'}`;
+    errors.replaceChildren(
+      ...errs.slice(0, 50).map((e) => {
+        const li = document.createElement('li');
+        li.textContent = e;
+        return li;
+      }),
+    );
+    output.textContent = result;
+  }
+
+  document.getElementById('jl-copy')!.addEventListener('click', (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    navigator.clipboard.writeText(result).then(() => {
+      btn.innerHTML = '<i class="fas fa-check me-1"></i>Copied';
+      setTimeout(() => (btn.innerHTML = '<i class="far fa-clipboard me-1"></i>Copy'), 1500);
+    });
+  });
+
+  document.getElementById('jl-download')!.addEventListener('click', () => {
+    const blob = new Blob([result], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `converted.${extension}`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  [input, mode, infer].forEach((el) => el.addEventListener('input', convert));
+  convert();
+</script>

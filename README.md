@@ -1,110 +1,48 @@
-# Shoaib Akthar - Portfolio & Blog
+# Shoaib Akthar - Learning AI Engineering in Public
 
 [![Build and Deploy](https://github.com/datawithshoaib/datawithshoaib.github.io/actions/workflows/pages-deploy.yml/badge.svg)](https://github.com/datawithshoaib/datawithshoaib.github.io/actions/workflows/pages-deploy.yml)
 
-> Personal portfolio, learning blog, project showcase, and resource library of Shoaib Akthar (AI Engineer & Data Scientist). Built with **Astro 5**.
+> A public learning log: LeetCode problems, courses with notes, and a journal. Built with **Astro** and deployed to GitHub Pages.
 
-## 🚀 Tech Stack
+| Page | Route | Content folder |
+|---|---|---|
+| Dashboard (stats, activity heatmap, streak, recent activity) | `/` | — |
+| LeetCode log (filter by difficulty, topic, status) | `/leetcode/` | `src/content/leetcode/` |
+| Courses (progress and notes) | `/courses/` | `src/content/courses/` |
+| Journal (timeline, tag filter) | `/journal/` | `src/content/journal/` |
 
-- **Framework**: [Astro 5](https://astro.build/) (Static Site Generation - SSG)
-- **Styling**: Bootstrap 5 + Standalone Chirpy Theme Styles + Custom CSS
-- **Syntax Highlighting**: Shiki (with dual light/dark GitHub themes)
-- **Math / LaTeX**: Remark-Math & Rehype-KaTeX
-- **Search**: Built-in client-side instant search (`Ctrl+K`)
-- **Typography & Icons**: Google Fonts (Lato, Source Sans Pro) & FontAwesome 6
-- **Deployment**: GitHub Pages via GitHub Actions (fast Node.js build)
+## ✍️ Adding entries
 
-## 📁 Project Structure
+Every entry is a Markdown file. The `new` script creates one from a template with today's date filled in:
 
-```text
-├── public/
-│   └── assets/
-│       ├── css/          # Standalone theme stylesheets
-│       ├── docs/         # Visual slide decks & PDF guides
-│       └── img/          # Images (profile, posts, portfolio, certificates)
-├── src/
-│   ├── components/       # UI components (Sidebar, Topbar, PostCard, TOC, Search, etc.)
-│   ├── content/
-│   │   ├── experiments/  # AI experiments & concept explorations (.md)
-│   │   ├── portfolio/    # Project case studies & portfolio (.md)
-│   │   └── posts/        # Learning blog posts (.md)
-│   ├── data/
-│   │   ├── certificates.json  # Verified credentials & badges
-│   │   ├── resources.json     # Slide decks & educational materials
-│   │   └── site.ts            # Site metadata, navigation, & social links
-│   ├── layouts/          # BaseLayout, PostLayout, PageLayout
-│   ├── pages/            # File-based routing & dynamic collections
-│   └── utils/            # Content helpers, URL mapping, & tag utilities
-├── astro.config.mjs      # Astro configuration
-└── package.json          # Node dependencies & scripts
+```bash
+npm run new leetcode "1. Two Sum"         # -> src/content/leetcode/0001-two-sum.md
+npm run new course "Hugging Face LLM Course"
+npm run new journal "Fine-tuning with LoRA"  # -> src/content/journal/2026-10-30-fine-tuning-with-lora.md
 ```
+
+Fill in the frontmatter and write your notes, then commit and push. GitHub Actions rebuilds the site. To update a course's progress, edit `progress`, `status` and `completed` in its file.
+
+### Frontmatter
+
+**LeetCode**: `title`, `number`, `url`, `difficulty` (Easy | Medium | Hard), `topics`, `date`, `status` (solved | attempted | revisit), `language`, `time`, `space`, `minutes`
+
+**Courses**: `title`, `provider`, `instructor`, `url`, `status` (planned | in-progress | completed | dropped), `started`, `completed`, `progress` (0–100), `certificate`, `description`, `tags`
+
+**Journal**: `title`, `date`, `tags`, `hours`
+
+The schema is in `src/content.config.ts`, and a build fails with a clear error if a field is invalid. Each `## Heading` in a course's notes becomes an entry in that page's table of contents.
+
+Everything in this repo is public, including the content files.
+
+## 🧰 Reusable tools
+
+`tools/` holds browser-only AI Engineering and Data Science tools, packaged for another Astro site. They aren't part of this site's build. See [tools/README.md](tools/README.md).
 
 ## 🛠️ Development
 
-### Prerequisites
-
-- **Node.js**: v18 or higher (v20+ recommended)
-- **npm**: v9 or higher
-
-### Getting Started
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/datawithshoaib/datawithshoaib.github.io.git
-   cd datawithshoaib.github.io
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server:**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:4321](http://localhost:4321) in your browser.
-
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-   Static files will be generated in the `dist/` directory.
-
-5. **Preview production build:**
-   ```bash
-   npm run preview
-   ```
-
-## 📝 Writing Content
-
-### Adding a Blog Post
-Create a new `.md` file in `src/content/posts/`:
-```markdown
----
-title: Your Post Title
-date: 2026-09-18
-permalink: /posts/2026/09/your-post-title/
-categories: ["Machine Learning"]
-tags: ["Python", "Scikit-Learn"]
-image: /assets/img/posts/your-image.png
-description: A short excerpt of the post.
-toc: true
----
-
-Post content in standard Markdown...
+```bash
+npm ci
+npm run dev     # http://localhost:4321
+npm run build   # static output in dist/
 ```
-
-### Adding a Portfolio Project
-Create a new `.md` file in `src/content/portfolio/` under the appropriate subcategory folder.
-
-### Adding an Experiment
-Create a new `.md` file in `src/content/experiments/`.
-
-## 🚢 Deployment
-
-The site is automatically built and deployed to GitHub Pages whenever changes are pushed to `main` via the GitHub Actions workflow in `.github/workflows/pages-deploy.yml`.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

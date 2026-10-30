@@ -1,0 +1,136 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+
+const before = `You are a helpful assistant. Answer the user's question about our product.
+Keep answers short. If you don't know, say so.`;
+const after = `You are a support assistant for Acme Analytics. Answer the user's question about our product using the documentation below.
+Keep answers under 100 words. If the documentation doesn't cover it, say so and suggest contacting support.`;
+---
+
+<ToolLayout
+  title="Prompt Diff"
+  description="Compare two versions of a prompt word by word to see exactly what changed."
+  icon="fas fa-code-compare"
+>
+  <div class="row g-3">
+    <div class="col-12 col-lg-6">
+      <div class="tool-panel h-100">
+        <label for="pd-a" class="tool-label d-block">Version A (before)</label>
+        <textarea id="pd-a" class="form-control" rows="10" spellcheck="false">{before}</textarea>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="tool-panel h-100">
+        <label for="pd-b" class="tool-label d-block">Version B (after)</label>
+        <textarea id="pd-b" class="form-control" rows="10" spellcheck="false">{after}</textarea>
+      </div>
+    </div>
+
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value text-success" id="pd-added">0</div><div class="tool-stat-label">Words added</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value text-danger" id="pd-removed">0</div><div class="tool-stat-label">Words removed</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="pd-tokens">0</div><div class="tool-stat-label">Est. token change</div></div></div>
+
+    <div class="col-12">
+      <div class="tool-panel">
+        <div class="tool-label">Changes</div>
+        <div id="pd-warning" class="small text-warning mb-2 d-none"></div>
+        <div id="pd-output" class="tool-output"></div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<style is:global>
+.pd-ins {
+  background-color: rgba(22, 163, 74, 0.2);
+  color: inherit;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.pd-del {
+  background-color: rgba(220, 38, 38, 0.18);
+  color: inherit;
+  border-radius: 2px;
+}
+</style>
+
+<script>
+  type Op = { type: 'same' | 'ins' | 'del'; text: string };
+
+  const a = document.getElementById('pd-a') as HTMLTextAreaElement;
+  const b = document.getElementById('pd-b') as HTMLTextAreaElement;
+  const out = document.getElementById('pd-output') as HTMLDivElement;
+  const warning = document.getElementById('pd-warning') as HTMLDivElement;
+
+  // Keeps an O(n*m) table to a few million cells.
+  const MAX_TOKENS = 3000;
+
+  const tokenize = (s: string) => s.split(/(\s+)/).filter(Boolean);
+
+  function diff(x: string[], y: string[]): Op[] {
+    const n = x.length;
+    const m = y.length;
+    const lcs = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = m - 1; j >= 0; j--) {
+        lcs[i][j] = x[i] === y[j] ? lcs[i + 1][j + 1] + 1 : Math.max(lcs[i + 1][j], lcs[i][j + 1]);
+      }
+    }
+    const ops: Op[] = [];
+    const push = (type: Op['type'], text: string) => {
+      const last = ops[ops.length - 1];
+      if (last && last.type === type) last.text += text;
+      else ops.push({ type, text });
+    };
+    let i = 0;
+    let j = 0;
+    while (i < n && j < m) {
+      if (x[i] === y[j]) {
+        push('same', x[i]);
+        i++;
+        j++;
+      } else if (lcs[i + 1][j] >= lcs[i][j + 1]) push('del', x[i++]);
+      else push('ins', y[j++]);
+    }
+    while (i < n) push('del', x[i++]);
+    while (j < m) push('ins', y[j++]);
+    return ops;
+  }
+
+  const countWords = (s: string) => (s.trim() ? s.trim().split(/\s+/).length : 0);
+
+  function render() {
+    let x = tokenize(a.value);
+    let y = tokenize(b.value);
+    const truncated = x.length > MAX_TOKENS || y.length > MAX_TOKENS;
+    warning.classList.toggle('d-none', !truncated);
+    if (truncated) {
+      warning.textContent = `Only the first ${MAX_TOKENS} words and spaces of each version are compared.`;
+      x = x.slice(0, MAX_TOKENS);
+      y = y.slice(0, MAX_TOKENS);
+    }
+
+    const ops = diff(x, y);
+    let added = 0;
+    let removed = 0;
+    out.replaceChildren(
+      ...ops.map((op) => {
+        if (op.type === 'same') return document.createTextNode(op.text);
+        const el = document.createElement(op.type);
+        el.className = op.type === 'ins' ? 'pd-ins' : 'pd-del';
+        el.textContent = op.text;
+        if (op.type === 'ins') added += countWords(op.text);
+        else removed += countWords(op.text);
+        return el;
+      }),
+    );
+
+    const tokenDelta = Math.ceil(b.value.length / 4) - Math.ceil(a.value.length / 4);
+    document.getElementById('pd-added')!.textContent = `+${added}`;
+    document.getElementById('pd-removed')!.textContent = `-${removed}`;
+    document.getElementById('pd-tokens')!.textContent = `${tokenDelta >= 0 ? '+' : ''}${tokenDelta}`;
+  }
+
+  [a, b].forEach((el) => el.addEventListener('input', render));
+  render();
+</script>

@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname;
 
 function isActive(url: string) {
   if (url === '/') {
-    return currentPath === '/' || currentPath.startsWith('/page/');
+    return currentPath === '/';
   }
   return currentPath.startsWith(url);
 }

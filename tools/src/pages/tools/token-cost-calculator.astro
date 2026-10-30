@@ -1,0 +1,121 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import { pricingUpdated } from '../../data/model-pricing';
+---
+
+<ToolLayout
+  title="Token & Cost Calculator"
+  description="Estimate prompt tokens and compare what a request costs across Claude models."
+  icon="fas fa-coins"
+>
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <div class="tool-panel h-100">
+        <label for="tc-text" class="tool-label d-block">Prompt / input text</label>
+        <textarea id="tc-text" class="form-control" rows="12" placeholder="Paste a system prompt, document or conversation..."></textarea>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <div class="tool-panel h-100">
+        <label for="tc-input-tokens" class="tool-label d-block">Input tokens per request</label>
+        <input id="tc-input-tokens" type="number" min="0" class="form-control mb-1" value="0" />
+        <p class="small text-muted mb-3">Filled in from the text as you type. Override it if you already know the count.</p>
+
+        <label for="tc-output-tokens" class="tool-label d-block">Output tokens per request</label>
+        <input id="tc-output-tokens" type="number" min="0" class="form-control mb-3" value="500" />
+
+        <label for="tc-requests" class="tool-label d-block">Number of requests</label>
+        <input id="tc-requests" type="number" min="1" class="form-control" value="1000" />
+      </div>
+    </div>
+
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="tc-chars">0</div><div class="tool-stat-label">Characters</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="tc-words">0</div><div class="tool-stat-label">Words</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="tc-tokens">0</div><div class="tool-stat-label">Est. tokens</div></div></div>
+
+    <div class="col-12">
+      <div class="tool-panel">
+        <div class="table-responsive">
+          <table class="table tool-table mb-2">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th class="text-end">Input $/1M</th>
+                <th class="text-end">Output $/1M</th>
+                <th class="text-end">Per request</th>
+                <th class="text-end" id="tc-total-head">Total</th>
+              </tr>
+            </thead>
+            <tbody id="tc-rows"></tbody>
+          </table>
+        </div>
+        <p class="small text-muted mb-0">
+          Token counts are estimated at about 4 characters per token. Use the API's token counting endpoint for exact numbers.
+          Prices are Anthropic API list prices as of {pricingUpdated} and leave out caching and batch discounts.
+        </p>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  import { models } from '../../data/model-pricing';
+
+  const text = document.getElementById('tc-text') as HTMLTextAreaElement;
+  const inputTokens = document.getElementById('tc-input-tokens') as HTMLInputElement;
+  const outputTokens = document.getElementById('tc-output-tokens') as HTMLInputElement;
+  const requests = document.getElementById('tc-requests') as HTMLInputElement;
+  const rows = document.getElementById('tc-rows') as HTMLTableSectionElement;
+  const totalHead = document.getElementById('tc-total-head') as HTMLTableCellElement;
+
+  const num = (el: HTMLInputElement) => Math.max(0, Number(el.value) || 0);
+  const money = (v: number) =>
+    v === 0 ? '$0' : v < 0.01 ? `$${v.toFixed(5)}` : `$${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  function estimateTokens(s: string) {
+    return Math.ceil(s.length / 4);
+  }
+
+  function onText() {
+    const s = text.value;
+    const words = s.trim() ? s.trim().split(/\s+/).length : 0;
+    const tokens = estimateTokens(s);
+    document.getElementById('tc-chars')!.textContent = s.length.toLocaleString();
+    document.getElementById('tc-words')!.textContent = words.toLocaleString();
+    document.getElementById('tc-tokens')!.textContent = tokens.toLocaleString();
+    inputTokens.value = String(tokens);
+    render();
+  }
+
+  function render() {
+    const inTok = num(inputTokens);
+    const outTok = num(outputTokens);
+    const n = Math.max(1, num(requests));
+    totalHead.textContent = `${n.toLocaleString()} requests`;
+
+    rows.replaceChildren(
+      ...models.map((m) => {
+        const perRequest = (inTok * m.input + outTok * m.output) / 1_000_000;
+        const tr = document.createElement('tr');
+        for (const [value, right] of [
+          [m.name, false],
+          [`$${m.input}`, true],
+          [`$${m.output}`, true],
+          [money(perRequest), true],
+          [money(perRequest * n), true],
+        ] as const) {
+          const td = document.createElement('td');
+          td.textContent = value;
+          if (right) td.className = 'text-end';
+          tr.appendChild(td);
+        }
+        return tr;
+      }),
+    );
+  }
+
+  text.addEventListener('input', onText);
+  [inputTokens, outputTokens, requests].forEach((el) => el.addEventListener('input', render));
+  render();
+</script>

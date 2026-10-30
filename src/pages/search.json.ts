@@ -1,48 +1,33 @@
 import type { APIRoute } from 'astro';
-import { getAllSortedPosts, getAllSortedPortfolio, getAllSortedExperiments, getAllSortedSnippets, getPostUrl, getPortfolioUrl, getExperimentUrl, getSnippetUrl, getSnippetTitle, getSnippetExcerpt } from '../utils/content';
+import { getProblems, getCourses, getJournal, problemUrl, courseUrl, journalUrl, excerpt } from '../utils/learning';
 
 export const GET: APIRoute = async () => {
-  const posts = await getAllSortedPosts();
-  const portfolio = await getAllSortedPortfolio();
-  const experiments = await getAllSortedExperiments();
-  const snippets = await getAllSortedSnippets();
+  const [problems, courses, journal] = await Promise.all([getProblems(), getCourses(), getJournal()]);
 
   const searchData = [
-    ...posts.map((p) => ({
-      title: p.data.title,
-      url: getPostUrl(p),
-      excerpt: p.data.description || '',
-      date: p.data.date ? new Date(p.data.date).toISOString() : '',
-      tags: p.data.tags || [],
-      categories: p.data.categories || [],
-      type: 'post',
+    ...problems.map((p) => ({
+      title: p.data.number ? `${p.data.number}. ${p.data.title}` : p.data.title,
+      url: problemUrl(p),
+      excerpt: excerpt(p.body, 120),
+      date: p.data.date.toISOString(),
+      tags: [p.data.difficulty, ...p.data.topics],
+      categories: ['LeetCode'],
     })),
-    ...portfolio.map((p) => ({
-      title: p.data.title,
-      url: getPortfolioUrl(p),
-      excerpt: p.data.description || p.data.excerpt || '',
-      date: p.data.date ? new Date(p.data.date).toISOString() : '',
-      tags: p.data.tags || [],
-      categories: p.data.categories || [],
-      type: 'project',
+    ...courses.map((c) => ({
+      title: c.data.title,
+      url: courseUrl(c),
+      excerpt: c.data.description || excerpt(c.body, 120),
+      date: (c.data.completed ?? c.data.started)?.toISOString() ?? '',
+      tags: c.data.tags,
+      categories: ['Course'],
     })),
-    ...experiments.map((e) => ({
-      title: e.data.title,
-      url: getExperimentUrl(e),
-      excerpt: e.data.description || e.data.excerpt || '',
-      date: e.data.date ? new Date(e.data.date).toISOString() : '',
-      tags: e.data.tags || [],
-      categories: e.data.categories || [],
-      type: 'experiment',
-    })),
-    ...snippets.map((s) => ({
-      title: getSnippetTitle(s),
-      url: getSnippetUrl(s),
-      excerpt: getSnippetExcerpt(s),
-      date: '',
-      tags: [],
-      categories: [],
-      type: 'snippet',
+    ...journal.map((j) => ({
+      title: j.data.title,
+      url: journalUrl(j),
+      excerpt: excerpt(j.body, 120),
+      date: j.data.date.toISOString(),
+      tags: j.data.tags,
+      categories: ['Journal'],
     })),
   ];
 

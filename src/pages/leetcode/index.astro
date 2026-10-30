@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeetCodeCard from '../../components/LeetCodeCard.astro';
+import { siteConfig } from '../../data/site';
+import { getProblems, problemUrl, formatDate, difficulties } from '../../utils/learning';
+
+const problems = await getProblems();
+const solved = problems.filter((p) => p.data.status === 'solved');
+const byDifficulty = Object.fromEntries(difficulties.map((d) => [d, solved.filter((p) => p.data.difficulty === d).length]));
+
+const topicCounts = new Map<string, number>();
+for (const p of problems) for (const t of p.data.topics) topicCounts.set(t, (topicCounts.get(t) ?? 0) + 1);
+const topics = [...topicCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const toRevisit = problems.filter((p) => p.data.status === 'revisit').length;
+---
+
+<BaseLayout title="LeetCode" description="Every LeetCode problem I've worked on, with my approach, complexity and code.">
+  <div class="px-1">
+    <header class="mb-4">
+      <h1 class="dynamic-title mb-2">LeetCode Log</h1>
+      <p class="lead text-muted mb-0">Every problem I've worked on, with my approach, complexity and code.</p>
+    </header>
+
+    {siteConfig.leetcodeUsername && (
+      <div class="mb-4">
+        <LeetCodeCard ext="heatmap" size="lg" />
+      </div>
+    )}
+
+    <h2 class="lt-section-title">Solutions I've written up</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value">{solved.length}</div><div class="lt-stat-label">Solved &amp; logged</div></div></div>
+      <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value" style="color:#00a08e">{byDifficulty.Easy}</div><div class="lt-stat-label">Easy</div></div></div>
+      <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value" style="color:#d48806">{byDifficulty.Medium}</div><div class="lt-stat-label">Medium</div></div></div>
+      <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value" style="color:#e0403c">{byDifficulty.Hard}</div><div class="lt-stat-label">Hard</div></div></div>
+    </div>
+
+    {problems.length === 0 ? (
+      <div class="lt-empty">
+        <i class="fas fa-code fa-2x mb-3"></i>
+        <p class="mb-2">No problems logged yet.</p>
+        <p class="small mb-0">Add one with <code>npm run new leetcode "1. Two Sum"</code>, then fill in the file it creates in <code>src/content/leetcode/</code>.</p>
+      </div>
+    ) : (
+      <>
+        <div class="lt-card mb-3">
+          <div class="d-flex flex-wrap gap-2 align-items-center mb-3" id="lc-difficulty">
+            <button type="button" class="lt-filter-btn active" data-value="all">All</button>
+            {difficulties.map((d) => <button type="button" class="lt-filter-btn" data-value={d}>{d}</button>)}
+          </div>
+          <div class="row g-2">
+            <div class="col-12 col-md-5">
+              <input id="lc-search" type="search" class="form-control form-control-sm lt-input" placeholder="Search by title or number..." aria-label="Search problems" />
+            </div>
+            <div class="col-6 col-md-4">
+              <select id="lc-topic" class="form-select form-select-sm lt-input" aria-label="Filter by topic">
+                <option value="">All topics</option>
+                {topics.map(([t, n]) => <option value={t}>{t} ({n})</option>)}
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <select id="lc-status" class="form-select form-select-sm lt-input" aria-label="Filter by status">
+                <option value="">Any status</option>
+                <option value="solved">Solved</option>
+                <option value="attempted">Attempted</option>
+                <option value="revisit">Revisit{toRevisit ? ` (${toRevisit})` : ''}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="lt-card p-0">
+          <div class="table-responsive">
+            <table class="table lt-table">
+              <thead>
+                <tr>
+                  <th class="ps-3">#</th>
+                  <th>Problem</th>
+                  <th>Difficulty</th>
+                  <th class="d-none d-md-table-cell">Topics</th>
+                  <th>Status</th>
+                  <th class="d-none d-sm-table-cell text-end pe-3">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {problems.map((p) => (
+                  <tr
+                    class="lc-row"
+                    data-search={`${p.data.number ?? ''} ${p.data.title}`.toLowerCase()}
+                    data-difficulty={p.data.difficulty}
+                    data-topics={JSON.stringify(p.data.topics)}
+                    data-status={p.data.status}
+                  >
+                    <td class="ps-3 text-muted">{p.data.number ?? '–'}</td>
+                    <td>
+                      <a href={problemUrl(p)}>{p.data.title}</a>
+                      {p.data.url && (
+                        <a href={p.data.url} target="_blank" rel="noopener" class="ms-1 text-muted small" title="Open on LeetCode" aria-label="Open on LeetCode">
+                          <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                      )}
+                    </td>
+                    <td><span class={`diff-badge diff-${p.data.difficulty.toLowerCase()}`}>{p.data.difficulty}</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="d-flex flex-wrap gap-1">{p.data.topics.map((t) => <span class="lt-chip">{t}</span>)}</div>
+                    </td>
+                    <td><span class={`status-badge status-${p.data.status}`}>{p.data.status}</span></td>
+                    <td class="d-none d-sm-table-cell text-end pe-3 text-muted text-nowrap">{formatDate(p.data.date)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p id="lc-none" class="text-center text-muted small py-4 mb-0 d-none">No problems match these filters.</p>
+        </div>
+      </>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  const rows = document.querySelectorAll<HTMLTableRowElement>('.lc-row');
+  const search = document.getElementById('lc-search') as HTMLInputElement | null;
+  const topic = document.getElementById('lc-topic') as HTMLSelectElement | null;
+  const status = document.getElementById('lc-status') as HTMLSelectElement | null;
+  const diffButtons = document.querySelectorAll<HTMLButtonElement>('#lc-difficulty .lt-filter-btn');
+  let difficulty = 'all';
+
+  function filter() {
+    const q = (search?.value ?? '').trim().toLowerCase();
+    let visible = 0;
+    rows.forEach((row) => {
+      const show =
+        (!q || row.dataset.search!.includes(q)) &&
+        (difficulty === 'all' || row.dataset.difficulty === difficulty) &&
+        (!topic?.value || (JSON.parse(row.dataset.topics!) as string[]).includes(topic.value)) &&
+        (!status?.value || row.dataset.status === status.value);
+      row.classList.toggle('d-none', !show);
+      if (show) visible++;
+    });
+    document.getElementById('lc-none')?.classList.toggle('d-none', visible > 0);
+  }
+
+  diffButtons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      diffButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      difficulty = btn.dataset.value!;
+      filter();
+    }),
+  );
+  [search, topic, status].forEach((el) => el?.addEventListener('input', filter));
+</script>

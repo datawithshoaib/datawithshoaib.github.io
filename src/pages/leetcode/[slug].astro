@@ -1,0 +1,48 @@
+---
+import { render } from 'astro:content';
+import EntryLayout from '../../layouts/EntryLayout.astro';
+import { getProblems, problemUrl, slugOf, formatDate, type Problem } from '../../utils/learning';
+
+export async function getStaticPaths() {
+  const problems = await getProblems();
+  return problems.map((problem, i) => ({
+    params: { slug: slugOf(problem) },
+    props: { problem, newer: problems[i - 1] ?? null, older: problems[i + 1] ?? null },
+  }));
+}
+
+const { problem, newer, older } = Astro.props as { problem: Problem; newer: Problem | null; older: Problem | null };
+const { Content } = await render(problem);
+const d = problem.data;
+const title = d.number ? `${d.number}. ${d.title}` : d.title;
+const link = (p: Problem | null) => (p ? { title: p.data.title, url: problemUrl(p) } : null);
+---
+
+<EntryLayout
+  title={title}
+  description={`My notes and solution for LeetCode ${title} (${d.difficulty}).`}
+  back={{ url: '/leetcode/', label: 'LeetCode log' }}
+  tags={d.topics}
+  prev={link(older)}
+  next={link(newer)}
+>
+  <Fragment slot="meta">
+    <span class={`diff-badge diff-${d.difficulty.toLowerCase()}`}>{d.difficulty}</span>
+    <span class={`status-badge status-${d.status}`}>{d.status}</span>
+    <span><i class="far fa-calendar-alt me-1"></i>{formatDate(d.date, 'long')}</span>
+    {d.language && <span><i class="fas fa-code me-1"></i>{d.language}</span>}
+    {d.minutes && <span><i class="far fa-clock me-1"></i>{d.minutes} min</span>}
+    {d.url && (
+      <a href={d.url} target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square me-1"></i>Open on LeetCode</a>
+    )}
+  </Fragment>
+
+  {(d.time || d.space) && (
+    <div slot="before" class="row g-3 mb-4">
+      {d.time && <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value fs-5">{d.time}</div><div class="lt-stat-label">Time</div></div></div>}
+      {d.space && <div class="col-6 col-md-3"><div class="lt-stat"><div class="lt-stat-value fs-5">{d.space}</div><div class="lt-stat-label">Space</div></div></div>}
+    </div>
+  )}
+
+  <Content />
+</EntryLayout>
