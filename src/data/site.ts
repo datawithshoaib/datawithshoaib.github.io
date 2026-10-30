@@ -13,8 +13,12 @@ export interface SocialLink {
 
 export const siteConfig = {
   title: 'Shoaib Akthar',
-  tagline: 'AI Engineer',
-  description: "Shoaib's learning blog, notes, experiments and projects on Data Science, Machine Learning, Deep Learning, and Artificial Intelligence.",
+  tagline: 'Learning AI Engineering in public',
+  description: "Shoaib Akthar's public learning log: LeetCode problems solved, courses in progress with notes, and a journal of learning AI engineering.",
+  // Main website with the blog, projects and portfolio. Leave empty to hide the links.
+  mainSiteUrl: '',
+  // Public LeetCode profile shown as a live stats card. Leave empty to hide it.
+  leetcodeUsername: 'datawithshoaib',
   url: 'https://datawithshoaib.github.io',
   avatar: 'https://avatars.githubusercontent.com/u/84625981?v=4',
   author: 'Shoaib Akthar',
@@ -24,18 +28,10 @@ export const siteConfig = {
   linkedin: 'https://linkedin.com/in/datawithshoaib',
   
   navItems: [
-    { title: 'HOME', url: '/', icon: 'fas fa-home' },
-    { title: 'PROJECTS', url: '/projects/', icon: 'fas fa-laptop-code' },
-    { title: 'EXPERIMENTS', url: '/experiments/', icon: 'fas fa-flask' },
-    { title: 'SNIPPETS', url: '/snippets/', icon: 'fas fa-code' },
-    { title: 'THOUGHTS', url: '/thoughts/', icon: 'fas fa-note-sticky' },
-    { title: 'CERTIFICATES', url: '/certificates/', icon: 'fas fa-award' },
-    { title: 'CV', url: '/cv/', icon: 'fas fa-file-alt' },
-    { title: 'RESOURCES', url: '/resources/', icon: 'fas fa-layer-group' },
-    { title: 'CATEGORIES', url: '/categories/', icon: 'fas fa-folder-open' },
-    { title: 'TAGS', url: '/tags/', icon: 'fas fa-tags' },
-    { title: 'ARCHIVES', url: '/archives/', icon: 'fas fa-archive' },
-    { title: 'ABOUT', url: '/about/', icon: 'fas fa-info-circle' },
+    { title: 'DASHBOARD', url: '/', icon: 'fas fa-chart-simple' },
+    { title: 'LEETCODE', url: '/leetcode/', icon: 'fas fa-code' },
+    { title: 'COURSES', url: '/courses/', icon: 'fas fa-graduation-cap' },
+    { title: 'JOURNAL', url: '/journal/', icon: 'fas fa-book-open' },
   ] as NavItem[],
 
   socialLinks: [
@@ -62,12 +58,6 @@ export const siteConfig = {
       url: 'mailto:shoaibakthar.work@gmail.com',
       icon: 'fas fa-envelope',
       ariaLabel: 'email',
-    },
-    {
-      name: 'RSS',
-      url: '/feed.xml',
-      icon: 'fas fa-rss',
-      ariaLabel: 'rss',
     },
   ] as SocialLink[],
 };

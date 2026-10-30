@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCourses, courseUrl, formatDate, courseStatuses } from '../../utils/learning';
+
+const courses = await getCourses();
+const groups = courseStatuses
+  .map((s) => ({ ...s, courses: courses.filter((c) => c.data.status === s.value) }))
+  .filter((g) => g.courses.length > 0);
+const count = (status: string) => courses.filter((c) => c.data.status === status).length;
+---
+
+<BaseLayout title="Courses" description="Courses I'm taking to learn AI engineering, with progress and my notes.">
+  <div class="px-1">
+    <header class="mb-4">
+      <h1 class="dynamic-title mb-2">Courses</h1>
+      <p class="lead text-muted mb-0">What I'm studying to learn AI engineering, with progress and my notes from each course.</p>
+    </header>
+
+    <div class="row g-3 mb-4">
+      <div class="col-4"><div class="lt-stat"><div class="lt-stat-value">{count('in-progress')}</div><div class="lt-stat-label">In progress</div></div></div>
+      <div class="col-4"><div class="lt-stat"><div class="lt-stat-value">{count('completed')}</div><div class="lt-stat-label">Completed</div></div></div>
+      <div class="col-4"><div class="lt-stat"><div class="lt-stat-value">{count('planned')}</div><div class="lt-stat-label">Planned</div></div></div>
+    </div>
+
+    {courses.length === 0 && (
+      <div class="lt-empty">
+        <i class="fas fa-graduation-cap fa-2x mb-3"></i>
+        <p class="mb-2">No courses added yet.</p>
+        <p class="small mb-0">Add one with <code>npm run new course "Course name"</code>, then write your notes in the file it creates in <code>src/content/courses/</code>.</p>
+      </div>
+    )}
+
+    {groups.map((group) => (
+      <section class="mb-4">
+        <h2 class="lt-section-title"><i class={`${group.icon} me-2`}></i>{group.label}</h2>
+        <div class="row g-3">
+          {group.courses.map((c) => (
+            <div class="col-12 col-md-6">
+              <a href={courseUrl(c)} class="lt-card h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                  <h3 class="lt-card-title">{c.data.title}</h3>
+                  <span class={`status-badge status-${c.data.status}`}>{group.label}</span>
+                </div>
+                <div class="lt-meta mb-2">
+                  {[c.data.provider, c.data.instructor].filter(Boolean).join(' · ')}
+                </div>
+                {c.data.description && <p class="small text-muted mb-3">{c.data.description}</p>}
+                <div class="mt-auto">
+                  {c.data.status !== 'planned' && (
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <div class="lt-progress flex-grow-1"><span style={`width:${c.data.progress}%`}></span></div>
+                      <span class="lt-meta">{c.data.progress}%</span>
+                    </div>
+                  )}
+                  <div class="lt-meta">
+                    {c.data.completed
+                      ? `Completed ${formatDate(c.data.completed)}`
+                      : c.data.started
+                        ? `Started ${formatDate(c.data.started)}`
+                        : 'Not started'}
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

@@ -1,0 +1,166 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Classification Metrics"
+  description="Enter a binary confusion matrix and get every common evaluation metric, with what each one actually tells you."
+  icon="fas fa-table-cells"
+>
+  <div class="row g-3">
+    <div class="col-12 col-lg-5">
+      <div class="tool-panel h-100">
+        <div class="tool-label mb-2">Confusion matrix</div>
+        <div class="cm-grid">
+          <div></div>
+          <div class="cm-axis">Predicted +</div>
+          <div class="cm-axis">Predicted −</div>
+
+          <div class="cm-axis cm-axis-row">Actual +</div>
+          <label class="cm-cell cm-good">
+            <span>True positive</span>
+            <input id="cm-tp" type="number" min="0" class="form-control form-control-sm" value="85" />
+          </label>
+          <label class="cm-cell cm-bad">
+            <span>False negative</span>
+            <input id="cm-fn" type="number" min="0" class="form-control form-control-sm" value="15" />
+          </label>
+
+          <div class="cm-axis cm-axis-row">Actual −</div>
+          <label class="cm-cell cm-bad">
+            <span>False positive</span>
+            <input id="cm-fp" type="number" min="0" class="form-control form-control-sm" value="30" />
+          </label>
+          <label class="cm-cell cm-good">
+            <span>True negative</span>
+            <input id="cm-tn" type="number" min="0" class="form-control form-control-sm" value="870" />
+          </label>
+        </div>
+        <p class="small text-muted mt-3 mb-0" id="cm-summary"></p>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-7">
+      <div class="tool-panel h-100">
+        <div class="table-responsive">
+          <table class="table tool-table mb-0">
+            <thead>
+              <tr><th>Metric</th><th class="text-end">Value</th><th>Formula</th><th class="d-none d-md-table-cell">What it tells you</th></tr>
+            </thead>
+            <tbody id="cm-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="tool-panel small" id="cm-note"></div>
+    </div>
+  </div>
+</ToolLayout>
+
+<style is:global>
+.cm-grid {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.cm-axis {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted-color, #6c757d);
+  text-align: center;
+  align-self: end;
+}
+.cm-axis-row { align-self: center; text-align: right; }
+.cm-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-color, #212529);
+}
+.cm-good { background-color: rgba(22, 163, 74, 0.14); }
+.cm-bad { background-color: rgba(220, 38, 38, 0.12); }
+.cm-formula {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+</style>
+
+<script>
+  const ids = ['tp', 'fp', 'fn', 'tn'] as const;
+  const inputs = Object.fromEntries(ids.map((id) => [id, document.getElementById(`cm-${id}`) as HTMLInputElement])) as Record<
+    (typeof ids)[number],
+    HTMLInputElement
+  >;
+
+  const ratio = (a: number, b: number) => (b === 0 ? NaN : a / b);
+  const pct = (v: number) => (Number.isNaN(v) ? 'n/a' : `${(v * 100).toFixed(1)}%`);
+  const dec = (v: number) => (Number.isNaN(v) ? 'n/a' : v.toFixed(3));
+
+  function render() {
+    const [tp, fp, fn, tn] = ids.map((id) => Math.max(0, Math.floor(Number(inputs[id].value) || 0)));
+    const total = tp + fp + fn + tn;
+
+    const precision = ratio(tp, tp + fp);
+    const recall = ratio(tp, tp + fn);
+    const specificity = ratio(tn, tn + fp);
+    const f1 = ratio(2 * tp, 2 * tp + fp + fn);
+    const mccDen = Math.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn));
+    const mcc = ratio(tp * tn - fp * fn, mccDen);
+    const prevalence = ratio(tp + fn, total);
+    const accuracy = ratio(tp + tn, total);
+    const balanced = (recall + specificity) / 2;
+
+    const metrics: [string, string, string, string][] = [
+      ['Accuracy', pct(accuracy), '(TP+TN) / total', 'Share of all predictions that were right. Misleading when one class dominates.'],
+      ['Precision', pct(precision), 'TP / (TP+FP)', 'When the model says positive, how often it is right. Matters when false alarms are costly.'],
+      ['Recall (sensitivity)', pct(recall), 'TP / (TP+FN)', 'Share of real positives the model catches. Matters when misses are costly.'],
+      ['Specificity', pct(specificity), 'TN / (TN+FP)', 'Share of real negatives correctly left alone.'],
+      ['F1 score', pct(f1), '2TP / (2TP+FP+FN)', 'Harmonic mean of precision and recall. Ignores true negatives.'],
+      ['Balanced accuracy', pct(balanced), '(Recall+Specificity) / 2', 'Accuracy that weights both classes equally, so imbalance cannot inflate it.'],
+      ['MCC', dec(mcc), '(TP·TN − FP·FN) / √(…)', 'Correlation between prediction and truth, from −1 to 1. A strong single number for imbalanced data.'],
+      ['False positive rate', pct(ratio(fp, fp + tn)), 'FP / (FP+TN)', 'Share of negatives wrongly flagged. The x-axis of a ROC curve.'],
+      ['Negative predictive value', pct(ratio(tn, tn + fn)), 'TN / (TN+FN)', 'When the model says negative, how often it is right.'],
+    ];
+
+    document.getElementById('cm-rows')!.replaceChildren(
+      ...metrics.map(([name, value, formula, meaning]) => {
+        const tr = document.createElement('tr');
+        const cells: [string, string][] = [
+          [name, 'fw-semibold'],
+          [value, 'text-end'],
+          [formula, 'cm-formula text-muted'],
+          [meaning, 'text-muted d-none d-md-table-cell'],
+        ];
+        for (const [text, cls] of cells) {
+          const td = document.createElement('td');
+          td.textContent = text;
+          td.className = cls;
+          tr.appendChild(td);
+        }
+        return tr;
+      }),
+    );
+
+    document.getElementById('cm-summary')!.textContent = total
+      ? `${total.toLocaleString()} samples, ${(tp + fn).toLocaleString()} actual positives (${pct(prevalence)} prevalence).`
+      : 'Enter counts to begin.';
+
+    // Accuracy of always predicting the majority class: the bar a model has to beat.
+    const baseline = Math.max(prevalence, 1 - prevalence);
+    const note = document.getElementById('cm-note')!;
+    if (!total) note.textContent = '';
+    else if (baseline >= 0.8)
+      note.textContent = `The classes are imbalanced: predicting the majority class every time would already score ${pct(baseline)} accuracy. Judge this model on precision, recall, F1, balanced accuracy or MCC instead.`;
+    else note.textContent = `The classes are fairly balanced. A model that always predicts the majority class would score ${pct(baseline)} accuracy, so that is the bar to beat.`;
+  }
+
+  Object.values(inputs).forEach((el) => el.addEventListener('input', render));
+  render();
+</script>

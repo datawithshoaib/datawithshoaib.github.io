@@ -1,0 +1,213 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+
+const sample = `Retrieval-augmented generation (RAG) gives a language model access to documents it was not trained on. The documents are split into chunks, each chunk is embedded, and the chunks most similar to the user's question are pasted into the prompt.
+
+Chunk size is a trade-off. Small chunks match questions precisely but lose surrounding context. Large chunks keep context but dilute the embedding and waste prompt space.
+
+Overlap repeats the end of one chunk at the start of the next. It helps when an answer straddles a boundary, at the cost of storing some text twice.
+
+Recursive splitting tries paragraph breaks first, then line breaks, then sentences, then words. That keeps related text together whenever it fits.`;
+---
+
+<ToolLayout
+  title="RAG Chunking Visualizer"
+  description="See how different chunking strategies split a document, with the overlap between chunks highlighted."
+  icon="fas fa-layer-group"
+>
+  <div class="row g-3">
+    <div class="col-12 col-lg-8">
+      <div class="tool-panel h-100">
+        <label for="rc-text" class="tool-label d-block">Document</label>
+        <textarea id="rc-text" class="form-control" rows="12">{sample}</textarea>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="tool-panel h-100">
+        <label for="rc-strategy" class="tool-label d-block">Strategy</label>
+        <select id="rc-strategy" class="form-select mb-3">
+          <option value="recursive">Recursive (paragraph → line → sentence → word)</option>
+          <option value="sentence">Sentence packing</option>
+          <option value="fixed">Fixed size</option>
+        </select>
+
+        <label for="rc-size" class="tool-label d-block">Chunk size: <span id="rc-size-val"></span> chars</label>
+        <input id="rc-size" type="range" class="form-range mb-3" min="50" max="2000" step="10" value="300" />
+
+        <label for="rc-overlap" class="tool-label d-block">Overlap: <span id="rc-overlap-val"></span> chars</label>
+        <input id="rc-overlap" type="range" class="form-range" min="0" max="500" step="10" value="50" />
+        <p class="small text-muted mb-0">Overlap is capped below the chunk size.</p>
+      </div>
+    </div>
+
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="rc-count">0</div><div class="tool-stat-label">Chunks</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="rc-avg">0</div><div class="tool-stat-label">Avg chars</div></div></div>
+    <div class="col-4"><div class="tool-stat"><div class="tool-stat-value" id="rc-dup">0%</div><div class="tool-stat-label">Duplicated by overlap</div></div></div>
+
+    <div class="col-12">
+      <div id="rc-chunks" class="d-flex flex-column gap-2"></div>
+    </div>
+  </div>
+</ToolLayout>
+
+<style is:global>
+.rc-chunk {
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-left-width: 4px;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  background-color: var(--card-bg, #ffffff);
+}
+.rc-chunk-head {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted-color, #6c757d);
+  margin-bottom: 0.3rem;
+}
+.rc-chunk-body {
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-color, #212529);
+}
+.rc-overlap {
+  background-color: rgba(217, 119, 6, 0.22);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0;
+}
+</style>
+
+<script>
+  type Span = { start: number; end: number };
+
+  const text = document.getElementById('rc-text') as HTMLTextAreaElement;
+  const strategy = document.getElementById('rc-strategy') as HTMLSelectElement;
+  const size = document.getElementById('rc-size') as HTMLInputElement;
+  const overlap = document.getElementById('rc-overlap') as HTMLInputElement;
+  const out = document.getElementById('rc-chunks') as HTMLDivElement;
+
+  const len = (s: Span) => s.end - s.start;
+
+  function fixedChunks(n: number, chunkSize: number, ov: number): Span[] {
+    const chunks: Span[] = [];
+    let start = 0;
+    while (start < n) {
+      const end = Math.min(start + chunkSize, n);
+      chunks.push({ start, end });
+      if (end === n) break;
+      start = end - ov;
+    }
+    return chunks;
+  }
+
+  // Pack contiguous pieces into chunks up to chunkSize, carrying trailing pieces
+  // (up to ov chars) into the next chunk as overlap.
+  function merge(pieces: Span[], chunkSize: number, ov: number): Span[] {
+    const chunks: Span[] = [];
+    let cur: Span[] = [];
+    let curLen = 0;
+    for (const p of pieces) {
+      if (cur.length && curLen + len(p) > chunkSize) {
+        chunks.push({ start: cur[0].start, end: cur[cur.length - 1].end });
+        while (cur.length && (curLen > ov || curLen + len(p) > chunkSize)) {
+          curLen -= len(cur.shift()!);
+        }
+      }
+      cur.push(p);
+      curLen += len(p);
+    }
+    if (cur.length) chunks.push({ start: cur[0].start, end: cur[cur.length - 1].end });
+    return chunks;
+  }
+
+  function splitOn(s: string, span: Span, sep: string): Span[] {
+    const pieces: Span[] = [];
+    let start = span.start;
+    let idx = s.indexOf(sep, start);
+    while (idx !== -1 && idx < span.end) {
+      const end = Math.min(idx + sep.length, span.end);
+      pieces.push({ start, end });
+      start = end;
+      idx = s.indexOf(sep, start);
+    }
+    if (start < span.end) pieces.push({ start, end: span.end });
+    return pieces;
+  }
+
+  // Break text into pieces no longer than chunkSize, preferring coarse separators.
+  function recursivePieces(s: string, span: Span, chunkSize: number, seps: string[]): Span[] {
+    if (len(span) <= chunkSize) return [span];
+    const sepIndex = seps.findIndex((sep) => {
+      const i = s.indexOf(sep, span.start);
+      return i !== -1 && i < span.end - sep.length;
+    });
+    if (sepIndex === -1) return fixedChunks(len(span), chunkSize, 0).map((c) => ({ start: c.start + span.start, end: c.end + span.start }));
+    const rest = seps.slice(sepIndex + 1);
+    return splitOn(s, span, seps[sepIndex]).flatMap((p) => recursivePieces(s, p, chunkSize, rest));
+  }
+
+  function sentencePieces(s: string): Span[] {
+    const pieces: Span[] = [];
+    const re = /[^.!?\n]*(?:[.!?]+|\n+|$)\s*/g;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(s)) && m[0].length) pieces.push({ start: m.index, end: m.index + m[0].length });
+    return pieces;
+  }
+
+  function chunk(s: string, mode: string, chunkSize: number, ov: number): Span[] {
+    if (!s) return [];
+    if (mode === 'fixed') return fixedChunks(s.length, chunkSize, ov);
+    if (mode === 'sentence') return merge(sentencePieces(s), chunkSize, ov);
+    return merge(recursivePieces(s, { start: 0, end: s.length }, chunkSize, ['\n\n', '\n', '. ', ' ']), chunkSize, ov);
+  }
+
+  const hues = [205, 265, 150, 25, 330, 185, 45];
+
+  function render() {
+    const chunkSize = Number(size.value);
+    const ov = Math.min(Number(overlap.value), chunkSize - 10);
+    document.getElementById('rc-size-val')!.textContent = String(chunkSize);
+    document.getElementById('rc-overlap-val')!.textContent = String(ov);
+
+    const s = text.value;
+    const chunks = chunk(s, strategy.value, chunkSize, ov);
+    const total = chunks.reduce((a, c) => a + len(c), 0);
+
+    document.getElementById('rc-count')!.textContent = String(chunks.length);
+    document.getElementById('rc-avg')!.textContent = chunks.length ? String(Math.round(total / chunks.length)) : '0';
+    document.getElementById('rc-dup')!.textContent = s.length ? `${Math.max(0, Math.round(((total - s.length) / s.length) * 100))}%` : '0%';
+
+    out.replaceChildren(
+      ...chunks.map((c, i) => {
+        const prevEnd = i > 0 ? chunks[i - 1].end : c.start;
+        const ovEnd = Math.min(Math.max(prevEnd, c.start), c.end);
+
+        const el = document.createElement('div');
+        el.className = 'rc-chunk';
+        el.style.borderLeftColor = `hsl(${hues[i % hues.length]} 70% 50%)`;
+
+        const head = document.createElement('div');
+        head.className = 'rc-chunk-head';
+        head.textContent = `Chunk ${i + 1} · ${len(c)} chars${ovEnd > c.start ? ` · ${ovEnd - c.start} overlap` : ''}`;
+
+        const body = document.createElement('div');
+        body.className = 'rc-chunk-body';
+        if (ovEnd > c.start) {
+          const mark = document.createElement('mark');
+          mark.className = 'rc-overlap';
+          mark.textContent = s.slice(c.start, ovEnd);
+          body.appendChild(mark);
+        }
+        body.appendChild(document.createTextNode(s.slice(ovEnd, c.end)));
+
+        el.append(head, body);
+        return el;
+      }),
+    );
+  }
+
+  [text, strategy, size, overlap].forEach((el) => el.addEventListener('input', render));
+  render();
+</script>

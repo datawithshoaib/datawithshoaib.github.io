@@ -10,7 +10,7 @@
         <input
           id="modal-search-input"
           type="text"
-          placeholder="Type to search posts, projects, and experiments..."
+          placeholder="Search problems, courses and journal..."
           autocomplete="off"
         />
         <button id="search-close" class="btn btn-sm btn-link text-muted p-0" aria-label="Close">
@@ -136,8 +136,8 @@
           <div class="search-result-title">${item.title}</div>
           ${item.excerpt ? `<div class="search-result-snippet">${item.excerpt}</div>` : ''}
           <div class="search-result-meta">
-            <span><i class="far fa-calendar-alt me-1"></i>${item.date ? new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</span>
-            ${item.categories && item.categories.length > 0 ? `<span><i class="far fa-folder me-1"></i>${item.categories.join(', ')}</span>` : ''}
+            ${item.date ? `<span><i class="far fa-calendar-alt me-1"></i>${new Date(item.date).toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: 'short', day: 'numeric' })}</span>` : ''}
+            ${item.tags && item.tags.length > 0 ? `<span><i class="fas fa-tag me-1"></i>${item.tags.join(', ')}</span>` : ''}
           </div>
         </a>
       </li>

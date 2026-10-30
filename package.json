@@ -1,5 +1,5 @@
 {
-  "name": "datawithshoaib-portfolio",
+  "name": "datawithshoaib-learning-log",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "npm run clean && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "new": "node scripts/new.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.3",

@@ -1,0 +1,58 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  back: { url: string; label: string };
+  tags?: string[];
+  prev?: { title: string; url: string } | null;
+  next?: { title: string; url: string } | null;
+}
+
+const { title, description, back, tags = [], prev, next } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <article class="px-1">
+    <a href={back.url} class="small text-decoration-none d-inline-block mb-3">
+      <i class="fas fa-arrow-left me-1"></i>{back.label}
+    </a>
+    <h1 class="mb-2">{title}</h1>
+    <div class="lt-meta d-flex flex-wrap align-items-center gap-2 mb-4 pb-3 border-bottom">
+      <slot name="meta" />
+    </div>
+
+    <slot name="before" />
+
+    <div class="content mb-5">
+      <slot />
+    </div>
+
+    {tags.length > 0 && (
+      <div class="d-flex flex-wrap align-items-center gap-1 mb-4">
+        <i class="fas fa-tags me-1 text-muted"></i>
+        {tags.map((tag) => <span class="lt-chip">{tag}</span>)}
+      </div>
+    )}
+
+    {(prev || next) && (
+      <nav class="row g-2 pt-3 border-top" aria-label="Entry navigation">
+        <div class="col-6">
+          {prev && (
+            <a href={prev.url} class="btn btn-outline-secondary btn-sm w-100 text-start text-truncate" title={prev.title}>
+              <i class="fas fa-chevron-left me-1"></i>{prev.title}
+            </a>
+          )}
+        </div>
+        <div class="col-6 text-end">
+          {next && (
+            <a href={next.url} class="btn btn-outline-secondary btn-sm w-100 text-end text-truncate" title={next.title}>
+              {next.title}<i class="fas fa-chevron-right ms-1"></i>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</BaseLayout>

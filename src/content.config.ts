@@ -1,98 +1,59 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const imageSchema = z.union([
-  z.string(),
-  z.object({
-    path: z.string().optional().nullable(),
-    lqip: z.string().optional().nullable(),
-    alt: z.string().optional().nullable(),
-    no_bg: z.boolean().optional().nullable(),
+// Accept `tags: [a, b]` or `tags: a, b` in frontmatter.
+const list = z
+  .union([z.array(z.string()), z.string()])
+  .optional()
+  .nullable()
+  .transform((val) => {
+    if (!val) return [];
+    if (Array.isArray(val)) return val.filter(Boolean);
+    return val.split(',').map((s) => s.trim()).filter(Boolean);
+  });
+
+const leetcode = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/leetcode' }),
+  schema: z.object({
+    title: z.string(),
+    number: z.number().int().optional().nullable(),
+    url: z.string().url().optional().nullable(),
+    difficulty: z.enum(['Easy', 'Medium', 'Hard']),
+    topics: list,
+    date: z.coerce.date(),
+    status: z.enum(['solved', 'attempted', 'revisit']).default('solved'),
+    language: z.string().optional().nullable(),
+    time: z.string().optional().nullable(),
+    space: z.string().optional().nullable(),
+    minutes: z.number().optional().nullable(),
   }),
-]);
-
-const basePostSchema = z.object({
-  title: z.string(),
-  date: z.coerce.date().optional().nullable(),
-  last_modified_at: z.coerce.date().optional().nullable(),
-  permalink: z.string().optional().nullable(),
-  tags: z
-    .union([z.array(z.string()), z.string()])
-    .optional()
-    .nullable()
-    .transform((val) => {
-      if (!val) return [];
-      if (Array.isArray(val)) return val.filter(Boolean);
-      return val.split(',').map((s) => s.trim()).filter(Boolean);
-    }),
-  categories: z
-    .union([z.array(z.string()), z.string()])
-    .optional()
-    .nullable()
-    .transform((val) => {
-      if (!val) return [];
-      if (Array.isArray(val)) return val.filter(Boolean);
-      return val.split(',').map((s) => s.trim()).filter(Boolean);
-    }),
-  image: imageSchema.optional().nullable(),
-  toc: z.boolean().optional().nullable(),
-  pin: z.boolean().optional().nullable(),
-  description: z.string().optional().nullable(),
-  excerpt: z.string().optional().nullable(),
-  github: z.string().optional().nullable(),
-  demo: z.string().optional().nullable(),
-  skills: z.array(z.string()).optional().nullable(),
-  layout: z.string().optional().nullable(),
-  author: z.string().optional().nullable(),
-  authors: z.array(z.string()).optional().nullable(),
-  published: z.boolean().optional().nullable(),
-  comments: z.boolean().optional().nullable(),
-  media_subpath: z.string().optional().nullable(),
-  math: z.boolean().optional().nullable(),
-  mermaid: z.boolean().optional().nullable(),
-  excerpt_separator: z.string().optional().nullable(),
 });
 
-const posts = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
-  schema: basePostSchema,
+const courses = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/courses' }),
+  schema: z.object({
+    title: z.string(),
+    provider: z.string().optional().nullable(),
+    instructor: z.string().optional().nullable(),
+    url: z.string().url().optional().nullable(),
+    status: z.enum(['planned', 'in-progress', 'completed', 'dropped']).default('planned'),
+    started: z.coerce.date().optional().nullable(),
+    completed: z.coerce.date().optional().nullable(),
+    progress: z.number().min(0).max(100).default(0),
+    certificate: z.string().url().optional().nullable(),
+    description: z.string().optional().nullable(),
+    tags: list,
+  }),
 });
 
-const projects = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-  schema: basePostSchema,
+const journal = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/journal' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    tags: list,
+    hours: z.number().optional().nullable(),
+  }),
 });
 
-const experiments = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/experiments' }),
-  schema: basePostSchema,
-});
-
-const snippets = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/snippets' }),
-  schema: z
-    .object({
-      title: z.string().optional().nullable(),
-      description: z.string().optional().nullable(),
-    })
-    .passthrough(),
-});
-
-const thoughts = defineCollection({
-  loader: glob({ pattern: 'thoughts.md', base: './src/content' }),
-  schema: z
-    .object({
-      title: z.string().optional().nullable(),
-      date: z.coerce.date().optional().nullable(),
-      description: z.string().optional().nullable(),
-    })
-    .passthrough(),
-});
-
-export const collections = {
-  posts,
-  projects,
-  experiments,
-  snippets,
-  thoughts,
-};
+export const collections = { leetcode, courses, journal };

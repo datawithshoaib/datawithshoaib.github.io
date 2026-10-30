@@ -1,0 +1,126 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="A/B Test Significance"
+  description="Check whether the difference in conversion rate between two variants is statistically significant."
+  icon="fas fa-flask"
+>
+  <div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="tool-panel h-100">
+        <div class="tool-label mb-2">Variant A (control)</div>
+        <label for="ab-na" class="small text-muted d-block">Visitors</label>
+        <input id="ab-na" type="number" min="0" class="form-control mb-2" value="10000" />
+        <label for="ab-xa" class="small text-muted d-block">Conversions</label>
+        <input id="ab-xa" type="number" min="0" class="form-control" value="500" />
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="tool-panel h-100">
+        <div class="tool-label mb-2">Variant B (treatment)</div>
+        <label for="ab-nb" class="small text-muted d-block">Visitors</label>
+        <input id="ab-nb" type="number" min="0" class="form-control mb-2" value="10000" />
+        <label for="ab-xb" class="small text-muted d-block">Conversions</label>
+        <input id="ab-xb" type="number" min="0" class="form-control" value="570" />
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="tool-panel h-100">
+        <label for="ab-conf" class="tool-label d-block">Confidence level</label>
+        <select id="ab-conf" class="form-select mb-3">
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.99">99%</option>
+        </select>
+        <p class="small text-muted mb-0">Two-sided two-proportion z-test. The confidence interval is for the difference B − A.</p>
+      </div>
+    </div>
+
+    <div class="col-6 col-lg-3"><div class="tool-stat"><div class="tool-stat-value" id="ab-ra">–</div><div class="tool-stat-label">Conversion A</div></div></div>
+    <div class="col-6 col-lg-3"><div class="tool-stat"><div class="tool-stat-value" id="ab-rb">–</div><div class="tool-stat-label">Conversion B</div></div></div>
+    <div class="col-6 col-lg-3"><div class="tool-stat"><div class="tool-stat-value" id="ab-lift">–</div><div class="tool-stat-label">Relative lift</div></div></div>
+    <div class="col-6 col-lg-3"><div class="tool-stat"><div class="tool-stat-value" id="ab-p">–</div><div class="tool-stat-label">p-value</div></div></div>
+
+    <div class="col-12">
+      <div class="tool-panel">
+        <div id="ab-verdict" class="fw-semibold mb-1"></div>
+        <div id="ab-detail" class="small text-muted"></div>
+        <div id="ab-warning" class="small text-warning mt-2"></div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const el = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const inputs = ['ab-na', 'ab-xa', 'ab-nb', 'ab-xb', 'ab-conf'].map(el);
+
+  // Abramowitz & Stegun 7.1.26, absolute error below 1.5e-7.
+  function erf(x: number) {
+    const sign = Math.sign(x);
+    const t = 1 / (1 + 0.3275911 * Math.abs(x));
+    const y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return sign * y;
+  }
+  const normCdf = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+  const zCritical: Record<string, number> = { '0.90': 1.6449, '0.95': 1.96, '0.99': 2.5758 };
+
+  const pct = (v: number, digits = 2) => `${(v * 100).toFixed(digits)}%`;
+  const signed = (v: number, digits = 2) => `${v >= 0 ? '+' : ''}${(v * 100).toFixed(digits)}%`;
+
+  function render() {
+    const [na, xa, nb, xb] = inputs.slice(0, 4).map((i) => Math.max(0, Math.floor(Number(i.value) || 0)));
+    const conf = inputs[4].value;
+    const set = (id: string, text: string) => (document.getElementById(id)!.textContent = text);
+
+    if (!na || !nb || xa > na || xb > nb) {
+      ['ab-ra', 'ab-rb', 'ab-lift', 'ab-p'].forEach((id) => set(id, '–'));
+      set('ab-verdict', 'Enter visitors for both variants, with conversions no higher than visitors.');
+      set('ab-detail', '');
+      set('ab-warning', '');
+      return;
+    }
+
+    const pa = xa / na;
+    const pb = xb / nb;
+    const diff = pb - pa;
+    const pooled = (xa + xb) / (na + nb);
+    const sePooled = Math.sqrt(pooled * (1 - pooled) * (1 / na + 1 / nb));
+    const z = sePooled === 0 ? 0 : diff / sePooled;
+    const p = sePooled === 0 ? 1 : 2 * (1 - normCdf(Math.abs(z)));
+    const se = Math.sqrt((pa * (1 - pa)) / na + (pb * (1 - pb)) / nb);
+    const zc = zCritical[conf];
+    const lo = diff - zc * se;
+    const hi = diff + zc * se;
+    const alpha = 1 - Number(conf);
+
+    set('ab-ra', pct(pa));
+    set('ab-rb', pct(pb));
+    set('ab-lift', pa ? signed(diff / pa, 1) : 'n/a');
+    set('ab-p', p < 0.0001 ? '< 0.0001' : p.toFixed(4));
+
+    const significant = p < alpha;
+    const verdict = document.getElementById('ab-verdict')!;
+    verdict.className = `fw-semibold mb-1 ${significant ? 'text-success' : ''}`;
+    verdict.textContent = significant
+      ? `Significant at ${pct(Number(conf), 0)} confidence: B ${diff > 0 ? 'outperforms' : 'underperforms'} A.`
+      : `Not significant at ${pct(Number(conf), 0)} confidence. The difference could be noise.`;
+
+    set(
+      'ab-detail',
+      `Difference B − A: ${signed(diff)} points (${pct(Number(conf), 0)} CI ${signed(lo)} to ${signed(hi)}). z = ${z.toFixed(3)}. ` +
+        (significant
+          ? 'The interval excludes zero.'
+          : 'The interval includes zero, so a sample this size cannot rule out no effect.'),
+    );
+
+    // The normal approximation needs roughly 5+ successes and failures per group.
+    const small = [xa, na - xa, xb, nb - xb].some((c) => c < 5);
+    set('ab-warning', small ? 'Some groups have fewer than 5 conversions or non-conversions, so the normal approximation is unreliable. Collect more data or use an exact test.' : '');
+  }
+
+  inputs.forEach((i) => i.addEventListener('input', render));
+  render();
+</script>

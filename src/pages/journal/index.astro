@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getJournal, journalUrl, formatDate, excerpt } from '../../utils/learning';
+
+const entries = await getJournal();
+const totalHours = entries.reduce((sum, e) => sum + (e.data.hours ?? 0), 0);
+
+const tagCounts = new Map<string, number>();
+for (const e of entries) for (const t of e.data.tags) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+const monthOf = (d: Date) => d.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: 'long' });
+const months: { label: string; entries: typeof entries }[] = [];
+for (const e of entries) {
+  const label = monthOf(e.data.date);
+  if (months.at(-1)?.label !== label) months.push({ label, entries: [] });
+  months.at(-1)!.entries.push(e);
+}
+---
+
+<BaseLayout title="Journal" description="A running diary of what I'm learning in AI engineering.">
+  <div class="px-1">
+    <header class="mb-4">
+      <h1 class="dynamic-title mb-2">Learning Journal</h1>
+      <p class="lead text-muted mb-0">A running diary of what I learned, what confused me, and what I'm trying next.</p>
+    </header>
+
+    <div class="row g-3 mb-4">
+      <div class="col-6"><div class="lt-stat"><div class="lt-stat-value">{entries.length}</div><div class="lt-stat-label">Entries</div></div></div>
+      <div class="col-6"><div class="lt-stat"><div class="lt-stat-value">{totalHours ? `${Math.round(totalHours * 10) / 10}h` : '–'}</div><div class="lt-stat-label">Hours logged</div></div></div>
+    </div>
+
+    {entries.length === 0 ? (
+      <div class="lt-empty">
+        <i class="fas fa-book-open fa-2x mb-3"></i>
+        <p class="mb-2">No journal entries yet.</p>
+        <p class="small mb-0">Start one with <code>npm run new journal "What I learned today"</code>. It creates a dated file in <code>src/content/journal/</code>.</p>
+      </div>
+    ) : (
+      <>
+        {tags.length > 0 && (
+          <div class="d-flex flex-wrap gap-2 mb-2" id="jr-tags">
+            <button type="button" class="lt-filter-btn active" data-tag="">All</button>
+            {tags.map(([t, n]) => <button type="button" class="lt-filter-btn" data-tag={t}>{t} <span class="opacity-75">{n}</span></button>)}
+          </div>
+        )}
+
+        {months.map((m) => (
+          <section class="jr-month">
+            <h2 class="lt-timeline-month">{m.label}</h2>
+            <div class="d-flex flex-column gap-2">
+              {m.entries.map((e) => (
+                <a href={journalUrl(e)} class="lt-card jr-entry" data-tags={JSON.stringify(e.data.tags)}>
+                  <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h3 class="lt-card-title">{e.data.title}</h3>
+                    <span class="lt-meta text-nowrap">{formatDate(e.data.date)}</span>
+                  </div>
+                  <p class="small text-muted mb-2">{excerpt(e.body)}</p>
+                  <div class="d-flex flex-wrap gap-1 align-items-center">
+                    {e.data.hours && <span class="lt-meta me-1"><i class="far fa-clock me-1"></i>{e.data.hours}h</span>}
+                    {e.data.tags.map((t) => <span class="lt-chip">{t}</span>)}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('#jr-tags .lt-filter-btn');
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag;
+      buttons.forEach((b) => b.classList.toggle('active', b === btn));
+      document.querySelectorAll<HTMLElement>('.jr-month').forEach((month) => {
+        let visible = 0;
+        month.querySelectorAll<HTMLElement>('.jr-entry').forEach((entry) => {
+          const show = !tag || (JSON.parse(entry.dataset.tags!) as string[]).includes(tag);
+          entry.classList.toggle('d-none', !show);
+          if (show) visible++;
+        });
+        month.classList.toggle('d-none', visible === 0);
+      });
+    }),
+  );
+</script>

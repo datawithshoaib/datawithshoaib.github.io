@@ -1,0 +1,215 @@
+/* Shared styles for the LeetCode, courses and journal pages. Colors use the Chirpy
+   theme variables with light-mode fallbacks, and alpha tints so they work in dark mode. */
+
+.lt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  background-color: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.lt-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted-color, #6c757d);
+  margin-bottom: 0.85rem;
+}
+
+.lt-card {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.85rem;
+  padding: 1rem 1.15rem;
+}
+
+a.lt-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+a.lt-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: var(--link-color, #0284c7);
+}
+
+.lt-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--heading-color, #212529);
+  margin-bottom: 0.25rem;
+}
+
+.lt-stat {
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  height: 100%;
+}
+
+.lt-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading-color, #212529);
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted-color, #6c757d);
+}
+
+.lt-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted-color, #6c757d);
+}
+
+.lt-chip {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e9ecef);
+  white-space: nowrap;
+}
+
+.diff-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.diff-easy { background-color: rgba(0, 184, 163, 0.14); color: #00a08e; }
+.diff-medium { background-color: rgba(245, 158, 11, 0.16); color: #d48806; }
+.diff-hard { background-color: rgba(239, 71, 67, 0.14); color: #e0403c; }
+
+.status-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  background-color: var(--btn-border-color, #f1f3f5);
+  color: var(--text-muted-color, #6c757d);
+}
+.status-solved, .status-completed { background-color: rgba(22, 163, 74, 0.14); color: #16a34a; }
+.status-revisit, .status-in-progress { background-color: rgba(2, 132, 199, 0.14); color: #0284c7; }
+.status-attempted { background-color: rgba(245, 158, 11, 0.16); color: #d48806; }
+
+.lt-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--btn-border-color, #e9ecef);
+  overflow: hidden;
+}
+.lt-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--link-color, #0284c7);
+}
+
+.lt-filter-btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-muted-color, #6c757d);
+  border: 1px solid var(--card-border-color, #e0e0e0);
+  transition: all 0.2s ease;
+}
+.lt-filter-btn:hover { color: var(--heading-color, #212529); }
+.lt-filter-btn.active {
+  background-color: var(--link-color, #0284c7);
+  border-color: var(--link-color, #0284c7);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.lt-input {
+  background-color: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef) !important;
+}
+.lt-input option { color: #212529; }
+
+.lt-table { font-size: 0.875rem; margin-bottom: 0; }
+.lt-table th,
+.lt-table td {
+  background: transparent !important;
+  color: var(--text-color, #212529) !important;
+  border-color: var(--card-border-color, #e9ecef) !important;
+  vertical-align: middle;
+}
+.lt-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted-color, #6c757d) !important;
+}
+.lt-table a { color: var(--heading-color, #212529); font-weight: 500; }
+.lt-table a:hover { color: var(--link-color, #0284c7); }
+
+.lt-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border: 1px dashed var(--card-border-color, #dee2e6);
+  border-radius: 0.85rem;
+  color: var(--text-muted-color, #6c757d);
+}
+.lt-empty code {
+  font-size: 0.8rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background-color: var(--btn-border-color, #f1f3f5);
+}
+
+/* Activity heatmap: one column per week, one row per weekday. */
+.heatmap-scroll { overflow-x: auto; padding-bottom: 0.25rem; }
+.heatmap {
+  display: grid;
+  grid-template-rows: repeat(7, 11px);
+  grid-auto-flow: column;
+  grid-auto-columns: 11px;
+  gap: 3px;
+  width: max-content;
+}
+.heatmap-cell {
+  border-radius: 2px;
+  background-color: var(--btn-border-color, #ebedf0);
+}
+.heatmap-cell.l1 { background-color: rgba(2, 132, 199, 0.3); }
+.heatmap-cell.l2 { background-color: rgba(2, 132, 199, 0.55); }
+.heatmap-cell.l3 { background-color: rgba(2, 132, 199, 0.8); }
+.heatmap-cell.l4 { background-color: #0284c7; }
+.heatmap-cell.out { visibility: hidden; }
+.heatmap-legend { display: inline-flex; gap: 3px; vertical-align: middle; }
+.heatmap-legend .heatmap-cell { width: 11px; height: 11px; display: inline-block; }
+
+.lt-timeline-month {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted-color, #6c757d);
+  margin: 1.5rem 0 0.75rem;
+}

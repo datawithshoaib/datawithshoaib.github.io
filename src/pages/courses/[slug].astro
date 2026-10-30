@@ -1,0 +1,52 @@
+---
+import { render } from 'astro:content';
+import EntryLayout from '../../layouts/EntryLayout.astro';
+import { getCourses, slugOf, formatDate, courseStatuses, type Course } from '../../utils/learning';
+
+export async function getStaticPaths() {
+  const courses = await getCourses();
+  return courses.map((course) => ({ params: { slug: slugOf(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: Course };
+const { Content, headings } = await render(course);
+const d = course.data;
+const status = courseStatuses.find((s) => s.value === d.status)!;
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+<EntryLayout
+  title={d.title}
+  description={d.description ?? `My notes from ${d.title}${d.provider ? ` (${d.provider})` : ''}.`}
+  back={{ url: '/courses/', label: 'All courses' }}
+  tags={d.tags}
+>
+  <Fragment slot="meta">
+    <span class={`status-badge status-${d.status}`}>{status.label}</span>
+    {d.provider && <span><i class="fas fa-building-columns me-1"></i>{d.provider}</span>}
+    {d.instructor && <span><i class="far fa-user me-1"></i>{d.instructor}</span>}
+    {d.started && <span><i class="far fa-calendar-alt me-1"></i>Started {formatDate(d.started)}</span>}
+    {d.completed && <span><i class="fas fa-flag-checkered me-1"></i>Completed {formatDate(d.completed)}</span>}
+    {d.url && <a href={d.url} target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square me-1"></i>Course page</a>}
+    {d.certificate && <a href={d.certificate} target="_blank" rel="noopener"><i class="fas fa-award me-1"></i>Certificate</a>}
+  </Fragment>
+
+  <div slot="before" class="mb-4">
+    {d.status !== 'planned' && (
+      <div class="d-flex align-items-center gap-2 mb-3" style="max-width: 28rem">
+        <div class="lt-progress flex-grow-1"><span style={`width:${d.progress}%`}></span></div>
+        <span class="lt-meta">{d.progress}% complete</span>
+      </div>
+    )}
+    {sections.length > 1 && (
+      <nav class="lt-card small" aria-label="Notes contents">
+        <div class="lt-section-title mb-2">Notes</div>
+        <ol class="mb-0 ps-3">
+          {sections.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+        </ol>
+      </nav>
+    )}
+  </div>
+
+  <Content />
+</EntryLayout>

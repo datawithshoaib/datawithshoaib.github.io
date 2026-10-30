@@ -1,0 +1,112 @@
+---
+// Live LeetCode stats card rendered by LeetCard (https://github.com/JacobLinCool/LeetCard).
+// It fetches the public profile on every page view, so nothing is pulled at build time.
+import { siteConfig } from '../data/site';
+
+export interface Props {
+  ext?: 'heatmap' | 'contest' | 'activity';
+  // Max width the card image scales up to. The SVG is 500px wide natively and stays sharp when scaled.
+  size?: 'md' | 'lg';
+}
+
+const { ext, size = 'md' } = Astro.props;
+const username = siteConfig.leetcodeUsername;
+const profileUrl = `https://leetcode.com/u/${username}/`;
+const src = (theme: 'light' | 'dark') =>
+  `https://leetcard.jacoblin.cool/${username}?theme=${theme}&font=Source%20Sans%203&border=0&radius=0${ext ? `&ext=${ext}` : ''}`;
+const alt = `LeetCode stats for ${username}: problems solved by difficulty and global ranking${ext === 'heatmap' ? ', with a 52-week submission heatmap' : ''}`;
+---
+
+{username && (
+  <section class={`lc-panel lc-panel-${size}`}>
+    <header class="lc-panel-head">
+      <span class="lc-logo" aria-hidden="true"><i class="fas fa-code"></i></span>
+      <div class="flex-grow-1 min-w-0">
+        <div class="lc-panel-title">LeetCode</div>
+        <div class="lc-panel-user">@{username} · live stats</div>
+      </div>
+      <a href={profileUrl} target="_blank" rel="noopener" class="btn btn-sm lc-profile-btn">
+        View profile<i class="fas fa-arrow-up-right-from-square ms-1"></i>
+      </a>
+    </header>
+    <a href={profileUrl} target="_blank" rel="noopener" class="lc-panel-body" tabindex="-1">
+      <img class="lc-live-light" src={src('light')} alt={alt} width="500" height={ext ? 320 : 200} loading="lazy" />
+      <img class="lc-live-dark" src={src('dark')} alt={alt} width="500" height={ext ? 320 : 200} loading="lazy" />
+    </a>
+  </section>
+)}
+
+<style>
+.lc-panel {
+  border: 1px solid var(--card-border-color, #e9ecef);
+  border-top: 3px solid #ffa116;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  background-color: var(--card-bg, #ffffff);
+}
+
+.lc-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--card-border-color, #e9ecef);
+}
+
+.lc-logo {
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  font-size: 0.85rem;
+  border-radius: 0.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 161, 22, 0.15);
+  color: #e8890c;
+}
+
+.lc-panel-title {
+  font-weight: 700;
+  color: var(--heading-color, #212529);
+  line-height: 1.2;
+}
+
+.lc-panel-user {
+  font-size: 0.78rem;
+  color: var(--text-muted-color, #6c757d);
+}
+
+.lc-profile-btn {
+  flex-shrink: 0;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  border: 1px solid rgba(255, 161, 22, 0.5);
+  color: #e8890c;
+}
+.lc-profile-btn:hover {
+  background-color: #ffa116;
+  border-color: #ffa116;
+  color: #ffffff;
+}
+
+/* The card image keeps its own light/dark background, so the body matches it. */
+.lc-panel-body {
+  display: block;
+  padding: 0.25rem 0.75rem 0.5rem;
+  background-color: #ffffff;
+}
+.lc-panel-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.lc-panel-md .lc-panel-body img { max-width: 520px; }
+.lc-panel-lg .lc-panel-body img { max-width: 640px; }
+
+.lc-live-dark { display: none !important; }
+:global(html[data-mode='dark']) .lc-panel-body { background-color: #101010; }
+:global(html[data-mode='dark']) .lc-live-light { display: none !important; }
+:global(html[data-mode='dark']) .lc-live-dark { display: block !important; }
+</style>

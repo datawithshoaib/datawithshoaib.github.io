@@ -1,0 +1,33 @@
+---
+import { render } from 'astro:content';
+import EntryLayout from '../../layouts/EntryLayout.astro';
+import { getJournal, journalUrl, slugOf, formatDate, excerpt, type JournalEntry } from '../../utils/learning';
+
+export async function getStaticPaths() {
+  const entries = await getJournal();
+  return entries.map((entry, i) => ({
+    params: { slug: slugOf(entry) },
+    props: { entry, newer: entries[i - 1] ?? null, older: entries[i + 1] ?? null },
+  }));
+}
+
+const { entry, newer, older } = Astro.props as { entry: JournalEntry; newer: JournalEntry | null; older: JournalEntry | null };
+const { Content } = await render(entry);
+const link = (e: JournalEntry | null) => (e ? { title: e.data.title, url: journalUrl(e) } : null);
+---
+
+<EntryLayout
+  title={entry.data.title}
+  description={excerpt(entry.body, 155)}
+  back={{ url: '/journal/', label: 'Journal' }}
+  tags={entry.data.tags}
+  prev={link(older)}
+  next={link(newer)}
+>
+  <Fragment slot="meta">
+    <span><i class="far fa-calendar-alt me-1"></i>{formatDate(entry.data.date, 'long')}</span>
+    {entry.data.hours && <span><i class="far fa-clock me-1"></i>{entry.data.hours}h of study</span>}
+  </Fragment>
+
+  <Content />
+</EntryLayout>
